@@ -45,7 +45,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     protected boolean forceBigDecimals;
 
     protected Map<Integer, JdbcTypeInformation> typeMap;
-    
+
     public JavaTypeResolverDefaultImpl() {
         super();
         properties = new Properties();
@@ -83,8 +83,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.LONGNVARCHAR, new JdbcTypeInformation("LONGNVARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
-        typeMap.put(Types.LONGVARBINARY, new JdbcTypeInformation(
-                "LONGVARBINARY", //$NON-NLS-1$
+        typeMap.put(Types.LONGVARBINARY, new JdbcTypeInformation("LONGVARBINARY", //$NON-NLS-1$
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.LONGVARCHAR, new JdbcTypeInformation("LONGVARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
@@ -116,31 +115,24 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.VARCHAR, new JdbcTypeInformation("VARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
-        
+
     }
 
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
-        forceBigDecimals = StringUtility
-                .isTrue(properties
-                        .getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
+        forceBigDecimals = StringUtility.isTrue(properties.getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
     }
 
-    public FullyQualifiedJavaType calculateJavaType(
-            IntrospectedColumn introspectedColumn) {
+    public FullyQualifiedJavaType calculateJavaType(IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType answer;
-        JdbcTypeInformation jdbcTypeInformation = typeMap
-                .get(introspectedColumn.getJdbcType());
+        JdbcTypeInformation jdbcTypeInformation = typeMap.get(introspectedColumn.getJdbcType());
 
         if (jdbcTypeInformation == null) {
             switch (introspectedColumn.getJdbcType()) {
             case Types.DECIMAL:
             case Types.NUMERIC:
-                if (introspectedColumn.getScale() > 0
-                        || introspectedColumn.getLength() > 18
-                        || forceBigDecimals) {
-                    answer = new FullyQualifiedJavaType(BigDecimal.class
-                            .getName());
+                if (introspectedColumn.getScale() > 0 || introspectedColumn.getLength() > 18 || forceBigDecimals) {
+                    answer = new FullyQualifiedJavaType(BigDecimal.class.getName());
                 } else if (introspectedColumn.getLength() > 9) {
                     answer = new FullyQualifiedJavaType(Long.class.getName());
                 } else if (introspectedColumn.getLength() > 4) {
@@ -163,8 +155,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
     public String calculateJdbcTypeName(IntrospectedColumn introspectedColumn) {
         String answer;
-        JdbcTypeInformation jdbcTypeInformation = typeMap
-                .get(introspectedColumn.getJdbcType());
+        JdbcTypeInformation jdbcTypeInformation = typeMap.get(introspectedColumn.getJdbcType());
 
         if (jdbcTypeInformation == null) {
             switch (introspectedColumn.getJdbcType()) {
@@ -198,8 +189,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
         private FullyQualifiedJavaType fullyQualifiedJavaType;
 
-        public JdbcTypeInformation(String jdbcTypeName,
-                FullyQualifiedJavaType fullyQualifiedJavaType) {
+        public JdbcTypeInformation(String jdbcTypeName, FullyQualifiedJavaType fullyQualifiedJavaType) {
             this.jdbcTypeName = jdbcTypeName;
             this.fullyQualifiedJavaType = fullyQualifiedJavaType;
         }

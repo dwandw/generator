@@ -24,8 +24,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByExampl
  * 
  * @author Jeff Butler
  */
-public class AnnotatedUpdateByExampleSelectiveMethodGenerator extends
-    UpdateByExampleSelectiveMethodGenerator {
+public class AnnotatedUpdateByExampleSelectiveMethodGenerator extends UpdateByExampleSelectiveMethodGenerator {
 
     public AnnotatedUpdateByExampleSelectiveMethodGenerator() {
         super();
@@ -41,7 +40,7 @@ public class AnnotatedUpdateByExampleSelectiveMethodGenerator extends
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getUpdateByExampleSelectiveStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 }

@@ -52,8 +52,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
 
     public DAOMethodNameCalculator getDAOMethodNameCalculator() {
         if (dAOMethodNameCalculator == null) {
-            String type = context.getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);
+            String type = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);
             if (stringHasValue(type)) {
                 if ("extended".equalsIgnoreCase(type)) { //$NON-NLS-1$
                     type = ExtendedDAOMethodNameCalculator.class.getName();
@@ -65,12 +64,10 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
             }
 
             try {
-                dAOMethodNameCalculator = (DAOMethodNameCalculator) ObjectFactory
-                        .createInternalObject(type);
+                dAOMethodNameCalculator = (DAOMethodNameCalculator) ObjectFactory.createInternalObject(type);
             } catch (Exception e) {
                 dAOMethodNameCalculator = new DefaultDAOMethodNameCalculator();
-                warnings.add(getString(
-                        "Warning.17", type, e.getMessage())); //$NON-NLS-1$
+                warnings.add(getString("Warning.17", type, e.getMessage())); //$NON-NLS-1$
             }
         }
 
@@ -79,9 +76,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
 
     public JavaVisibility getExampleMethodVisibility() {
         if (exampleMethodVisibility == null) {
-            String type = context
-                    .getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.DAO_EXAMPLE_METHOD_VISIBILITY);
+            String type = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.DAO_EXAMPLE_METHOD_VISIBILITY);
             if (stringHasValue(type)) {
                 if ("public".equalsIgnoreCase(type)) { //$NON-NLS-1$
                     exampleMethodVisibility = JavaVisibility.PUBLIC;

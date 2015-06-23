@@ -24,8 +24,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByExampl
  * 
  * @author Jeff Butler
  */
-public class AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator extends
-    UpdateByExampleWithoutBLOBsMethodGenerator {
+public class AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator extends UpdateByExampleWithoutBLOBsMethodGenerator {
 
     public AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator() {
         super();
@@ -41,7 +40,7 @@ public class AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator extends
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getUpdateByExampleStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 }

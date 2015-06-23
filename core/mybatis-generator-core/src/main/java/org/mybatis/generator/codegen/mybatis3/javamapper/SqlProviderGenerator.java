@@ -45,8 +45,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.Pr
  */
 public class SqlProviderGenerator extends AbstractJavaGenerator {
 
-	private boolean useLegacyBuilder;
-	
+    private boolean useLegacyBuilder;
+
     public SqlProviderGenerator(boolean useLegacyBuilder) {
         super();
         this.useLegacyBuilder = useLegacyBuilder;
@@ -58,8 +58,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
                 introspectedTable.getFullyQualifiedTable().toString()));
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getMyBatis3SqlProviderType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
@@ -78,12 +77,11 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         if (addApplyWhereMethod) {
             addApplyWhereMethod(topLevelClass);
         }
-        
+
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
-        
+
         if (topLevelClass.getMethods().size() > 0) {
-            if (context.getPlugins().providerGenerated(topLevelClass,
-                introspectedTable)) {
+            if (context.getPlugins().providerGenerated(topLevelClass, introspectedTable)) {
                 answer.add(topLevelClass);
             }
         }
@@ -120,8 +118,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         }
     }
 
-    protected boolean addSelectByExampleWithBLOBsMethod(
-            TopLevelClass topLevelClass) {
+    protected boolean addSelectByExampleWithBLOBsMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
             AbstractJavaProviderMethodGenerator methodGenerator = new ProviderSelectByExampleWithBLOBsMethodGenerator(useLegacyBuilder);
@@ -132,8 +129,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         return rc;
     }
 
-    protected boolean addSelectByExampleWithoutBLOBsMethod(
-            TopLevelClass topLevelClass) {
+    protected boolean addSelectByExampleWithoutBLOBsMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
             AbstractJavaProviderMethodGenerator methodGenerator = new ProviderSelectByExampleWithoutBLOBsMethodGenerator(useLegacyBuilder);
@@ -144,8 +140,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         return rc;
     }
 
-    protected boolean addUpdateByExampleSelectiveMethod(
-            TopLevelClass topLevelClass) {
+    protected boolean addUpdateByExampleSelectiveMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
             AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleSelectiveMethodGenerator(useLegacyBuilder);
@@ -156,8 +151,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         return rc;
     }
 
-    protected boolean addUpdateByExampleWithBLOBsMethod(
-            TopLevelClass topLevelClass) {
+    protected boolean addUpdateByExampleWithBLOBsMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
             AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleWithBLOBsMethodGenerator(useLegacyBuilder);
@@ -168,8 +162,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         return rc;
     }
 
-    protected boolean addUpdateByExampleWithoutBLOBsMethod(
-            TopLevelClass topLevelClass) {
+    protected boolean addUpdateByExampleWithoutBLOBsMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
             AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleWithoutBLOBsMethodGenerator(useLegacyBuilder);
@@ -180,8 +173,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         return rc;
     }
 
-    protected void addUpdateByPrimaryKeySelectiveMethod(
-            TopLevelClass topLevelClass) {
+    protected void addUpdateByPrimaryKeySelectiveMethod(TopLevelClass topLevelClass) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
             AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByPrimaryKeySelectiveMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
@@ -193,9 +185,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         initializeAndExecuteGenerator(methodGenerator, topLevelClass);
     }
 
-    protected void initializeAndExecuteGenerator(
-            AbstractJavaProviderMethodGenerator methodGenerator,
-            TopLevelClass topLevelClass) {
+    protected void initializeAndExecuteGenerator(AbstractJavaProviderMethodGenerator methodGenerator, TopLevelClass topLevelClass) {
         methodGenerator.setContext(context);
         methodGenerator.setIntrospectedTable(introspectedTable);
         methodGenerator.setProgressCallback(progressCallback);

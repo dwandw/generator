@@ -34,8 +34,7 @@ public class StringUtility {
         return s != null && s.length() > 0;
     }
 
-    public static String composeFullyQualifiedTableName(String catalog,
-            String schema, String tableName, char separator) {
+    public static String composeFullyQualifiedTableName(String catalog, String schema, String tableName, char separator) {
         StringBuilder sb = new StringBuilder();
 
         if (stringHasValue(catalog)) {

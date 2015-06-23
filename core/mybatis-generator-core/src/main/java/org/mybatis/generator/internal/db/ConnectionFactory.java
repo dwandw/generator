@@ -49,8 +49,7 @@ public class ConnectionFactory {
         super();
     }
 
-    public Connection getConnection(JDBCConnectionConfiguration config)
-            throws SQLException {
+    public Connection getConnection(JDBCConnectionConfiguration config) throws SQLException {
         Driver driver = getDriver(config);
 
         Properties props = new Properties();

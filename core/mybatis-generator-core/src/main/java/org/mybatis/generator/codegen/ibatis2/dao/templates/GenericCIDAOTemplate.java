@@ -26,8 +26,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  */
 public class GenericCIDAOTemplate extends AbstractDAOTemplate {
 
-    private FullyQualifiedJavaType sqlMapClientType = new FullyQualifiedJavaType(
-            "com.ibatis.sqlmap.client.SqlMapClient"); //$NON-NLS-1$
+    private FullyQualifiedJavaType sqlMapClientType = new FullyQualifiedJavaType("com.ibatis.sqlmap.client.SqlMapClient"); //$NON-NLS-1$
 
     /**
      *  
@@ -46,8 +45,7 @@ public class GenericCIDAOTemplate extends AbstractDAOTemplate {
         Method constructor = new Method();
         constructor.setConstructor(true);
         constructor.setVisibility(JavaVisibility.PUBLIC);
-        constructor
-                .addParameter(new Parameter(sqlMapClientType, "sqlMapClient")); //$NON-NLS-1$
+        constructor.addParameter(new Parameter(sqlMapClientType, "sqlMapClient")); //$NON-NLS-1$
         constructor.addBodyLine("super();"); //$NON-NLS-1$
         constructor.addBodyLine("this.sqlMapClient = sqlMapClient;"); //$NON-NLS-1$
         setConstructorTemplate(constructor);

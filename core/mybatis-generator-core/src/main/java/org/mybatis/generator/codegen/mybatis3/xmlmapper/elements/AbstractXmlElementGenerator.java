@@ -44,20 +44,16 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
      *            the generated key for the current table
      * @return the selectKey element
      */
-    protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn,
-            GeneratedKey generatedKey) {
-        String identityColumnType = introspectedColumn
-                .getFullyQualifiedJavaType().getFullyQualifiedName();
+    protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn, GeneratedKey generatedKey) {
+        String identityColumnType = introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName();
 
         XmlElement answer = new XmlElement("selectKey"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("resultType", identityColumnType)); //$NON-NLS-1$
-        answer.addAttribute(new Attribute(
-                "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("order", //$NON-NLS-1$
-                generatedKey.getMyBatis3Order())); 
-        
-        answer.addElement(new TextElement(generatedKey
-                        .getRuntimeSqlStatement()));
+                generatedKey.getMyBatis3Order()));
+
+        answer.addElement(new TextElement(generatedKey.getRuntimeSqlStatement()));
 
         return answer;
     }

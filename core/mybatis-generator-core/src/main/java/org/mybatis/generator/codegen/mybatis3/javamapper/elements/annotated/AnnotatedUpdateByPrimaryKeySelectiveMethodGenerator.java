@@ -24,8 +24,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimar
  * 
  * @author Jeff Butler
  */
-public class AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator extends
-    UpdateByPrimaryKeySelectiveMethodGenerator {
+public class AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator extends UpdateByPrimaryKeySelectiveMethodGenerator {
 
     public AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator() {
         super();
@@ -41,7 +40,7 @@ public class AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator extends
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getUpdateByPrimaryKeySelectiveStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 }

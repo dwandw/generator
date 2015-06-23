@@ -51,7 +51,7 @@ public class FullyQualifiedTable {
 
     /** The domain object name. */
     private String domainObjectName;
-    
+
     /** The domain object sub package. */
     private String domainObjectSubPackage;
 
@@ -68,49 +68,59 @@ public class FullyQualifiedTable {
     private String endingDelimiter;
 
     /**
-     * This object is used to hold information related to the table itself, not the columns in the table.
+     * This object is used to hold information related to the table itself, not
+     * the columns in the table.
      *
      * @param introspectedCatalog
-     *            the actual catalog of the table as returned from DatabaseMetaData. This value should only be set if
-     *            the user configured a catalog. Otherwise the DatabaseMetaData is reporting some database default that
-     *            we don't want in the generated code.
+     *            the actual catalog of the table as returned from
+     *            DatabaseMetaData. This value should only be set if the user
+     *            configured a catalog. Otherwise the DatabaseMetaData is
+     *            reporting some database default that we don't want in the
+     *            generated code.
      * @param introspectedSchema
-     *            the actual schema of the table as returned from DatabaseMetaData. This value should only be set if the
-     *            user configured a schema. Otherwise the DatabaseMetaData is reporting some database default that we
-     *            don't want in the generated code.
+     *            the actual schema of the table as returned from
+     *            DatabaseMetaData. This value should only be set if the user
+     *            configured a schema. Otherwise the DatabaseMetaData is
+     *            reporting some database default that we don't want in the
+     *            generated code.
      * @param introspectedTableName
      *            the actual table name as returned from DatabaseMetaData
      * @param domainObjectName
-     *            the configured domain object name for this table. If nothing is configured, we'll build the domain
-     *            object named based on the tableName or runtimeTableName.
+     *            the configured domain object name for this table. If nothing
+     *            is configured, we'll build the domain object named based on
+     *            the tableName or runtimeTableName.
      * @param alias
-     *            a configured alias for the table. This alias will be added to the table name in the SQL
+     *            a configured alias for the table. This alias will be added to
+     *            the table name in the SQL
      * @param ignoreQualifiersAtRuntime
-     *            if true, then the catalog and schema qualifiers will be ignored when composing fully qualified names
-     *            in the generated SQL. This is used, for example, when the user needs to specify a specific schema for
-     *            generating code but does not want the schema in the generated SQL
+     *            if true, then the catalog and schema qualifiers will be
+     *            ignored when composing fully qualified names in the generated
+     *            SQL. This is used, for example, when the user needs to specify
+     *            a specific schema for generating code but does not want the
+     *            schema in the generated SQL
      * @param runtimeCatalog
-     *            this is used to "rename" the catalog in the generated SQL. This is useful, for example, when
-     *            generating code against one catalog that should run with a different catalog.
+     *            this is used to "rename" the catalog in the generated SQL.
+     *            This is useful, for example, when generating code against one
+     *            catalog that should run with a different catalog.
      * @param runtimeSchema
-     *            this is used to "rename" the schema in the generated SQL. This is useful, for example, when generating
-     *            code against one schema that should run with a different schema.
+     *            this is used to "rename" the schema in the generated SQL. This
+     *            is useful, for example, when generating code against one
+     *            schema that should run with a different schema.
      * @param runtimeTableName
-     *            this is used to "rename" the table in the generated SQL. This is useful, for example, when generating
-     *            code to run with an Oracle synonym. The user would have to specify the actual table name and schema
-     *            for generation, but would want to use the synonym name in the generated SQL
+     *            this is used to "rename" the table in the generated SQL. This
+     *            is useful, for example, when generating code to run with an
+     *            Oracle synonym. The user would have to specify the actual
+     *            table name and schema for generation, but would want to use
+     *            the synonym name in the generated SQL
      * @param delimitIdentifiers
-     *            if true, then the table identifiers will be delimited at runtime. The delimiter characters are
-     *            obtained from the Context.
+     *            if true, then the table identifiers will be delimited at
+     *            runtime. The delimiter characters are obtained from the
+     *            Context.
      * @param context
      *            the context
      */
-    public FullyQualifiedTable(String introspectedCatalog,
-            String introspectedSchema, String introspectedTableName,
-            String domainObjectName, String alias,
-            boolean ignoreQualifiersAtRuntime, String runtimeCatalog,
-            String runtimeSchema, String runtimeTableName,
-            boolean delimitIdentifiers, Context context) {
+    public FullyQualifiedTable(String introspectedCatalog, String introspectedSchema, String introspectedTableName, String domainObjectName, String alias,
+            boolean ignoreQualifiersAtRuntime, String runtimeCatalog, String runtimeSchema, String runtimeTableName, boolean delimitIdentifiers, Context context) {
         super();
         this.introspectedCatalog = introspectedCatalog;
         this.introspectedSchema = introspectedSchema;
@@ -119,7 +129,7 @@ public class FullyQualifiedTable {
         this.runtimeCatalog = runtimeCatalog;
         this.runtimeSchema = runtimeSchema;
         this.runtimeTableName = runtimeTableName;
-        
+
         if (stringHasValue(domainObjectName)) {
             int index = domainObjectName.lastIndexOf('.');
             if (index == -1) {
@@ -136,10 +146,8 @@ public class FullyQualifiedTable {
             this.alias = alias.trim();
         }
 
-        beginningDelimiter = delimitIdentifiers ? context
-                .getBeginningDelimiter() : ""; //$NON-NLS-1$
-        endingDelimiter = delimitIdentifiers ? context.getEndingDelimiter()
-                : ""; //$NON-NLS-1$
+        beginningDelimiter = delimitIdentifiers ? context.getBeginningDelimiter() : ""; //$NON-NLS-1$
+        endingDelimiter = delimitIdentifiers ? context.getEndingDelimiter() : ""; //$NON-NLS-1$
     }
 
     /**
@@ -207,9 +215,7 @@ public class FullyQualifiedTable {
         }
         addDelimiters(localTableName);
 
-        return composeFullyQualifiedTableName(localCatalog
-                .toString(), localSchema.toString(), localTableName.toString(),
-                '.');
+        return composeFullyQualifiedTableName(localCatalog.toString(), localSchema.toString(), localTableName.toString(), '.');
     }
 
     /**
@@ -237,17 +243,11 @@ public class FullyQualifiedTable {
      * @return the namespace
      */
     public String getIbatis2SqlMapNamespace() {
-        String localCatalog = stringHasValue(runtimeCatalog) ? runtimeCatalog
-                : introspectedCatalog;
-        String localSchema = stringHasValue(runtimeSchema) ? runtimeSchema
-                : introspectedSchema;
-        String localTable = stringHasValue(runtimeTableName) ? runtimeTableName
-                : introspectedTableName;
+        String localCatalog = stringHasValue(runtimeCatalog) ? runtimeCatalog : introspectedCatalog;
+        String localSchema = stringHasValue(runtimeSchema) ? runtimeSchema : introspectedSchema;
+        String localTable = stringHasValue(runtimeTableName) ? runtimeTableName : introspectedTableName;
 
-        return composeFullyQualifiedTableName(
-                        ignoreQualifiersAtRuntime ? null : localCatalog,
-                        ignoreQualifiersAtRuntime ? null : localSchema,
-                        localTable, '_');
+        return composeFullyQualifiedTableName(ignoreQualifiersAtRuntime ? null : localCatalog, ignoreQualifiersAtRuntime ? null : localSchema, localTable, '_');
     }
 
     /**
@@ -265,7 +265,9 @@ public class FullyQualifiedTable {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -280,15 +282,13 @@ public class FullyQualifiedTable {
 
         FullyQualifiedTable other = (FullyQualifiedTable) obj;
 
-        return areEqual(this.introspectedTableName,
-                other.introspectedTableName)
-                && areEqual(this.introspectedCatalog,
-                        other.introspectedCatalog)
-                && areEqual(this.introspectedSchema,
-                        other.introspectedSchema);
+        return areEqual(this.introspectedTableName, other.introspectedTableName) && areEqual(this.introspectedCatalog, other.introspectedCatalog)
+                && areEqual(this.introspectedSchema, other.introspectedSchema);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -301,14 +301,14 @@ public class FullyQualifiedTable {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return composeFullyQualifiedTableName(
-                introspectedCatalog, introspectedSchema, introspectedTableName,
-                '.');
+        return composeFullyQualifiedTableName(introspectedCatalog, introspectedSchema, introspectedTableName, '.');
     }
 
     /**
@@ -321,8 +321,8 @@ public class FullyQualifiedTable {
     }
 
     /**
-     * Calculates a Java package fragment based on the table catalog and schema. If qualifiers are ignored, then this
-     * method will return an empty string
+     * Calculates a Java package fragment based on the table catalog and schema.
+     * If qualifiers are ignored, then this method will return an empty string
      *
      * @param isSubPackagesEnabled
      *            the is sub packages enabled
@@ -347,7 +347,7 @@ public class FullyQualifiedTable {
                 sb.append(introspectedSchema.toLowerCase());
             }
         }
-        
+
         if (stringHasValue(domainObjectSubPackage)) {
             sb.append('.');
             sb.append(domainObjectSubPackage);

@@ -47,8 +47,12 @@ public class AntProgressCallback extends NullProgressCallback {
         this.verbose = verbose;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.NullProgressCallback#startTask(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.internal.NullProgressCallback#startTask(java.lang
+     * .String)
      */
     @Override
     public void startTask(String subTaskName) {

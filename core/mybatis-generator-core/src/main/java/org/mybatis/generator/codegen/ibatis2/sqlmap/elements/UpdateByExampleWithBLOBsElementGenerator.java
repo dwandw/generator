@@ -29,8 +29,7 @@ import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
  * @author Jeff Butler
  * 
  */
-public class UpdateByExampleWithBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class UpdateByExampleWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public UpdateByExampleWithBLOBsElementGenerator() {
         super();
@@ -40,32 +39,26 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
 
-        answer
-                .addAttribute(new Attribute(
-                        "id", introspectedTable.getUpdateByExampleWithBLOBsStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getUpdateByExampleWithBLOBsStatementId())); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder sb = new StringBuilder();
         sb.append("update "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
         // set up for first column
         sb.setLength(0);
         sb.append("set "); //$NON-NLS-1$
 
-        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
-                .iterator();
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
 
-            sb.append(Ibatis2FormattingUtilities
-                    .getAliasedEscapedColumnName(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(Ibatis2FormattingUtilities.getParameterClause(
-                    introspectedColumn, "record.")); //$NON-NLS-1$
+            sb.append(Ibatis2FormattingUtilities.getParameterClause(introspectedColumn, "record.")); //$NON-NLS-1$
 
             if (iter.hasNext()) {
                 sb.append(',');
@@ -80,19 +73,15 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
             }
         }
 
-        XmlElement isParameterPresentElement = new XmlElement(
-                "isParameterPresent"); //$NON-NLS-1$
+        XmlElement isParameterPresentElement = new XmlElement("isParameterPresent"); //$NON-NLS-1$
         answer.addElement(isParameterPresentElement);
 
         XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
         includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getIbatis2SqlMapNamespace()
-                        + "." + introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
+                introspectedTable.getIbatis2SqlMapNamespace() + "." + introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
         isParameterPresentElement.addElement(includeElement);
 
-        if (context.getPlugins()
-                .sqlMapUpdateByExampleWithBLOBsElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapUpdateByExampleWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

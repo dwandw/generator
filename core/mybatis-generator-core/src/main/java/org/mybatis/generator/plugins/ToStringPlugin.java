@@ -31,28 +31,24 @@ public class ToStringPlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         generateToString(introspectedTable, topLevelClass);
         return true;
     }
 
     @Override
-    public boolean modelRecordWithBLOBsClassGenerated(
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        generateToString(introspectedTable, topLevelClass);
-        return true;
-    }
-    
-    @Override
-    public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         generateToString(introspectedTable, topLevelClass);
         return true;
     }
 
-    private void generateToString(IntrospectedTable introspectedTable,
-            TopLevelClass topLevelClass) {
+    @Override
+    public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        generateToString(introspectedTable, topLevelClass);
+        return true;
+    }
+
+    private void generateToString(IntrospectedTable introspectedTable, TopLevelClass topLevelClass) {
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
@@ -61,8 +57,7 @@ public class ToStringPlugin extends PluginAdapter {
             method.addAnnotation("@Override"); //$NON-NLS-1$
         }
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine("StringBuilder sb = new StringBuilder();"); //$NON-NLS-1$
         method.addBodyLine("sb.append(getClass().getSimpleName());"); //$NON-NLS-1$

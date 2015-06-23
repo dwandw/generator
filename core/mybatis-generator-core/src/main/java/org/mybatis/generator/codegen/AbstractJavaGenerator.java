@@ -37,8 +37,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
 
     public static Method getGetter(Field field) {
         Method method = new Method();
-        method.setName(getGetterMethodName(field.getName(), field
-                .getType()));
+        method.setName(getGetterMethodName(field.getName(), field.getType()));
         method.setReturnType(field.getType());
         method.setVisibility(JavaVisibility.PUBLIC);
         StringBuilder sb = new StringBuilder();
@@ -50,11 +49,9 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     }
 
     public String getRootClass() {
-        String rootClass = introspectedTable
-                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_CLASS);
+        String rootClass = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_CLASS);
         if (rootClass == null) {
-            Properties properties = context
-                    .getJavaModelGeneratorConfiguration().getProperties();
+            Properties properties = context.getJavaModelGeneratorConfiguration().getProperties();
             rootClass = properties.getProperty(PropertyRegistry.ANY_ROOT_CLASS);
         }
 

@@ -56,8 +56,7 @@ public class ConditionalModelRules extends BaseRules {
      * @return true if the class should be generated
      */
     public boolean generateBaseRecordClass() {
-        return introspectedTable.getBaseColumns().size() > 0
-                || introspectedTable.getPrimaryKeyColumns().size() == 1
+        return introspectedTable.getBaseColumns().size() > 0 || introspectedTable.getPrimaryKeyColumns().size() == 1
                 || (introspectedTable.getBLOBColumns().size() > 0 && !generateRecordWithBLOBsClass());
 
     }
@@ -70,10 +69,8 @@ public class ConditionalModelRules extends BaseRules {
      * @return true if the record with BLOBs class should be generated
      */
     public boolean generateRecordWithBLOBsClass() {
-        int otherColumnCount = introspectedTable.getPrimaryKeyColumns().size()
-                + introspectedTable.getBaseColumns().size();
+        int otherColumnCount = introspectedTable.getPrimaryKeyColumns().size() + introspectedTable.getBaseColumns().size();
 
-        return otherColumnCount > 1
-                && introspectedTable.getBLOBColumns().size() > 1;
+        return otherColumnCount > 1 && introspectedTable.getBLOBColumns().size() > 1;
     }
 }

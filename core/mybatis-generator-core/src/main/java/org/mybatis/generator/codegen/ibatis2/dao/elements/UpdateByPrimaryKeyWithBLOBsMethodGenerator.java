@@ -30,8 +30,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * @author Jeff Butler
  * 
  */
-public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
-        AbstractDAOElementGenerator {
+public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends AbstractDAOElementGenerator {
 
     public UpdateByPrimaryKeyWithBLOBsMethodGenerator() {
         super();
@@ -44,16 +43,12 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
 
         StringBuilder sb = new StringBuilder();
         sb.append("int rows = "); //$NON-NLS-1$
-        sb.append(daoTemplate.getUpdateMethod(introspectedTable
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getUpdateByPrimaryKeyWithBLOBsStatementId(), "record")); //$NON-NLS-1$
+        sb.append(daoTemplate.getUpdateMethod(introspectedTable.getIbatis2SqlMapNamespace(), introspectedTable.getUpdateByPrimaryKeyWithBLOBsStatementId(), "record")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
 
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 
-        if (context.getPlugins()
-                .clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
-                        topLevelClass, introspectedTable)) {
+        if (context.getPlugins().clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }
@@ -64,9 +59,7 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = getMethodShell(importedTypes);
 
-        if (context.getPlugins()
-                .clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
-                        interfaze, introspectedTable)) {
+        if (context.getPlugins().clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
@@ -76,11 +69,9 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
         FullyQualifiedJavaType parameterType;
 
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getRecordWithBLOBsType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
         } else {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getBaseRecordType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         }
 
         importedTypes.add(parameterType);
@@ -88,8 +79,7 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(getDAOMethodNameCalculator()
-                .getUpdateByPrimaryKeyWithBLOBsMethodName(introspectedTable));
+        method.setName(getDAOMethodNameCalculator().getUpdateByPrimaryKeyWithBLOBsMethodName(introspectedTable));
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 
         for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {
@@ -97,8 +87,7 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
             importedTypes.add(fqjt);
         }
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         return method;
     }

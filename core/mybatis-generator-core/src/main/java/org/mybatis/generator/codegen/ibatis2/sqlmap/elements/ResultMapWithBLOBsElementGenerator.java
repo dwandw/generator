@@ -29,8 +29,7 @@ import org.mybatis.generator.config.PropertyRegistry;
  * @author Jeff Butler
  * 
  */
-public class ResultMapWithBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public ResultMapWithBLOBsElementGenerator() {
         super();
@@ -38,8 +37,7 @@ public class ResultMapWithBLOBsElementGenerator extends
 
     @Override
     public void addElements(XmlElement parentElement) {
-        boolean useColumnIndex = isTrue(introspectedTable
-                        .getTableConfigurationProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES));
+        boolean useColumnIndex = isTrue(introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES));
 
         XmlElement answer = new XmlElement("resultMap"); //$NON-NLS-1$
 
@@ -67,42 +65,29 @@ public class ResultMapWithBLOBsElementGenerator extends
         context.getCommentGenerator().addComment(answer);
 
         int i = introspectedTable.getNonBLOBColumnCount() + 1;
-        if (stringHasValue(introspectedTable
-                .getSelectByPrimaryKeyQueryId())
-                || stringHasValue(introspectedTable
-                        .getSelectByExampleQueryId())) {
+        if (stringHasValue(introspectedTable.getSelectByPrimaryKeyQueryId()) || stringHasValue(introspectedTable.getSelectByExampleQueryId())) {
             i++;
         }
 
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getBLOBColumns()) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getBLOBColumns()) {
             XmlElement resultElement = new XmlElement("result"); //$NON-NLS-1$
 
             if (useColumnIndex) {
-                resultElement.addAttribute(new Attribute(
-                        "columnIndex", Integer.toString(i++))); //$NON-NLS-1$
+                resultElement.addAttribute(new Attribute("columnIndex", Integer.toString(i++))); //$NON-NLS-1$
             } else {
-                resultElement
-                        .addAttribute(new Attribute(
-                                "column", Ibatis2FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
+                resultElement.addAttribute(new Attribute("column", Ibatis2FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
             }
-            resultElement.addAttribute(new Attribute(
-                    "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-            resultElement.addAttribute(new Attribute(
-                    "jdbcType", introspectedColumn.getJdbcTypeName())); //$NON-NLS-1$
+            resultElement.addAttribute(new Attribute("property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+            resultElement.addAttribute(new Attribute("jdbcType", introspectedColumn.getJdbcTypeName())); //$NON-NLS-1$
 
-            if (stringHasValue(introspectedColumn
-                    .getTypeHandler())) {
-                resultElement.addAttribute(new Attribute(
-                        "typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+                resultElement.addAttribute(new Attribute("typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
             }
 
             answer.addElement(resultElement);
         }
 
-        if (context.getPlugins()
-                .sqlMapResultMapWithBLOBsElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapResultMapWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

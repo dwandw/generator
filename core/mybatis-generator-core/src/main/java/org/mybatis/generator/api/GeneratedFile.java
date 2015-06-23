@@ -15,14 +15,13 @@
  */
 package org.mybatis.generator.api;
 
-
 /**
  * Abstract class that holds information common to all generated files.
  * 
  * @author Jeff Butler
  */
 public abstract class GeneratedFile {
-    
+
     /** The target project. */
     protected String targetProject;
 
@@ -74,7 +73,9 @@ public abstract class GeneratedFile {
      */
     public abstract String getTargetPackage();
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

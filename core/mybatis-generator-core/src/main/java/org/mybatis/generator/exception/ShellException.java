@@ -22,7 +22,7 @@ package org.mybatis.generator.exception;
  * @author Jeff Butler
  */
 public class ShellException extends Exception {
-    
+
     /** The Constant serialVersionUID. */
     static final long serialVersionUID = -2026841561754434544L;
 

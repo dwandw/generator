@@ -14,7 +14,7 @@ import java.lang.reflect.Array;
  * <pre>
  * public int hashCode() {
  *     int result = HashCodeUtil.SEED;
- *     //collect the contributions of various fields
+ *     // collect the contributions of various fields
  *     result = HashCodeUtil.hash(result, fPrimitive);
  *     result = HashCodeUtil.hash(result, fObject);
  *     result = HashCodeUtil.hash(result, fArray);
@@ -114,9 +114,11 @@ public final class HashCodeUtil {
     }
 
     /**
-     * <code>aObject</code> is a possibly-null object field, and possibly an array.
+     * <code>aObject</code> is a possibly-null object field, and possibly an
+     * array.
      * 
-     * If <code>aObject</code> is an array, then each element may be a primitive or a possibly-null object.
+     * If <code>aObject</code> is an array, then each element may be a primitive
+     * or a possibly-null object.
      *
      * @param aSeed
      *            the a seed

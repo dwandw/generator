@@ -56,8 +56,7 @@ public class XmlFileMergerJaxp {
          * attempt to read a DTD. We don't need that support for the merge and
          * it can cause problems on systems that aren't Internet connected.
          */
-        public InputSource resolveEntity(String publicId, String systemId)
-                throws SAXException, IOException {
+        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
 
             StringReader sr = new StringReader(""); //$NON-NLS-1$
 
@@ -72,13 +71,12 @@ public class XmlFileMergerJaxp {
         super();
     }
 
-    public static String getMergedSource(GeneratedXmlFile generatedXmlFile,
-            File existingFile) throws ShellException {
+    public static String getMergedSource(GeneratedXmlFile generatedXmlFile, File existingFile) throws ShellException {
 
         try {
-            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
-                new InputSource(new InputStreamReader(new FileInputStream(existingFile), "UTF-8")), //$NON-NLS-1$
-                existingFile.getName());
+            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())), new InputSource(new InputStreamReader(new FileInputStream(
+                    existingFile), "UTF-8")), //$NON-NLS-1$
+                    existingFile.getName());
         } catch (IOException e) {
             throw new ShellException(getString("Warning.13", //$NON-NLS-1$
                     existingFile.getName()), e);
@@ -90,13 +88,11 @@ public class XmlFileMergerJaxp {
                     existingFile.getName()), e);
         }
     }
-    
-    public static String getMergedSource(InputSource newFile,
-            InputSource existingFile, String existingFileName) throws IOException, SAXException,
+
+    public static String getMergedSource(InputSource newFile, InputSource existingFile, String existingFileName) throws IOException, SAXException,
             ParserConfigurationException, ShellException {
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory
-                .newInstance();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setExpandEntityReferences(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
         builder.setEntityResolver(new NullEntityResolver());
@@ -132,8 +128,7 @@ public class XmlFileMergerJaxp {
         attributeCount = attributes.getLength();
         for (int i = 0; i < attributeCount; i++) {
             Node node = attributes.item(i);
-            existingRootElement.setAttribute(node.getNodeName(), node
-                    .getNodeValue());
+            existingRootElement.setAttribute(node.getNodeName(), node.getNodeValue());
         }
 
         // remove the old generated elements and any
@@ -145,8 +140,7 @@ public class XmlFileMergerJaxp {
             Node node = children.item(i);
             if (isGeneratedNode(node)) {
                 nodesToDelete.add(node);
-            } else if (isWhiteSpace(node)
-                    && isGeneratedNode(children.item(i + 1))) {
+            } else if (isWhiteSpace(node) && isGeneratedNode(children.item(i + 1))) {
                 nodesToDelete.add(node);
             }
         }

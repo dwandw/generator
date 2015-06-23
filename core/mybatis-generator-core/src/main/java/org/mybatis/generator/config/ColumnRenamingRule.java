@@ -85,8 +85,7 @@ public class ColumnRenamingRule {
         xmlElement.addAttribute(new Attribute("searchString", searchString)); //$NON-NLS-1$
 
         if (replaceString != null) {
-            xmlElement.addAttribute(new Attribute(
-                    "replaceString", replaceString)); //$NON-NLS-1$
+            xmlElement.addAttribute(new Attribute("replaceString", replaceString)); //$NON-NLS-1$
         }
 
         return xmlElement;

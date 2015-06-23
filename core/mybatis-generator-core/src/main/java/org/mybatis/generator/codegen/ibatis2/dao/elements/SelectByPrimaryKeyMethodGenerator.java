@@ -33,8 +33,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * @author Jeff Butler
  * 
  */
-public class SelectByPrimaryKeyMethodGenerator extends
-        AbstractDAOElementGenerator {
+public class SelectByPrimaryKeyMethodGenerator extends AbstractDAOElementGenerator {
 
     public SelectByPrimaryKeyMethodGenerator() {
         super();
@@ -51,8 +50,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
         if (!introspectedTable.getRules().generatePrimaryKeyClass()) {
             // no primary key class, but primary key is enabled. Primary
             // key columns must be in the base class.
-            FullyQualifiedJavaType keyType = new FullyQualifiedJavaType(
-                    introspectedTable.getBaseRecordType());
+            FullyQualifiedJavaType keyType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
             topLevelClass.addImportedType(keyType);
 
             sb.setLength(0);
@@ -62,12 +60,10 @@ public class SelectByPrimaryKeyMethodGenerator extends
             sb.append("();"); //$NON-NLS-1$
             method.addBodyLine(sb.toString());
 
-            for (IntrospectedColumn introspectedColumn : introspectedTable
-                    .getPrimaryKeyColumns()) {
+            for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
                 sb.setLength(0);
                 sb.append("_key."); //$NON-NLS-1$
-                sb.append(getSetterMethodName(introspectedColumn
-                        .getJavaProperty()));
+                sb.append(getSetterMethodName(introspectedColumn.getJavaProperty()));
                 sb.append('(');
                 sb.append(introspectedColumn.getJavaProperty());
                 sb.append(");"); //$NON-NLS-1$
@@ -82,14 +78,11 @@ public class SelectByPrimaryKeyMethodGenerator extends
         sb.append(" record = ("); //$NON-NLS-1$
         sb.append(returnType.getShortName());
         sb.append(") "); //$NON-NLS-1$
-        sb.append(daoTemplate.getQueryForObjectMethod(introspectedTable
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getSelectByPrimaryKeyStatementId(), "_key")); //$NON-NLS-1$
+        sb.append(daoTemplate.getQueryForObjectMethod(introspectedTable.getIbatis2SqlMapNamespace(), introspectedTable.getSelectByPrimaryKeyStatementId(), "_key")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
         method.addBodyLine("return record;"); //$NON-NLS-1$
 
-        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(
-                method, topLevelClass, introspectedTable)) {
+        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }
@@ -100,8 +93,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = getMethodShell(importedTypes);
 
-        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(
-                method, interfaze, introspectedTable)) {
+        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
@@ -111,27 +103,21 @@ public class SelectByPrimaryKeyMethodGenerator extends
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
 
-        FullyQualifiedJavaType returnType = introspectedTable.getRules()
-                .calculateAllFieldsClass();
+        FullyQualifiedJavaType returnType = introspectedTable.getRules().calculateAllFieldsClass();
         method.setReturnType(returnType);
         importedTypes.add(returnType);
 
-        method.setName(getDAOMethodNameCalculator()
-                .getSelectByPrimaryKeyMethodName(introspectedTable));
+        method.setName(getDAOMethodNameCalculator().getSelectByPrimaryKeyMethodName(introspectedTable));
 
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-            FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                    introspectedTable.getPrimaryKeyType());
+            FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
             importedTypes.add(type);
             method.addParameter(new Parameter(type, "_key")); //$NON-NLS-1$
         } else {
-            for (IntrospectedColumn introspectedColumn : introspectedTable
-                    .getPrimaryKeyColumns()) {
-                FullyQualifiedJavaType type = introspectedColumn
-                        .getFullyQualifiedJavaType();
+            for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
+                FullyQualifiedJavaType type = introspectedColumn.getFullyQualifiedJavaType();
                 importedTypes.add(type);
-                method.addParameter(new Parameter(type, introspectedColumn
-                        .getJavaProperty()));
+                method.addParameter(new Parameter(type, introspectedColumn.getJavaProperty()));
             }
         }
 
@@ -140,8 +126,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
             importedTypes.add(fqjt);
         }
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         return method;
     }

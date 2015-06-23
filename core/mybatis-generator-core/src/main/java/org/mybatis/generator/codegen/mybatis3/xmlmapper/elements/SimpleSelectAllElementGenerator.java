@@ -30,8 +30,7 @@ import org.mybatis.generator.internal.util.StringUtility;
  * @author Jeff Butler
  * 
  */
-public class SimpleSelectAllElementGenerator extends
-        AbstractXmlElementGenerator {
+public class SimpleSelectAllElementGenerator extends AbstractXmlElementGenerator {
 
     public SimpleSelectAllElementGenerator() {
         super();
@@ -41,8 +40,7 @@ public class SimpleSelectAllElementGenerator extends
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getSelectAllStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getSelectAllStatementId())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
                 introspectedTable.getBaseResultMapId()));
 
@@ -50,11 +48,9 @@ public class SimpleSelectAllElementGenerator extends
 
         StringBuilder sb = new StringBuilder();
         sb.append("select "); //$NON-NLS-1$
-        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
-                .iterator();
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
         while (iter.hasNext()) {
-            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
-                    .next()));
+            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter.next()));
 
             if (iter.hasNext()) {
                 sb.append(", "); //$NON-NLS-1$
@@ -72,10 +68,9 @@ public class SimpleSelectAllElementGenerator extends
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
-        
+
         String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
         boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);
         if (hasOrderBy) {
@@ -85,8 +80,7 @@ public class SimpleSelectAllElementGenerator extends
             answer.addElement(new TextElement(sb.toString()));
         }
 
-        if (context.getPlugins().sqlMapSelectAllElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapSelectAllElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

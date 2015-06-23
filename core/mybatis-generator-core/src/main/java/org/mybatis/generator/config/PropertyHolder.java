@@ -54,8 +54,7 @@ public abstract class PropertyHolder {
 
             XmlElement propertyElement = new XmlElement("property"); //$NON-NLS-1$
             propertyElement.addAttribute(new Attribute("name", propertyName)); //$NON-NLS-1$
-            propertyElement.addAttribute(new Attribute(
-                    "value", properties.getProperty(propertyName))); //$NON-NLS-1$
+            propertyElement.addAttribute(new Attribute("value", properties.getProperty(propertyName))); //$NON-NLS-1$
             xmlElement.addElement(propertyElement);
         }
     }

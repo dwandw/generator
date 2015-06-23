@@ -23,7 +23,7 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  * @author Jeff Butler
  */
 public class TextElement extends Element {
-    
+
     /** The content. */
     private String content;
 
@@ -38,7 +38,9 @@ public class TextElement extends Element {
         this.content = content;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.dom.xml.Element#getFormattedContent(int)
      */
     @Override

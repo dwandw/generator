@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  * @author Jeff Butler
  */
 public class XmlElement extends Element {
-    
+
     /** The attributes. */
     private List<Attribute> attributes;
 
@@ -48,9 +48,10 @@ public class XmlElement extends Element {
         elements = new ArrayList<Element>();
         this.name = name;
     }
-    
+
     /**
-     * Copy constructor. Not a truly deep copy, but close enough for most purposes.
+     * Copy constructor. Not a truly deep copy, but close enough for most
+     * purposes.
      *
      * @param original
      *            the original
@@ -123,7 +124,9 @@ public class XmlElement extends Element {
         return name;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.dom.xml.Element#getFormattedContent(int)
      */
     @Override

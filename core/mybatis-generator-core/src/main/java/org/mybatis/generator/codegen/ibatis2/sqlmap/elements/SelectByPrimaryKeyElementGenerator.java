@@ -28,8 +28,7 @@ import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
  * @author Jeff Butler
  * 
  */
-public class SelectByPrimaryKeyElementGenerator extends
-        AbstractXmlElementGenerator {
+public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenerator {
 
     public SelectByPrimaryKeyElementGenerator() {
         super();
@@ -39,8 +38,7 @@ public class SelectByPrimaryKeyElementGenerator extends
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$
         if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
             answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
                     introspectedTable.getResultMapWithBLOBsId()));
@@ -66,8 +64,7 @@ public class SelectByPrimaryKeyElementGenerator extends
         StringBuilder sb = new StringBuilder();
         sb.append("select "); //$NON-NLS-1$
 
-        if (stringHasValue(introspectedTable
-                .getSelectByPrimaryKeyQueryId())) {
+        if (stringHasValue(introspectedTable.getSelectByPrimaryKeyQueryId())) {
             sb.append('\'');
             sb.append(introspectedTable.getSelectByPrimaryKeyQueryId());
             sb.append("' as QUERYID,"); //$NON-NLS-1$
@@ -81,13 +78,11 @@ public class SelectByPrimaryKeyElementGenerator extends
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
         boolean and = false;
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
             sb.setLength(0);
             if (and) {
                 sb.append("  and "); //$NON-NLS-1$
@@ -96,17 +91,13 @@ public class SelectByPrimaryKeyElementGenerator extends
                 and = true;
             }
 
-            sb.append(Ibatis2FormattingUtilities
-                    .getAliasedEscapedColumnName(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(Ibatis2FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getParameterClause(introspectedColumn));
             answer.addElement(new TextElement(sb.toString()));
         }
 
-        if (context.getPlugins()
-                .sqlMapSelectByPrimaryKeyElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

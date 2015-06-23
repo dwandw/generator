@@ -63,33 +63,29 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     public JavaMapperGenerator(boolean requiresMatchedXMLGenerator) {
         super(requiresMatchedXMLGenerator);
     }
-    
+
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getMyBatis3JavaMapperType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
 
-        String rootInterface = introspectedTable
-            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+        String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
-            rootInterface = context.getJavaClientGeneratorConfiguration()
-                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+            rootInterface = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
         if (stringHasValue(rootInterface)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
-                    rootInterface);
+            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(rootInterface);
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
         }
-        
+
         addCountByExampleMethod(interfaze);
         addDeleteByExampleMethod(interfaze);
         addDeleteByPrimaryKeyMethod(interfaze);
@@ -106,11 +102,10 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
-        if (context.getPlugins().clientGenerated(interfaze, null,
-                introspectedTable)) {
+        if (context.getPlugins().clientGenerated(interfaze, null, introspectedTable)) {
             answer.add(interfaze);
         }
-        
+
         List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
         if (extraCompilationUnits != null) {
             answer.addAll(extraCompilationUnits);
@@ -211,16 +206,13 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-        if (introspectedTable.getRules()
-                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
+        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
-    protected void initializeAndExecuteGenerator(
-            AbstractJavaMapperMethodGenerator methodGenerator,
-            Interface interfaze) {
+    protected void initializeAndExecuteGenerator(AbstractJavaMapperMethodGenerator methodGenerator, Interface interfaze) {
         methodGenerator.setContext(context);
         methodGenerator.setIntrospectedTable(introspectedTable);
         methodGenerator.setProgressCallback(progressCallback);

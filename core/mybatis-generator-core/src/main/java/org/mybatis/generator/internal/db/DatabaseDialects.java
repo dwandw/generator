@@ -25,24 +25,24 @@ public enum DatabaseDialects {
     /** The D b2. */
     DB2("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
     /** The mysql. */
- MYSQL("SELECT LAST_INSERT_ID()"), //$NON-NLS-1$
+    MYSQL("SELECT LAST_INSERT_ID()"), //$NON-NLS-1$
     /** The sqlserver. */
- SQLSERVER("SELECT SCOPE_IDENTITY()"), //$NON-NLS-1$
+    SQLSERVER("SELECT SCOPE_IDENTITY()"), //$NON-NLS-1$
     /** The cloudscape. */
- CLOUDSCAPE("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
+    CLOUDSCAPE("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
     /** The derby. */
- DERBY("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
+    DERBY("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
     /** The hsqldb. */
- HSQLDB("CALL IDENTITY()"), //$NON-NLS-1$
+    HSQLDB("CALL IDENTITY()"), //$NON-NLS-1$
     /** The sybase. */
- SYBASE("SELECT @@IDENTITY"), //$NON-NLS-1$
+    SYBASE("SELECT @@IDENTITY"), //$NON-NLS-1$
     /** The D b2_ mf. */
- DB2_MF("SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1"), //$NON-NLS-1$
+    DB2_MF("SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1"), //$NON-NLS-1$
     /** The informix. */
- INFORMIX("select dbinfo('sqlca.sqlerrd1') from systables where tabid=1"); //$NON-NLS-1$
+    INFORMIX("select dbinfo('sqlca.sqlerrd1') from systables where tabid=1"); //$NON-NLS-1$
 
     /** The identity retrieval statement. */
- private String identityRetrievalStatement;
+    private String identityRetrievalStatement;
 
     /**
      * Instantiates a new database dialects.
@@ -68,8 +68,8 @@ public enum DatabaseDialects {
      *
      * @param database
      *            the database
-     * @return the database dialect for the selected database. May return null if there is no known dialect for the
-     *         selected db
+     * @return the database dialect for the selected database. May return null
+     *         if there is no known dialect for the selected db
      */
     public static DatabaseDialects getDatabaseDialect(String database) {
         DatabaseDialects returnValue = null;

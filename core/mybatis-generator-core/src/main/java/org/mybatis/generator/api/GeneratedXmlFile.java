@@ -23,7 +23,7 @@ import org.mybatis.generator.api.dom.xml.Document;
  * @author Jeff Butler
  */
 public class GeneratedXmlFile extends GeneratedFile {
-    
+
     /** The document. */
     private Document document;
 
@@ -35,7 +35,7 @@ public class GeneratedXmlFile extends GeneratedFile {
 
     /** The is mergeable. */
     private boolean isMergeable;
-    
+
     /** The xml formatter. */
     private XmlFormatter xmlFormatter;
 
@@ -51,13 +51,12 @@ public class GeneratedXmlFile extends GeneratedFile {
      * @param targetProject
      *            the target project
      * @param isMergeable
-     *            true if the file can be merged by the built in XML file merger.
+     *            true if the file can be merged by the built in XML file
+     *            merger.
      * @param xmlFormatter
      *            the xml formatter
      */
-    public GeneratedXmlFile(Document document, String fileName,
-            String targetPackage, String targetProject, boolean isMergeable,
-            XmlFormatter xmlFormatter) {
+    public GeneratedXmlFile(Document document, String fileName, String targetPackage, String targetProject, boolean isMergeable, XmlFormatter xmlFormatter) {
         super(targetProject);
         this.document = document;
         this.fileName = fileName;
@@ -66,7 +65,9 @@ public class GeneratedXmlFile extends GeneratedFile {
         this.xmlFormatter = xmlFormatter;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.GeneratedFile#getFormattedContent()
      */
     @Override
@@ -94,7 +95,9 @@ public class GeneratedXmlFile extends GeneratedFile {
         return targetPackage;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.GeneratedFile#isMergeable()
      */
     @Override

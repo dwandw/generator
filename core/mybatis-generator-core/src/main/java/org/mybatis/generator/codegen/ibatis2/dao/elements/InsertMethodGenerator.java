@@ -52,9 +52,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
             sb.append("Object newKey = "); //$NON-NLS-1$
         }
 
-        sb.append(daoTemplate.getInsertMethod(introspectedTable
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getInsertStatementId(), "record")); //$NON-NLS-1$
+        sb.append(daoTemplate.getInsertMethod(introspectedTable.getIbatis2SqlMapNamespace(), introspectedTable.getInsertStatementId(), "record")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
 
         if (returnType != null) {
@@ -65,8 +63,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
                 sb.setLength(0);
 
                 if (returnType.isPrimitive()) {
-                    PrimitiveTypeWrapper ptw = returnType
-                            .getPrimitiveTypeWrapper();
+                    PrimitiveTypeWrapper ptw = returnType.getPrimitiveTypeWrapper();
                     sb.append("return (("); //$NON-NLS-1$
                     sb.append(ptw.getShortName());
                     sb.append(") newKey"); //$NON-NLS-1$
@@ -83,8 +80,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
             }
         }
 
-        if (context.getPlugins().clientInsertMethodGenerated(method,
-                topLevelClass, introspectedTable)) {
+        if (context.getPlugins().clientInsertMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }
@@ -95,8 +91,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = getMethodShell(importedTypes);
 
-        if (context.getPlugins().clientInsertMethodGenerated(method,
-                interfaze, introspectedTable)) {
+        if (context.getPlugins().clientInsertMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
@@ -107,8 +102,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
 
         FullyQualifiedJavaType returnType;
         if (introspectedTable.getGeneratedKey() != null) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(introspectedTable.getGeneratedKey().getColumn());
+            IntrospectedColumn introspectedColumn = introspectedTable.getColumn(introspectedTable.getGeneratedKey().getColumn());
             if (introspectedColumn == null) {
                 // the specified column doesn't exist, so don't do the generated
                 // key
@@ -125,11 +119,9 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
         method.setReturnType(returnType);
         method.setVisibility(JavaVisibility.PUBLIC);
         DAOMethodNameCalculator methodNameCalculator = getDAOMethodNameCalculator();
-        method.setName(methodNameCalculator
-                .getInsertMethodName(introspectedTable));
+        method.setName(methodNameCalculator.getInsertMethodName(introspectedTable));
 
-        FullyQualifiedJavaType parameterType = introspectedTable.getRules()
-                .calculateAllFieldsClass();
+        FullyQualifiedJavaType parameterType = introspectedTable.getRules().calculateAllFieldsClass();
 
         importedTypes.add(parameterType);
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
@@ -139,8 +131,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
             importedTypes.add(fqjt);
         }
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         return method;
     }

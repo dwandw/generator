@@ -51,15 +51,15 @@ import org.mybatis.generator.internal.util.StringUtility;
  * @author Jeff Butler
  */
 public class ObjectFactory {
-    
+
     /** The external class loaders. */
     private static List<ClassLoader> externalClassLoaders;
-    
+
     /** The resource class loaders. */
     private static List<ClassLoader> resourceClassLoaders;
-    
+
     static {
-    	externalClassLoaders = new ArrayList<ClassLoader>();
+        externalClassLoaders = new ArrayList<ClassLoader>();
         resourceClassLoaders = new ArrayList<ClassLoader>();
     }
 
@@ -71,34 +71,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Adds a custom classloader to the collection of classloaders searched for resources. Currently, this is only used
-     * when searching for properties files that may be referenced in the configuration file.
+     * Adds a custom classloader to the collection of classloaders searched for
+     * resources. Currently, this is only used when searching for properties
+     * files that may be referenced in the configuration file.
      *
      * @param classLoader
      *            the class loader
      */
-    public static synchronized void addResourceClassLoader(
-            ClassLoader classLoader) {
+    public static synchronized void addResourceClassLoader(ClassLoader classLoader) {
         ObjectFactory.resourceClassLoaders.add(classLoader);
     }
 
     /**
-     * Adds a custom classloader to the collection of classloaders searched for "external" classes. These are classes
-     * that do not depend on any of the generator's classes or interfaces. Examples are JDBC drivers, root classes, root
-     * interfaces, etc.
+     * Adds a custom classloader to the collection of classloaders searched for
+     * "external" classes. These are classes that do not depend on any of the
+     * generator's classes or interfaces. Examples are JDBC drivers, root
+     * classes, root interfaces, etc.
      *
      * @param classLoader
      *            the class loader
      */
-    public static synchronized void addExternalClassLoader(
-            ClassLoader classLoader) {
+    public static synchronized void addExternalClassLoader(ClassLoader classLoader) {
         ObjectFactory.externalClassLoaders.add(classLoader);
     }
-    
+
     /**
-     * This method returns a class loaded from the context classloader, or the classloader supplied by a client. This is
-     * appropriate for JDBC drivers, model root classes, etc. It is not appropriate for any class that extends one of
-     * the supplied classes or interfaces.
+     * This method returns a class loaded from the context classloader, or the
+     * classloader supplied by a client. This is appropriate for JDBC drivers,
+     * model root classes, etc. It is not appropriate for any class that extends
+     * one of the supplied classes or interfaces.
      *
      * @param type
      *            the type
@@ -106,8 +107,7 @@ public class ObjectFactory {
      * @throws ClassNotFoundException
      *             the class not found exception
      */
-    public static Class<?> externalClassForName(String type)
-            throws ClassNotFoundException {
+    public static Class<?> externalClassForName(String type) throws ClassNotFoundException {
 
         Class<?> clazz;
 
@@ -120,7 +120,7 @@ public class ObjectFactory {
                 ;
             }
         }
-        
+
         return internalClassForName(type);
     }
 
@@ -138,8 +138,7 @@ public class ObjectFactory {
             Class<?> clazz = externalClassForName(type);
             answer = clazz.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString(
-                    "RuntimeError.6", type), e); //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
         }
 
         return answer;
@@ -154,8 +153,7 @@ public class ObjectFactory {
      * @throws ClassNotFoundException
      *             the class not found exception
      */
-    public static Class<?> internalClassForName(String type)
-            throws ClassNotFoundException {
+    public static Class<?> internalClassForName(String type) throws ClassNotFoundException {
         Class<?> clazz = null;
 
         try {
@@ -185,10 +183,10 @@ public class ObjectFactory {
         for (ClassLoader classLoader : resourceClassLoaders) {
             url = classLoader.getResource(resource);
             if (url != null) {
-              return url;
+                return url;
             }
         }
-        
+
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         url = cl.getResource(resource);
 
@@ -214,8 +212,7 @@ public class ObjectFactory {
 
             answer = clazz.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString(
-                    "RuntimeError.6", type), e); //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
 
         }
 
@@ -231,10 +228,8 @@ public class ObjectFactory {
      *            the warnings
      * @return the java type resolver
      */
-    public static JavaTypeResolver createJavaTypeResolver(Context context,
-            List<String> warnings) {
-        JavaTypeResolverConfiguration config = context
-                .getJavaTypeResolverConfiguration();
+    public static JavaTypeResolver createJavaTypeResolver(Context context, List<String> warnings) {
+        JavaTypeResolverConfiguration config = context.getJavaTypeResolverConfiguration();
         String type;
 
         if (config != null && config.getConfigurationType() != null) {
@@ -267,10 +262,8 @@ public class ObjectFactory {
      *            the plugin configuration
      * @return the plugin
      */
-    public static Plugin createPlugin(Context context,
-            PluginConfiguration pluginConfiguration) {
-        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration
-                .getConfigurationType());
+    public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration) {
+        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration.getConfigurationType());
         plugin.setContext(context);
         plugin.setProperties(pluginConfiguration.getProperties());
         return plugin;
@@ -285,8 +278,7 @@ public class ObjectFactory {
      */
     public static CommentGenerator createCommentGenerator(Context context) {
 
-        CommentGeneratorConfiguration config = context
-                .getCommentGeneratorConfiguration();
+        CommentGeneratorConfiguration config = context.getCommentGeneratorConfiguration();
         CommentGenerator answer;
 
         String type;
@@ -324,7 +316,7 @@ public class ObjectFactory {
 
         return answer;
     }
-    
+
     /**
      * Creates a new Object object.
      *
@@ -344,7 +336,7 @@ public class ObjectFactory {
 
         return answer;
     }
-    
+
     /**
      * Creates a new Object object.
      *
@@ -356,9 +348,7 @@ public class ObjectFactory {
      *            the context
      * @return the introspected table
      */
-    public static IntrospectedTable createIntrospectedTable(
-            TableConfiguration tableConfiguration, FullyQualifiedTable table,
-            Context context) {
+    public static IntrospectedTable createIntrospectedTable(TableConfiguration tableConfiguration, FullyQualifiedTable table, Context context) {
 
         IntrospectedTable answer = createIntrospectedTableForValidation(context);
         answer.setFullyQualifiedTable(table);
@@ -368,8 +358,9 @@ public class ObjectFactory {
     }
 
     /**
-     * This method creates an introspected table implementation that is only usable for validation (i.e. for a context
-     * to determine if the target is ibatis2 or mybatis3).
+     * This method creates an introspected table implementation that is only
+     * usable for validation (i.e. for a context to determine if the target is
+     * ibatis2 or mybatis3).
      * 
      *
      * @param context
@@ -397,7 +388,7 @@ public class ObjectFactory {
 
         return answer;
     }
-    
+
     /**
      * Creates a new Object object.
      *

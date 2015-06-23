@@ -135,8 +135,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
     @Override
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-        if (introspectedTable.getRules()
-                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
+        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
@@ -144,12 +143,12 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
     @Override
     public List<CompilationUnit> getExtraCompilationUnits() {
-    	boolean useLegacyBuilder = false;
-    	
-    	String prop = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.CLIENT_USE_LEGACY_BUILDER);
-    	if (StringUtility.stringHasValue(prop)) {
-    		useLegacyBuilder = Boolean.valueOf(prop);
-    	}
+        boolean useLegacyBuilder = false;
+
+        String prop = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.CLIENT_USE_LEGACY_BUILDER);
+        if (StringUtility.stringHasValue(prop)) {
+            useLegacyBuilder = Boolean.valueOf(prop);
+        }
         SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator(useLegacyBuilder);
         sqlProviderGenerator.setContext(context);
         sqlProviderGenerator.setIntrospectedTable(introspectedTable);

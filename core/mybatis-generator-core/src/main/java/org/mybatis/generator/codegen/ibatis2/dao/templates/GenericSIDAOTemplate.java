@@ -26,8 +26,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  */
 public class GenericSIDAOTemplate extends AbstractDAOTemplate {
 
-    private FullyQualifiedJavaType sqlMapClientType = new FullyQualifiedJavaType(
-            "com.ibatis.sqlmap.client.SqlMapClient"); //$NON-NLS-1$
+    private FullyQualifiedJavaType sqlMapClientType = new FullyQualifiedJavaType("com.ibatis.sqlmap.client.SqlMapClient"); //$NON-NLS-1$
 
     /**
      *  

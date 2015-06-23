@@ -29,8 +29,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * @author Jeff Butler
  * 
  */
-public class UpdateByExampleParmsInnerclassGenerator extends
-        AbstractDAOElementGenerator {
+public class UpdateByExampleParmsInnerclassGenerator extends AbstractDAOElementGenerator {
 
     public UpdateByExampleParmsInnerclassGenerator() {
         super();
@@ -38,25 +37,20 @@ public class UpdateByExampleParmsInnerclassGenerator extends
 
     @Override
     public void addImplementationElements(TopLevelClass topLevelClass) {
-        topLevelClass.addImportedType(new FullyQualifiedJavaType(
-                introspectedTable.getExampleType()));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType(introspectedTable.getExampleType()));
 
-        InnerClass innerClass = new InnerClass(new FullyQualifiedJavaType(
-                "UpdateByExampleParms")); //$NON-NLS-1$
+        InnerClass innerClass = new InnerClass(new FullyQualifiedJavaType("UpdateByExampleParms")); //$NON-NLS-1$
         innerClass.setVisibility(JavaVisibility.PROTECTED);
         innerClass.setStatic(true);
         innerClass.setSuperClass(introspectedTable.getExampleType());
-        context.getCommentGenerator().addClassComment(innerClass,
-                introspectedTable);
+        context.getCommentGenerator().addClassComment(innerClass, introspectedTable);
 
         Method method = new Method();
         method.setConstructor(true);
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setName(innerClass.getType().getShortName());
-        method.addParameter(new Parameter(FullyQualifiedJavaType
-                .getObjectInstance(), "record")); //$NON-NLS-1$
-        method.addParameter(new Parameter(new FullyQualifiedJavaType(
-                introspectedTable.getExampleType()), "example")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "record")); //$NON-NLS-1$
+        method.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getExampleType()), "example")); //$NON-NLS-1$
         method.addBodyLine("super(example);"); //$NON-NLS-1$
         method.addBodyLine("this.record = record;"); //$NON-NLS-1$
         innerClass.addMethod(method);

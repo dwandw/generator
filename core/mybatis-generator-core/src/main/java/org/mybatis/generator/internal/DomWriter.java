@@ -44,7 +44,7 @@ import org.w3c.dom.Text;
  * @author Jeff Butler (derivation)
  */
 public class DomWriter {
-    
+
     /** The print writer. */
     protected PrintWriter printWriter;
 
@@ -67,8 +67,7 @@ public class DomWriter {
      * @throws ShellException
      *             the shell exception
      */
-    public synchronized String toString(Document document)
-            throws ShellException {
+    public synchronized String toString(Document document) throws ShellException {
         StringWriter sw = new StringWriter();
         printWriter = new PrintWriter(sw);
         write(document);
@@ -181,10 +180,7 @@ public class DomWriter {
             // Escape NEL (0x85) and LSEP (0x2028) that appear in content
             // if the document is XML 1.1, since they would be normalized to LF
             // when the document is reparsed.
-            if (isXML11
-                    && ((c >= 0x01 && c <= 0x1F && c != 0x09 && c != 0x0A)
-                            || (c >= 0x7F && c <= 0x9F) || c == 0x2028)
-                    || isAttValue && (c == 0x09 || c == 0x0A)) {
+            if (isXML11 && ((c >= 0x01 && c <= 0x1F && c != 0x09 && c != 0x0A) || (c >= 0x7F && c <= 0x9F) || c == 0x2028) || isAttValue && (c == 0x09 || c == 0x0A)) {
                 printWriter.print("&#x"); //$NON-NLS-1$
                 printWriter.print(Integer.toHexString(c).toUpperCase());
                 printWriter.print(';');
@@ -213,8 +209,7 @@ public class DomWriter {
                     new Class[] {});
             // If Document class implements DOM L3, this method will exist.
             if (getXMLVersion != null) {
-                version = (String) getXMLVersion.invoke(document,
-                        (Object[]) null);
+                version = (String) getXMLVersion.invoke(document, (Object[]) null);
             }
         } catch (Exception e) {
             // Either this locator object doesn't have
@@ -272,8 +267,7 @@ public class DomWriter {
             break;
 
         default:
-            throw new ShellException(getString(
-                    "RuntimeError.18", Short.toString(type))); //$NON-NLS-1$
+            throw new ShellException(getString("RuntimeError.18", Short.toString(type))); //$NON-NLS-1$
         }
     }
 

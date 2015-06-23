@@ -29,8 +29,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  * @author Jeff Butler
  * 
  */
-public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     public UpdateByPrimaryKeyWithBLOBsMethodGenerator() {
         super();
@@ -42,11 +41,9 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
         FullyQualifiedJavaType parameterType;
 
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getRecordWithBLOBsType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
         } else {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getBaseRecordType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         }
 
         importedTypes.add(parameterType);
@@ -55,18 +52,14 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
-        method.setName(introspectedTable
-            .getUpdateByPrimaryKeyWithBLOBsStatementId());
+        method.setName(introspectedTable.getUpdateByPrimaryKeyWithBLOBsStatementId());
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(interfaze, method);
 
-        if (context.getPlugins()
-                .clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
-                        interfaze, introspectedTable)) {
+        if (context.getPlugins().clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }

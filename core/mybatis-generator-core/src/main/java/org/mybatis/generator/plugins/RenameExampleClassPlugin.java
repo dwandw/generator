@@ -68,8 +68,7 @@ public class RenameExampleClassPlugin extends PluginAdapter {
         searchString = properties.getProperty("searchString"); //$NON-NLS-1$
         replaceString = properties.getProperty("replaceString"); //$NON-NLS-1$
 
-        boolean valid = stringHasValue(searchString)
-                && stringHasValue(replaceString);
+        boolean valid = stringHasValue(searchString) && stringHasValue(replaceString);
 
         if (valid) {
             pattern = Pattern.compile(searchString);

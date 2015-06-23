@@ -42,7 +42,7 @@ public class IntrospectedColumn {
     protected int scale;
 
     protected boolean identity;
-    
+
     protected boolean isSequenceColumn;
 
     protected String javaProperty;
@@ -133,8 +133,7 @@ public class IntrospectedColumn {
 
     public void setActualColumnName(String actualColumnName) {
         this.actualColumnName = actualColumnName;
-        isColumnNameDelimited = StringUtility
-                .stringContainsSpace(actualColumnName);
+        isColumnNameDelimited = StringUtility.stringContainsSpace(actualColumnName);
     }
 
     /**
@@ -162,15 +161,12 @@ public class IntrospectedColumn {
     }
 
     public boolean isStringColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getStringInstance());
+        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType.getStringInstance());
     }
 
     public boolean isJdbcCharacterColumn() {
-        return jdbcType == Types.CHAR || jdbcType == Types.CLOB
-                || jdbcType == Types.LONGVARCHAR || jdbcType == Types.VARCHAR
-                || jdbcType == Types.LONGNVARCHAR || jdbcType == Types.NCHAR
-                || jdbcType == Types.NCLOB || jdbcType == Types.NVARCHAR;
+        return jdbcType == Types.CHAR || jdbcType == Types.CLOB || jdbcType == Types.LONGVARCHAR || jdbcType == Types.VARCHAR || jdbcType == Types.LONGNVARCHAR
+                || jdbcType == Types.NCHAR || jdbcType == Types.NCLOB || jdbcType == Types.NVARCHAR;
     }
 
     public String getJavaProperty() {
@@ -194,15 +190,11 @@ public class IntrospectedColumn {
     }
 
     public boolean isJDBCDateColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getDateInstance())
-                && "DATE".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
+        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType.getDateInstance()) && "DATE".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
     }
 
     public boolean isJDBCTimeColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getDateInstance())
-                && "TIME".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
+        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType.getDateInstance()) && "TIME".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
     }
 
     public String getTypeHandler() {
@@ -241,8 +233,7 @@ public class IntrospectedColumn {
         return fullyQualifiedJavaType;
     }
 
-    public void setFullyQualifiedJavaType(
-            FullyQualifiedJavaType fullyQualifiedJavaType) {
+    public void setFullyQualifiedJavaType(FullyQualifiedJavaType fullyQualifiedJavaType) {
         this.fullyQualifiedJavaType = fullyQualifiedJavaType;
     }
 

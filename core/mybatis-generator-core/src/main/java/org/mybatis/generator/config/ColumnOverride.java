@@ -176,8 +176,7 @@ public class ColumnOverride extends PropertyHolder {
         }
 
         if (stringHasValue(configuredDelimitedColumnName)) {
-            xmlElement.addAttribute(new Attribute(
-                    "delimitedColumnName", configuredDelimitedColumnName)); //$NON-NLS-1$
+            xmlElement.addAttribute(new Attribute("delimitedColumnName", configuredDelimitedColumnName)); //$NON-NLS-1$
         }
 
         addPropertyXmlElements(xmlElement);

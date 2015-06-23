@@ -34,18 +34,15 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getCountByExampleStatementId())); //$NON-NLS-1$
-        answer.addAttribute(new Attribute(
-                "parameterClass", introspectedTable.getExampleType())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getCountByExampleStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("parameterClass", introspectedTable.getExampleType())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("resultClass", "java.lang.Integer")); //$NON-NLS-1$ //$NON-NLS-2$
 
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder sb = new StringBuilder();
         sb.append("select count(*) from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
         XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
@@ -58,8 +55,7 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 
         answer.addElement(includeElement);
 
-        if (context.getPlugins().sqlMapCountByExampleElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapCountByExampleElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

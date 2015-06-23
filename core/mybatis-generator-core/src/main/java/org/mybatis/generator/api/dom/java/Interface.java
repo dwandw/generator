@@ -34,10 +34,10 @@ import java.util.TreeSet;
  * @author Jeff Butler
  */
 public class Interface extends JavaElement implements CompilationUnit {
-    
+
     /** The imported types. */
     private Set<FullyQualifiedJavaType> importedTypes;
-    
+
     /** The static imports. */
     private Set<String> staticImports;
 
@@ -79,25 +79,34 @@ public class Interface extends JavaElement implements CompilationUnit {
         this(new FullyQualifiedJavaType(type));
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getImportedTypes()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#getImportedTypes()
      */
     public Set<FullyQualifiedJavaType> getImportedTypes() {
         return Collections.unmodifiableSet(importedTypes);
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org
+     * .mybatis.generator.api.dom.java.FullyQualifiedJavaType)
      */
     public void addImportedType(FullyQualifiedJavaType importedType) {
-        if (importedType.isExplicitlyImported()
-                && !importedType.getPackageName().equals(type.getPackageName())) {
+        if (importedType.isExplicitlyImported() && !importedType.getPackageName().equals(type.getPackageName())) {
             importedTypes.add(importedType);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
      */
     public String getFormattedContent() {
         StringBuilder sb = new StringBuilder();
@@ -121,11 +130,11 @@ public class Interface extends JavaElement implements CompilationUnit {
             sb.append(';');
             newLine(sb);
         }
-        
+
         if (staticImports.size() > 0) {
             newLine(sb);
         }
-        
+
         Set<String> importStrings = calculateImports(importedTypes);
         for (String importString : importStrings) {
             sb.append(importString);
@@ -228,7 +237,9 @@ public class Interface extends JavaElement implements CompilationUnit {
         return type;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getSuperClass()
      */
     public FullyQualifiedJavaType getSuperClass() {
@@ -236,64 +247,95 @@ public class Interface extends JavaElement implements CompilationUnit {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getSuperInterfaceTypes()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#getSuperInterfaceTypes
+     * ()
      */
     public Set<FullyQualifiedJavaType> getSuperInterfaceTypes() {
         return superInterfaceTypes;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaInterface()
      */
     public boolean isJavaInterface() {
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaEnumeration()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#isJavaEnumeration()
      */
     public boolean isJavaEnumeration() {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addFileCommentLine(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#addFileCommentLine
+     * (java.lang.String)
      */
     public void addFileCommentLine(String commentLine) {
         fileCommentLines.add(commentLine);
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFileCommentLines()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#getFileCommentLines()
      */
     public List<String> getFileCommentLines() {
         return fileCommentLines;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedTypes(java.util.Set)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#addImportedTypes(java
+     * .util.Set)
      */
     public void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes) {
         this.importedTypes.addAll(importedTypes);
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getStaticImports()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#getStaticImports()
      */
     public Set<String> getStaticImports() {
         return staticImports;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImport(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImport(java
+     * .lang.String)
      */
     public void addStaticImport(String staticImport) {
         staticImports.add(staticImport);
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImports(java.util.Set)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImports(java
+     * .util.Set)
      */
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);

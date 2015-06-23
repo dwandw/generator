@@ -23,7 +23,7 @@ import java.util.List;
  * @author Jeff Butler
  */
 public class InvalidConfigurationException extends Exception {
-    
+
     /** The Constant serialVersionUID. */
     static final long serialVersionUID = 4902307610148543411L;
 
@@ -50,7 +50,9 @@ public class InvalidConfigurationException extends Exception {
         return errors;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Throwable#getMessage()
      */
     @Override

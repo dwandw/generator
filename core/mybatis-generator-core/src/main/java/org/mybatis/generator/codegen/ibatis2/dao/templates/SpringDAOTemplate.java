@@ -62,8 +62,7 @@ public class SpringDAOTemplate extends AbstractDAOTemplate {
 
     @Override
     protected void configureSuperClass() {
-        setSuperClass(new FullyQualifiedJavaType(
-                "org.springframework.orm.ibatis.support.SqlMapClientDaoSupport")); //$NON-NLS-1$
+        setSuperClass(new FullyQualifiedJavaType("org.springframework.orm.ibatis.support.SqlMapClientDaoSupport")); //$NON-NLS-1$
     }
 
     @Override

@@ -29,8 +29,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByExampl
  * 
  * @author Jeff Butler
  */
-public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends
-    SelectByExampleWithoutBLOBsMethodGenerator {
+public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends SelectByExampleWithoutBLOBsMethodGenerator {
 
     public AnnotatedSelectByExampleWithoutBLOBsMethodGenerator() {
         super();
@@ -49,35 +48,34 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends
             interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Result")); //$NON-NLS-1$
             interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
         }
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("@SelectProvider(type="); //$NON-NLS-1$
         sb.append(fqjt.getShortName());
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getSelectByExampleStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
-        
+
         if (introspectedTable.isConstructorBased()) {
             method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
         } else {
             method.addAnnotation("@Results({"); //$NON-NLS-1$
         }
-        
+
         Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
         Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getBaseColumns().iterator();
         while (iterPk.hasNext()) {
             IntrospectedColumn introspectedColumn = iterPk.next();
             sb.setLength(0);
             javaIndent(sb, 1);
-            sb.append(getResultAnnotation(interfaze, introspectedColumn, true,
-                    introspectedTable.isConstructorBased()));
-            
+            sb.append(getResultAnnotation(interfaze, introspectedColumn, true, introspectedTable.isConstructorBased()));
+
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
 
@@ -85,16 +83,15 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends
             IntrospectedColumn introspectedColumn = iterNonPk.next();
             sb.setLength(0);
             javaIndent(sb, 1);
-            sb.append(getResultAnnotation(interfaze, introspectedColumn, false,
-                    introspectedTable.isConstructorBased()));
-            
+            sb.append(getResultAnnotation(interfaze, introspectedColumn, false, introspectedTable.isConstructorBased()));
+
             if (iterNonPk.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 }

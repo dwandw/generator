@@ -26,8 +26,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.Anno
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.MixedMapperGenerator;
 
 /**
- * This class overrides the base mapper to provide annotated methods
- * for the methods that don't require SQL provider support
+ * This class overrides the base mapper to provide annotated methods for the
+ * methods that don't require SQL provider support
  * 
  * @author Jeff Butler
  *
@@ -72,8 +72,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
 
     @Override
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-        if (introspectedTable.getRules()
-                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
+        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }

@@ -32,11 +32,10 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimar
  * 
  * @author Jeff Butler
  */
-public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
-    UpdateByPrimaryKeyWithoutBLOBsMethodGenerator {
+public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends UpdateByPrimaryKeyWithoutBLOBsMethodGenerator {
 
     private boolean isSimple;
-    
+
     public AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(boolean isSimple) {
         super();
         this.isSimple = isSimple;
@@ -45,7 +44,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
     @Override
     public void addMapperAnnotations(Interface interfaze, Method method) {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
-        
+
         method.addAnnotation("@Update({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
@@ -110,7 +109,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
             }
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 }

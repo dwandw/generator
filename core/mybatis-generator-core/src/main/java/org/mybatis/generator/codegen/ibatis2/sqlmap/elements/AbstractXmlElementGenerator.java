@@ -46,21 +46,16 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
      *            the generated key for the current table
      * @return the selectKey element
      */
-    protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn,
-            GeneratedKey generatedKey) {
-        String identityColumnType = introspectedColumn
-                .getFullyQualifiedJavaType().getFullyQualifiedName();
+    protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn, GeneratedKey generatedKey) {
+        String identityColumnType = introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName();
 
         XmlElement answer = new XmlElement("selectKey"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("resultClass", identityColumnType)); //$NON-NLS-1$
-        answer.addAttribute(new Attribute(
-                "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
         if (stringHasValue(generatedKey.getType())) {
             answer.addAttribute(new Attribute("type", generatedKey.getType())); //$NON-NLS-1$  
         }
-        answer
-                .addElement(new TextElement(generatedKey
-                        .getRuntimeSqlStatement()));
+        answer.addElement(new TextElement(generatedKey.getRuntimeSqlStatement()));
 
         return answer;
     }
@@ -68,16 +63,14 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     protected XmlElement getBaseColumnListElement() {
         XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getIbatis2SqlMapNamespace()
-                        + "." + introspectedTable.getBaseColumnListId())); //$NON-NLS-1$
+                introspectedTable.getIbatis2SqlMapNamespace() + "." + introspectedTable.getBaseColumnListId())); //$NON-NLS-1$
         return answer;
     }
 
     protected XmlElement getBlobColumnListElement() {
         XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getIbatis2SqlMapNamespace()
-                        + "." + introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
+                introspectedTable.getIbatis2SqlMapNamespace() + "." + introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
         return answer;
     }
 }

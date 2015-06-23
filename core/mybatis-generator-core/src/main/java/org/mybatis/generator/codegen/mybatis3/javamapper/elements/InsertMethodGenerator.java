@@ -49,23 +49,19 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
         FullyQualifiedJavaType parameterType;
         if (isSimple) {
-            parameterType = new FullyQualifiedJavaType(
-                    introspectedTable.getBaseRecordType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         } else {
-            parameterType = introspectedTable.getRules()
-                    .calculateAllFieldsClass();
+            parameterType = introspectedTable.getRules().calculateAllFieldsClass();
         }
 
         importedTypes.add(parameterType);
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(interfaze, method);
 
-        if (context.getPlugins().clientInsertMethodGenerated(method, interfaze,
-                introspectedTable)) {
+        if (context.getPlugins().clientInsertMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }

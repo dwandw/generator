@@ -31,7 +31,7 @@ import org.mybatis.generator.internal.db.DatabaseDialects;
  * @author Jeff Butler
  */
 public class GeneratedKey {
-    
+
     /** The column. */
     private String column;
 
@@ -59,16 +59,14 @@ public class GeneratedKey {
      * @param type
      *            the type
      */
-    public GeneratedKey(String column, String configuredSqlStatement,
-            boolean isIdentity, String type) {
+    public GeneratedKey(String column, String configuredSqlStatement, boolean isIdentity, String type) {
         super();
         this.column = column;
         this.type = type;
         this.isIdentity = isIdentity;
         this.configuredSqlStatement = configuredSqlStatement;
 
-        DatabaseDialects dialect = DatabaseDialects
-                .getDatabaseDialect(configuredSqlStatement);
+        DatabaseDialects dialect = DatabaseDialects.getDatabaseDialect(configuredSqlStatement);
         if (dialect == null) {
             this.runtimeSqlStatement = configuredSqlStatement;
         } else {
@@ -113,23 +111,24 @@ public class GeneratedKey {
     }
 
     /**
-     * This method is used by the iBATIS2 generators to know if the XML &lt;selectKey&gt; element should be placed before the
-     * insert SQL statement.
+     * This method is used by the iBATIS2 generators to know if the XML
+     * &lt;selectKey&gt; element should be placed before the insert SQL
+     * statement.
      *
      * @return true, if is placed before insert in ibatis2
      */
     public boolean isPlacedBeforeInsertInIbatis2() {
         boolean rc;
-        
+
         if (stringHasValue(type)) {
             rc = true;
         } else {
             rc = !isIdentity;
         }
-        
+
         return rc;
     }
-    
+
     /**
      * Gets the my batis3 order.
      *
@@ -138,7 +137,7 @@ public class GeneratedKey {
     public String getMyBatis3Order() {
         return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
+
     /**
      * To xml element.
      *
@@ -147,8 +146,7 @@ public class GeneratedKey {
     public XmlElement toXmlElement() {
         XmlElement xmlElement = new XmlElement("generatedKey"); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute("column", column)); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute(
-                "sqlStatement", configuredSqlStatement)); //$NON-NLS-1$
+        xmlElement.addAttribute(new Attribute("sqlStatement", configuredSqlStatement)); //$NON-NLS-1$
         if (stringHasValue(type)) {
             xmlElement.addAttribute(new Attribute("type", type)); //$NON-NLS-1$
         }
@@ -178,18 +176,18 @@ public class GeneratedKey {
                         tableName));
             }
         }
-        
+
         if ("pre".equals(type) && isIdentity) { //$NON-NLS-1$
             errors.add(getString("ValidationError.23", //$NON-NLS-1$
                     tableName));
         }
-        
+
         if ("post".equals(type) && !isIdentity) { //$NON-NLS-1$
             errors.add(getString("ValidationError.24", //$NON-NLS-1$
                     tableName));
         }
     }
-    
+
     /**
      * Checks if is jdbc standard.
      *

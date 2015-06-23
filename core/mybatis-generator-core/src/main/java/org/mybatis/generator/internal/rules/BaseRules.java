@@ -33,10 +33,10 @@ public abstract class BaseRules implements Rules {
 
     /** The table configuration. */
     protected TableConfiguration tableConfiguration;
-    
+
     /** The introspected table. */
     protected IntrospectedTable introspectedTable;
-    
+
     /** The is model only. */
     protected final boolean isModelOnly;
 
@@ -65,7 +65,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isInsertStatementEnabled();
     }
 
@@ -80,7 +80,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isInsertStatementEnabled();
     }
 
@@ -119,10 +119,8 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && introspectedTable.hasBaseColumns();
+
+        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns() && introspectedTable.hasBaseColumns();
 
         return rc;
     }
@@ -139,10 +137,8 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && introspectedTable.hasBLOBColumns();
+
+        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns() && introspectedTable.hasBLOBColumns();
 
         return rc;
     }
@@ -159,11 +155,9 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && (introspectedTable.hasBLOBColumns() || introspectedTable
-                        .hasBaseColumns());
+
+        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns()
+                && (introspectedTable.hasBLOBColumns() || introspectedTable.hasBaseColumns());
 
         return rc;
     }
@@ -180,9 +174,8 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns();
+
+        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns();
 
         return rc;
     }
@@ -198,7 +191,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isDeleteByExampleStatementEnabled();
 
         return rc;
@@ -214,9 +207,8 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return true;
         }
-        
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+
+        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
 
         return rc;
     }
@@ -230,18 +222,17 @@ public abstract class BaseRules implements Rules {
      */
     public boolean generateResultMapWithBLOBs() {
         boolean rc;
-        
+
         if (introspectedTable.hasBLOBColumns()) {
             if (isModelOnly) {
                 rc = true;
             } else {
-                rc = tableConfiguration.isSelectByExampleStatementEnabled() 
-                        || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+                rc = tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
             }
         } else {
             rc = false;
         }
-        
+
         return rc;
     }
 
@@ -260,9 +251,8 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                || tableConfiguration.isDeleteByExampleStatementEnabled()
+
+        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isDeleteByExampleStatementEnabled()
                 || tableConfiguration.isCountByExampleStatementEnabled();
 
         if (introspectedTable.getTargetRuntime() == TargetRuntime.IBATIS2) {
@@ -287,9 +277,8 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3
-                && tableConfiguration.isUpdateByExampleStatementEnabled();
+
+        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3 && tableConfiguration.isUpdateByExampleStatementEnabled();
     }
 
     /**
@@ -304,11 +293,9 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && (introspectedTable.hasBaseColumns() || introspectedTable
-                        .hasBLOBColumns());
+
+        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled() && introspectedTable.hasPrimaryKeyColumns()
+                && (introspectedTable.hasBaseColumns() || introspectedTable.hasBLOBColumns());
 
         return rc;
     }
@@ -324,7 +311,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isSelectByExampleStatementEnabled();
     }
 
@@ -340,9 +327,8 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                && introspectedTable.hasBLOBColumns();
+
+        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled() && introspectedTable.hasBLOBColumns();
 
         return rc;
     }
@@ -355,112 +341,125 @@ public abstract class BaseRules implements Rules {
      * @return true if the example class should be generated
      */
     public boolean generateExampleClass() {
-        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null
-                && introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
+        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null && introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
             // this is a model only context - don't generate the example class
             return false;
         }
-        
+
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                || tableConfiguration.isDeleteByExampleStatementEnabled()
-                || tableConfiguration.isCountByExampleStatementEnabled()
-                || tableConfiguration.isUpdateByExampleStatementEnabled();
+
+        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isDeleteByExampleStatementEnabled()
+                || tableConfiguration.isCountByExampleStatementEnabled() || tableConfiguration.isUpdateByExampleStatementEnabled();
 
         return rc;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.internal.rules.Rules#generateCountByExample()
      */
     public boolean generateCountByExample() {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isCountByExampleStatementEnabled();
 
         return rc;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleSelective()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleSelective
+     * ()
      */
     public boolean generateUpdateByExampleSelective() {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled();
 
         return rc;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithoutBLOBs()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.mybatis.generator.internal.rules.Rules#
+     * generateUpdateByExampleWithoutBLOBs()
      */
     public boolean generateUpdateByExampleWithoutBLOBs() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
-                && (introspectedTable.hasPrimaryKeyColumns() || introspectedTable
-                        .hasBaseColumns());
+
+        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled() && (introspectedTable.hasPrimaryKeyColumns() || introspectedTable.hasBaseColumns());
 
         return rc;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithBLOBs()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithBLOBs
+     * ()
      */
     public boolean generateUpdateByExampleWithBLOBs() {
         if (isModelOnly) {
             return false;
         }
-        
-        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
-                && introspectedTable.hasBLOBColumns();
+
+        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled() && introspectedTable.hasBLOBColumns();
 
         return rc;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.internal.rules.Rules#getIntrospectedTable()
      */
     public IntrospectedTable getIntrospectedTable() {
         return introspectedTable;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.internal.rules.Rules#generateBaseColumnList()
      */
     public boolean generateBaseColumnList() {
         if (isModelOnly) {
             return false;
         }
-        
-        return generateSelectByPrimaryKey()
-                || generateSelectByExampleWithoutBLOBs();
+
+        return generateSelectByPrimaryKey() || generateSelectByExampleWithoutBLOBs();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.internal.rules.Rules#generateBlobColumnList()
      */
     public boolean generateBlobColumnList() {
         if (isModelOnly) {
             return false;
         }
-        
+
         return introspectedTable.hasBLOBColumns()
-                && (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration
-                        .isSelectByPrimaryKeyStatementEnabled());
+                && (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration.isSelectByPrimaryKeyStatementEnabled());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.internal.rules.Rules#generateJavaClient()
      */
     public boolean generateJavaClient() {

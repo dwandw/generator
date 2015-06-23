@@ -41,8 +41,7 @@ public class PrimitiveTypeWrapper extends FullyQualifiedJavaType {
      * @param toPrimitiveMethod
      *            the method that returns the wrapped primitive
      */
-    private PrimitiveTypeWrapper(String fullyQualifiedName,
-            String toPrimitiveMethod) {
+    private PrimitiveTypeWrapper(String fullyQualifiedName, String toPrimitiveMethod) {
         super(fullyQualifiedName);
         this.toPrimitiveMethod = toPrimitiveMethod;
     }

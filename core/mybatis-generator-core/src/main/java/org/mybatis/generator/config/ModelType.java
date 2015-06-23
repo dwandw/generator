@@ -49,8 +49,7 @@ public enum ModelType {
         } else if (CONDITIONAL.getModelType().equalsIgnoreCase(type)) {
             return CONDITIONAL;
         } else {
-            throw new RuntimeException(getString(
-                    "RuntimeError.13", type)); //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.13", type)); //$NON-NLS-1$
         }
     }
 }

@@ -29,7 +29,7 @@ import org.mybatis.generator.exception.ShellException;
  * @author Jeff Butler
  */
 public class DefaultShellCallback implements ShellCallback {
-    
+
     /** The overwrite. */
     private boolean overwrite;
 
@@ -44,11 +44,14 @@ public class DefaultShellCallback implements ShellCallback {
         this.overwrite = overwrite;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#getDirectory(java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.ShellCallback#getDirectory(java.lang.String,
+     * java.lang.String)
      */
-    public File getDirectory(String targetProject, String targetPackage)
-            throws ShellException {
+    public File getDirectory(String targetProject, String targetPackage) throws ShellException {
         // targetProject is interpreted as a directory that must exist
         //
         // targetPackage is interpreted as a sub directory, but in package
@@ -81,33 +84,42 @@ public class DefaultShellCallback implements ShellCallback {
         return directory;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#refreshProject(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.ShellCallback#refreshProject(java.lang.String)
      */
     public void refreshProject(String project) {
         // nothing to do in the default shell callback
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.ShellCallback#isMergeSupported()
      */
     public boolean isMergeSupported() {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.ShellCallback#isOverwriteEnabled()
      */
     public boolean isOverwriteEnabled() {
         return overwrite;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#mergeJavaFile(java.lang.String, java.lang.String, java.lang.String[], java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.mybatis.generator.api.ShellCallback#mergeJavaFile(java.lang.String,
+     * java.lang.String, java.lang.String[], java.lang.String)
      */
-    public String mergeJavaFile(String newFileSource,
-            String existingFileFullPath, String[] javadocTags, String fileEncoding)
-            throws ShellException {
+    public String mergeJavaFile(String newFileSource, String existingFileFullPath, String[] javadocTags, String fileEncoding) throws ShellException {
         throw new UnsupportedOperationException();
     }
 }

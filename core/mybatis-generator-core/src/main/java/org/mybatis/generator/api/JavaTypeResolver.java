@@ -51,9 +51,10 @@ public interface JavaTypeResolver {
     void setContext(Context context);
 
     /**
-     * The generator will supply a list to this method. The implementation class may add strings to the list that will
-     * be treated as warning messages and displayed to the user. The concept of a warning is that code generation can
-     * continue, but that the results may not be what is expected.
+     * The generator will supply a list to this method. The implementation class
+     * may add strings to the list that will be treated as warning messages and
+     * displayed to the user. The concept of a warning is that code generation
+     * can continue, but that the results may not be what is expected.
      *
      * @param warnings
      *            the new warnings
@@ -67,11 +68,10 @@ public interface JavaTypeResolver {
      * @param introspectedColumn
      *            the column whose Java type needs to be calculated
      * @return the calculated type, or null if an unsupported data type. If null
-     *         is returned, we will set the type to Object and issue a
-     *         warning unless the column is ignored or otherwise overridden
+     *         is returned, we will set the type to Object and issue a warning
+     *         unless the column is ignored or otherwise overridden
      */
-    FullyQualifiedJavaType calculateJavaType(
-            IntrospectedColumn introspectedColumn);
+    FullyQualifiedJavaType calculateJavaType(IntrospectedColumn introspectedColumn);
 
     /**
      * Calculates and returns the JDBC type name that should be associated with

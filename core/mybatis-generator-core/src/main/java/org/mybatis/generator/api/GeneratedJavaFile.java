@@ -23,13 +23,13 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
  * @author Jeff Butler
  */
 public class GeneratedJavaFile extends GeneratedFile {
-    
+
     /** The compilation unit. */
     private CompilationUnit compilationUnit;
-    
+
     /** The file encoding. */
     private String fileEncoding;
-    
+
     /** The java formatter. */
     private JavaFormatter javaFormatter;
 
@@ -45,10 +45,7 @@ public class GeneratedJavaFile extends GeneratedFile {
      * @param javaFormatter
      *            the java formatter
      */
-    public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject,
-            String fileEncoding,
-            JavaFormatter javaFormatter) {
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject, String fileEncoding, JavaFormatter javaFormatter) {
         super(targetProject);
         this.compilationUnit = compilationUnit;
         this.fileEncoding = fileEncoding;
@@ -65,13 +62,13 @@ public class GeneratedJavaFile extends GeneratedFile {
      * @param javaFormatter
      *            the java formatter
      */
-    public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject,
-            JavaFormatter javaFormatter) {
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject, JavaFormatter javaFormatter) {
         this(compilationUnit, targetProject, null, javaFormatter);
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.GeneratedFile#getFormattedContent()
      */
     @Override
@@ -79,7 +76,9 @@ public class GeneratedJavaFile extends GeneratedFile {
         return javaFormatter.getFormattedContent(compilationUnit);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.GeneratedFile#getFileName()
      */
     @Override
@@ -87,7 +86,9 @@ public class GeneratedJavaFile extends GeneratedFile {
         return compilationUnit.getType().getShortName() + ".java"; //$NON-NLS-1$
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.mybatis.generator.api.GeneratedFile#getTargetPackage()
      */
     public String getTargetPackage() {
@@ -107,7 +108,8 @@ public class GeneratedJavaFile extends GeneratedFile {
     }
 
     /**
-     * A Java file is mergeable if the getCompilationUnit() method returns a valid compilation unit.
+     * A Java file is mergeable if the getCompilationUnit() method returns a
+     * valid compilation unit.
      *
      * @return true, if is mergeable
      */

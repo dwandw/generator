@@ -16,11 +16,8 @@ package org.mybatis.generator.internal.util;
  *     if (!(that instanceof Car))
  *         return false;
  *     Car thatCar = (Car) that;
- *     return EqualsUtil.areEqual(this.fName, that.fName)
- *             &amp;&amp; EqualsUtil.areEqual(this.fNumDoors, that.fNumDoors)
- *             &amp;&amp; EqualsUtil.areEqual(this.fGasMileage, that.fGasMileage)
- *             &amp;&amp; EqualsUtil.areEqual(this.fColor, that.fColor)
- *             &amp;&amp; Arrays.equals(this.fMaintenanceChecks, that.fMaintenanceChecks); //array!
+ *     return EqualsUtil.areEqual(this.fName, that.fName) &amp;&amp; EqualsUtil.areEqual(this.fNumDoors, that.fNumDoors) &amp;&amp; EqualsUtil.areEqual(this.fGasMileage, that.fGasMileage)
+ *             &amp;&amp; EqualsUtil.areEqual(this.fColor, that.fColor) &amp;&amp; Arrays.equals(this.fMaintenanceChecks, that.fMaintenanceChecks); // array!
  * }
  * </pre>
  * 
@@ -101,7 +98,8 @@ public final class EqualsUtil {
     /**
      * Possibly-null object field.
      * 
-     * Includes type-safe enumerations and collections, but does not include arrays. See class comment.
+     * Includes type-safe enumerations and collections, but does not include
+     * arrays. See class comment.
      *
      * @param aThis
      *            the a this

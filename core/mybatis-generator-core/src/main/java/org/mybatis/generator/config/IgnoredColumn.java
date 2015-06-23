@@ -82,7 +82,9 @@ public class IgnoredColumn {
         configuredDelimitedColumnName = isColumnNameDelimited ? "true" : "false"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object obj) {
@@ -93,7 +95,9 @@ public class IgnoredColumn {
         return columnName.equals(((IgnoredColumn) obj).getColumnName());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     public int hashCode() {
@@ -110,8 +114,7 @@ public class IgnoredColumn {
         xmlElement.addAttribute(new Attribute("column", columnName)); //$NON-NLS-1$
 
         if (stringHasValue(configuredDelimitedColumnName)) {
-            xmlElement.addAttribute(new Attribute(
-                    "delimitedColumnName", configuredDelimitedColumnName)); //$NON-NLS-1$
+            xmlElement.addAttribute(new Attribute("delimitedColumnName", configuredDelimitedColumnName)); //$NON-NLS-1$
         }
 
         return xmlElement;

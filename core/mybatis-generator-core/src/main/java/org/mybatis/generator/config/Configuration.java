@@ -36,7 +36,7 @@ public class Configuration {
 
     /** The contexts. */
     private List<Context> contexts;
-    
+
     /** The class path entries. */
     private List<String> classPathEntries;
 
@@ -69,9 +69,11 @@ public class Configuration {
     }
 
     /**
-     * This method does a simple validate, it makes sure that all required fields have been filled in and that all
-     * implementation classes exist and are of the proper type. It does not do any more complex operations such as:
-     * validating that database tables exist or validating that named columns exist
+     * This method does a simple validate, it makes sure that all required
+     * fields have been filled in and that all implementation classes exist and
+     * are of the proper type. It does not do any more complex operations such
+     * as: validating that database tables exist or validating that named
+     * columns exist
      *
      * @throws InvalidConfigurationException
      *             the invalid configuration exception
@@ -146,9 +148,7 @@ public class Configuration {
         // note that this method will not reconstruct a properties
         // element - that element is only used in XML parsing
 
-        Document document = new Document(
-                XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID,
-                XmlConstants.MYBATIS_GENERATOR_CONFIG_SYSTEM_ID);
+        Document document = new Document(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID, XmlConstants.MYBATIS_GENERATOR_CONFIG_SYSTEM_ID);
         XmlElement rootElement = new XmlElement("generatorConfiguration"); //$NON-NLS-1$
         document.setRootElement(rootElement);
 

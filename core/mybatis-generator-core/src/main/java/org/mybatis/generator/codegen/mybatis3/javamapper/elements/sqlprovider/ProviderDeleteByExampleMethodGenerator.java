@@ -31,8 +31,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * @author Jeff Butler
  * 
  */
-public class ProviderDeleteByExampleMethodGenerator extends
-        AbstractJavaProviderMethodGenerator {
+public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
     public ProviderDeleteByExampleMethodGenerator(boolean useLegacyBuilder) {
         super(useLegacyBuilder);
@@ -44,41 +43,38 @@ public class ProviderDeleteByExampleMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
 
         if (useLegacyBuilder) {
-        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
-        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.DELETE_FROM"); //$NON-NLS-1$
-        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
+            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
+            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.DELETE_FROM"); //$NON-NLS-1$
+            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
         } else {
-        	importedTypes.add(NEW_BUILDER_IMPORT);
+            importedTypes.add(NEW_BUILDER_IMPORT);
         }
-        
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(fqjt);
 
-        Method method = new Method(
-                introspectedTable.getDeleteByExampleStatementId());
+        Method method = new Method(introspectedTable.getDeleteByExampleStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
-        
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         if (useLegacyBuilder) {
-        	method.addBodyLine("BEGIN();"); //$NON-NLS-1$
-        	method.addBodyLine(String.format("DELETE_FROM(\"%s\");", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
-        	method.addBodyLine("applyWhere(example, false);"); //$NON-NLS-1$
-        	method.addBodyLine("return SQL();"); //$NON-NLS-1$
+            method.addBodyLine("BEGIN();"); //$NON-NLS-1$
+            method.addBodyLine(String.format("DELETE_FROM(\"%s\");", //$NON-NLS-1$
+                    escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+            method.addBodyLine("applyWhere(example, false);"); //$NON-NLS-1$
+            method.addBodyLine("return SQL();"); //$NON-NLS-1$
         } else {
-        	method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
-        	method.addBodyLine(String.format("sql.DELETE_FROM(\"%s\");", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
-        	method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
-        	method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
+            method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
+            method.addBodyLine(String.format("sql.DELETE_FROM(\"%s\");", //$NON-NLS-1$
+                    escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+            method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
+            method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
         }
-        
-        if (context.getPlugins().providerDeleteByExampleMethodGenerated(method, topLevelClass,
-                introspectedTable)) {
+
+        if (context.getPlugins().providerDeleteByExampleMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);

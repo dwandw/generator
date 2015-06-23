@@ -43,24 +43,20 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
 
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
-                .getNewListInstance();
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
         FullyQualifiedJavaType listType;
-        listType = new FullyQualifiedJavaType(
-                introspectedTable.getBaseRecordType());
+        listType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
 
         importedTypes.add(listType);
         returnType.addTypeArgument(listType);
         method.setReturnType(returnType);
         method.setName(introspectedTable.getSelectAllStatementId());
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(interfaze, method);
 
-        if (context.getPlugins().clientSelectAllMethodGenerated(method,
-                interfaze, introspectedTable)) {
+        if (context.getPlugins().clientSelectAllMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }

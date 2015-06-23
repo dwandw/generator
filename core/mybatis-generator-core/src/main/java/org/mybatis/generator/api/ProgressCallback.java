@@ -21,8 +21,8 @@ package org.mybatis.generator.api;
  * 
  * During the execution of code generation, there are three main operations:
  * database introspection, code generation based on the results of
- * introspection, and then merging/saving generated files. Methods
- * in this interface accordingly and in this order:
+ * introspection, and then merging/saving generated files. Methods in this
+ * interface accordingly and in this order:
  * <ol>
  * <li>introspectionStarted(int)</li>
  * <li>(Repeatedly) startTask(String)</li>
@@ -33,8 +33,8 @@ package org.mybatis.generator.api;
  * <li>done()</li>
  * </ol>
  * <p>
- * Periodically, the <code>checkCancel()</code> method will be called to see if the
- * method should be canceled.
+ * Periodically, the <code>checkCancel()</code> method will be called to see if
+ * the method should be canceled.
  * <p>
  * For planning purposes, the most common use case will have a ratio of 20%
  * introspection tasks, 40% generation tasks, and 40% save tasks.
@@ -88,9 +88,9 @@ public interface ProgressCallback {
     void done();
 
     /**
-     * The method is called periodically during a long running method.
-     * If the the implementation throws <code>InterruptedException</code> then
-     * the method will be canceled. Any files that have already been saved will
+     * The method is called periodically during a long running method. If the
+     * the implementation throws <code>InterruptedException</code> then the
+     * method will be canceled. Any files that have already been saved will
      * remain on the file system.
      * 
      * @throws InterruptedException

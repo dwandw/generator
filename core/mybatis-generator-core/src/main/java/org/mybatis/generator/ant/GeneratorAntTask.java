@@ -108,14 +108,12 @@ public class GeneratorAntTask extends Task {
 
         File configurationFile = new File(configfile);
         if (!configurationFile.exists()) {
-            throw new BuildException(getString(
-                    "RuntimeError.1", configfile)); //$NON-NLS-1$
+            throw new BuildException(getString("RuntimeError.1", configfile)); //$NON-NLS-1$
         }
 
         Set<String> fullyqualifiedTables = new HashSet<String>();
         if (stringHasValue(fullyQualifiedTableNames)) {
-            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
-                    ","); //$NON-NLS-1$
+            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
                 if (s.length() > 0) {
@@ -136,8 +134,7 @@ public class GeneratorAntTask extends Task {
         }
 
         try {
-            Properties p = propertyset == null ? null : propertyset
-                    .getProperties();
+            Properties p = propertyset == null ? null : propertyset.getProperties();
 
             ConfigurationParser cp = new ConfigurationParser(p, warnings);
             Configuration config = cp.parseConfiguration(configurationFile);
@@ -146,8 +143,7 @@ public class GeneratorAntTask extends Task {
 
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
 
-            myBatisGenerator.generate(new AntProgressCallback(this, verbose), contexts,
-                    fullyqualifiedTables);
+            myBatisGenerator.generate(new AntProgressCallback(this, verbose), contexts, fullyqualifiedTables);
 
         } catch (XMLParserException e) {
             for (String error : e.getErrors()) {

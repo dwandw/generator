@@ -29,7 +29,7 @@ import org.xml.sax.SAXParseException;
  * @author Jeff Butler
  */
 public class ParserErrorHandler implements ErrorHandler {
-    
+
     /** The warnings. */
     private List<String> warnings;
 
@@ -57,8 +57,7 @@ public class ParserErrorHandler implements ErrorHandler {
      */
     public void warning(SAXParseException exception) throws SAXException {
         warnings.add(getString("Warning.7", //$NON-NLS-1$
-                Integer.toString(exception.getLineNumber()), exception
-                        .getMessage()));
+                Integer.toString(exception.getLineNumber()), exception.getMessage()));
     }
 
     /*
@@ -68,8 +67,7 @@ public class ParserErrorHandler implements ErrorHandler {
      */
     public void error(SAXParseException exception) throws SAXException {
         errors.add(getString("RuntimeError.4", //$NON-NLS-1$
-                Integer.toString(exception.getLineNumber()), exception
-                        .getMessage()));
+                Integer.toString(exception.getLineNumber()), exception.getMessage()));
     }
 
     /*
@@ -79,7 +77,6 @@ public class ParserErrorHandler implements ErrorHandler {
      */
     public void fatalError(SAXParseException exception) throws SAXException {
         errors.add(getString("RuntimeError.4", //$NON-NLS-1$
-                Integer.toString(exception.getLineNumber()), exception
-                        .getMessage()));
+                Integer.toString(exception.getLineNumber()), exception.getMessage()));
     }
 }

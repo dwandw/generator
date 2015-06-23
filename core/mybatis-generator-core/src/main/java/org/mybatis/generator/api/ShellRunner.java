@@ -92,8 +92,7 @@ public class ShellRunner {
 
         Set<String> contexts = new HashSet<String>();
         if (arguments.containsKey(CONTEXT_IDS)) {
-            StringTokenizer st = new StringTokenizer(
-                    arguments.get(CONTEXT_IDS), ","); //$NON-NLS-1$
+            StringTokenizer st = new StringTokenizer(arguments.get(CONTEXT_IDS), ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
                 if (s.length() > 0) {
@@ -106,13 +105,11 @@ public class ShellRunner {
             ConfigurationParser cp = new ConfigurationParser(warnings);
             Configuration config = cp.parseConfiguration(configurationFile);
 
-            DefaultShellCallback shellCallback = new DefaultShellCallback(
-                    arguments.containsKey(OVERWRITE));
+            DefaultShellCallback shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
 
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
 
-            ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback()
-                    : null;
+            ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback() : null;
 
             myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
 
@@ -179,8 +176,7 @@ public class ShellRunner {
                 if ((i + 1) < args.length) {
                     arguments.put(CONFIG_FILE, args[i + 1]);
                 } else {
-                    errors.add(getString(
-                            "RuntimeError.19", CONFIG_FILE)); //$NON-NLS-1$
+                    errors.add(getString("RuntimeError.19", CONFIG_FILE)); //$NON-NLS-1$
                 }
                 i++;
             } else if (OVERWRITE.equalsIgnoreCase(args[i])) {
@@ -199,8 +195,7 @@ public class ShellRunner {
                 if ((i + 1) < args.length) {
                     arguments.put(CONTEXT_IDS, args[i + 1]);
                 } else {
-                    errors.add(getString(
-                            "RuntimeError.19", CONTEXT_IDS)); //$NON-NLS-1$
+                    errors.add(getString("RuntimeError.19", CONTEXT_IDS)); //$NON-NLS-1$
                 }
                 i++;
             } else if (TABLES.equalsIgnoreCase(args[i])) {

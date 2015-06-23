@@ -30,31 +30,25 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * @author Jeff Butler
  * 
  */
-public class UpdateByExampleSelectiveMethodGenerator extends
-        AbstractDAOElementGenerator {
+public class UpdateByExampleSelectiveMethodGenerator extends AbstractDAOElementGenerator {
 
     @Override
     public void addImplementationElements(TopLevelClass topLevelClass) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = getMethodShell(importedTypes);
 
-        method
-                .addBodyLine("UpdateByExampleParms parms = new UpdateByExampleParms(record, example);"); //$NON-NLS-1$
+        method.addBodyLine("UpdateByExampleParms parms = new UpdateByExampleParms(record, example);"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
 
         sb.append("int rows = "); //$NON-NLS-1$
 
-        sb.append(daoTemplate.getUpdateMethod(introspectedTable
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getUpdateByExampleSelectiveStatementId(), "parms")); //$NON-NLS-1$
+        sb.append(daoTemplate.getUpdateMethod(introspectedTable.getIbatis2SqlMapNamespace(), introspectedTable.getUpdateByExampleSelectiveStatementId(), "parms")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
 
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 
-        if (context.getPlugins()
-                .clientUpdateByExampleSelectiveMethodGenerated(method,
-                        topLevelClass, introspectedTable)) {
+        if (context.getPlugins().clientUpdateByExampleSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }
@@ -66,9 +60,7 @@ public class UpdateByExampleSelectiveMethodGenerator extends
             Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
             Method method = getMethodShell(importedTypes);
 
-            if (context.getPlugins()
-                    .clientUpdateByExampleSelectiveMethodGenerated(method,
-                            interfaze, introspectedTable)) {
+            if (context.getPlugins().clientUpdateByExampleSelectiveMethodGenerated(method, interfaze, introspectedTable)) {
                 interfaze.addImportedTypes(importedTypes);
                 interfaze.addMethod(method);
             }
@@ -79,14 +71,11 @@ public class UpdateByExampleSelectiveMethodGenerator extends
         FullyQualifiedJavaType parameterType;
 
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getRecordWithBLOBsType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
         } else if (introspectedTable.getRules().generateBaseRecordClass()) {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getBaseRecordType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         } else {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getPrimaryKeyType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
         }
 
         importedTypes.add(parameterType);
@@ -94,19 +83,16 @@ public class UpdateByExampleSelectiveMethodGenerator extends
         Method method = new Method();
         method.setVisibility(getExampleMethodVisibility());
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(getDAOMethodNameCalculator()
-                .getUpdateByExampleSelectiveMethodName(introspectedTable));
+        method.setName(getDAOMethodNameCalculator().getUpdateByExampleSelectiveMethodName(introspectedTable));
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
-        method.addParameter(new Parameter(new FullyQualifiedJavaType(
-                introspectedTable.getExampleType()), "example")); //$NON-NLS-1$
+        method.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getExampleType()), "example")); //$NON-NLS-1$
 
         for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {
             method.addException(fqjt);
             importedTypes.add(fqjt);
         }
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         return method;
     }

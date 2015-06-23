@@ -33,9 +33,8 @@ import org.mybatis.generator.internal.util.StringUtility;
  * 
  * @author Jeff Butler
  */
-public class AnnotatedSelectAllMethodGenerator extends
-    SelectAllMethodGenerator {
-    
+public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator {
+
     public AnnotatedSelectAllMethodGenerator() {
         super();
     }
@@ -49,9 +48,8 @@ public class AnnotatedSelectAllMethodGenerator extends
         javaIndent(sb, 1);
         sb.append("\"select\","); //$NON-NLS-1$
         method.addAnnotation(sb.toString());
-        
-        Iterator<IntrospectedColumn> iter = introspectedTable
-            .getAllColumns().iterator();
+
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append('"');
@@ -67,7 +65,7 @@ public class AnnotatedSelectAllMethodGenerator extends
             if (sb.length() > 80) {
                 sb.append("\","); //$NON-NLS-1$
                 method.addAnnotation(sb.toString());
-                
+
                 sb.setLength(0);
                 javaIndent(sb, 1);
                 sb.append('"');
@@ -79,21 +77,20 @@ public class AnnotatedSelectAllMethodGenerator extends
             sb.append("\","); //$NON-NLS-1$
             method.addAnnotation(sb.toString());
         }
-        
+
         String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
         boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);
-        
+
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append("\"from "); //$NON-NLS-1$
-        sb.append(escapeStringForJava(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime()));
+        sb.append(escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()));
         sb.append('\"');
         if (hasOrderBy) {
             sb.append(',');
         }
         method.addAnnotation(sb.toString());
-        
+
         if (hasOrderBy) {
             sb.setLength(0);
             javaIndent(sb, 1);
@@ -102,15 +99,15 @@ public class AnnotatedSelectAllMethodGenerator extends
             sb.append('\"');
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
 
         addAnnotatedResults(interfaze, method);
     }
-    
+
     private void addAnnotatedResults(Interface interfaze, Method method) {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
-        
+
         if (introspectedTable.isConstructorBased()) {
             interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Arg")); //$NON-NLS-1$
             interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ConstructorArgs")); //$NON-NLS-1$
@@ -120,22 +117,21 @@ public class AnnotatedSelectAllMethodGenerator extends
             interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
             method.addAnnotation("@Results({"); //$NON-NLS-1$
         }
-        
+
         StringBuilder sb = new StringBuilder();
-        
+
         Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
         Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();
         while (iterPk.hasNext()) {
             IntrospectedColumn introspectedColumn = iterPk.next();
             sb.setLength(0);
             javaIndent(sb, 1);
-            sb.append(getResultAnnotation(interfaze, introspectedColumn, true,
-                    introspectedTable.isConstructorBased()));
-            
+            sb.append(getResultAnnotation(interfaze, introspectedColumn, true, introspectedTable.isConstructorBased()));
+
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
 
@@ -143,16 +139,15 @@ public class AnnotatedSelectAllMethodGenerator extends
             IntrospectedColumn introspectedColumn = iterNonPk.next();
             sb.setLength(0);
             javaIndent(sb, 1);
-            sb.append(getResultAnnotation(interfaze, introspectedColumn, false,
-                    introspectedTable.isConstructorBased()));
-            
+            sb.append(getResultAnnotation(interfaze, introspectedColumn, false, introspectedTable.isConstructorBased()));
+
             if (iterNonPk.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 }

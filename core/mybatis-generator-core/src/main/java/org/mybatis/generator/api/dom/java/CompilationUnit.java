@@ -25,7 +25,7 @@ import java.util.Set;
  * @author Jeff Butler
  */
 public interface CompilationUnit {
-    
+
     /**
      * Gets the formatted content.
      *
@@ -39,7 +39,7 @@ public interface CompilationUnit {
      * @return the imported types
      */
     Set<FullyQualifiedJavaType> getImportedTypes();
-    
+
     /**
      * Gets the static imports.
      *
@@ -97,7 +97,7 @@ public interface CompilationUnit {
      *            the imported types
      */
     void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes);
-    
+
     /**
      * Adds the static import.
      *
@@ -105,7 +105,7 @@ public interface CompilationUnit {
      *            the static import
      */
     void addStaticImport(String staticImport);
-    
+
     /**
      * Adds the static imports.
      *
@@ -115,7 +115,8 @@ public interface CompilationUnit {
     void addStaticImports(Set<String> staticImports);
 
     /**
-     * Comments will be written at the top of the file as is, we do not append any start or end comment characters.
+     * Comments will be written at the top of the file as is, we do not append
+     * any start or end comment characters.
      * 
      * Note that in the Eclipse plugin, file comments will not be merged.
      *

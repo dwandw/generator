@@ -35,10 +35,9 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * @author Jeff Butler
  * 
  */
-public class ProviderInsertSelectiveMethodGenerator extends
-        AbstractJavaProviderMethodGenerator {
+public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
-	public ProviderInsertSelectiveMethodGenerator(boolean useLegacyBuilder) {
+    public ProviderInsertSelectiveMethodGenerator(boolean useLegacyBuilder) {
         super(useLegacyBuilder);
     }
 
@@ -46,72 +45,62 @@ public class ProviderInsertSelectiveMethodGenerator extends
     public void addClassElements(TopLevelClass topLevelClass) {
         Set<String> staticImports = new TreeSet<String>();
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
-        
+
         if (useLegacyBuilder) {
-        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
-        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO"); //$NON-NLS-1$
-        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
-        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.VALUES"); //$NON-NLS-1$
+            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
+            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO"); //$NON-NLS-1$
+            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
+            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.VALUES"); //$NON-NLS-1$
         } else {
-        	importedTypes.add(NEW_BUILDER_IMPORT);
+            importedTypes.add(NEW_BUILDER_IMPORT);
         }
 
-        FullyQualifiedJavaType fqjt = introspectedTable.getRules()
-            .calculateAllFieldsClass();
+        FullyQualifiedJavaType fqjt = introspectedTable.getRules().calculateAllFieldsClass();
         importedTypes.add(fqjt);
 
-        Method method = new Method(
-                introspectedTable.getInsertSelectiveStatementId());
+        Method method = new Method(introspectedTable.getInsertSelectiveStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
-        
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         if (useLegacyBuilder) {
-        	method.addBodyLine("BEGIN();"); //$NON-NLS-1$
+            method.addBodyLine("BEGIN();"); //$NON-NLS-1$
         } else {
-        	method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
+            method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
         }
 
-    	method.addBodyLine(String.format("%sINSERT_INTO(\"%s\");", //$NON-NLS-1$
-                builderPrefix,
-    			escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
-    	
+        method.addBodyLine(String.format("%sINSERT_INTO(\"%s\");", //$NON-NLS-1$
+                builderPrefix, escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
+
         for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
             if (introspectedColumn.isIdentity()) {
                 // cannot set values on identity fields
                 continue;
             }
-            
-            method.addBodyLine(""); //$NON-NLS-1$
-            if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()
-                    && !introspectedColumn.isSequenceColumn()) {
-                method.addBodyLine(String.format("if (record.%s() != null) {", //$NON-NLS-1$
-                    getGetterMethodName(introspectedColumn.getJavaProperty(),
-                            introspectedColumn.getFullyQualifiedJavaType())));
-            }
-          	method.addBodyLine(String.format("%sVALUES(\"%s\", \"%s\");", //$NON-NLS-1$
-          			builderPrefix,
-          			escapeStringForJava(getEscapedColumnName(introspectedColumn)),
-                    getParameterClause(introspectedColumn)));
 
-          	if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()
-                    && !introspectedColumn.isSequenceColumn()) {
+            method.addBodyLine(""); //$NON-NLS-1$
+            if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive() && !introspectedColumn.isSequenceColumn()) {
+                method.addBodyLine(String.format("if (record.%s() != null) {", //$NON-NLS-1$
+                        getGetterMethodName(introspectedColumn.getJavaProperty(), introspectedColumn.getFullyQualifiedJavaType())));
+            }
+            method.addBodyLine(String.format("%sVALUES(\"%s\", \"%s\");", //$NON-NLS-1$
+                    builderPrefix, escapeStringForJava(getEscapedColumnName(introspectedColumn)), getParameterClause(introspectedColumn)));
+
+            if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive() && !introspectedColumn.isSequenceColumn()) {
                 method.addBodyLine("}"); //$NON-NLS-1$
             }
         }
-        
+
         method.addBodyLine(""); //$NON-NLS-1$
         if (useLegacyBuilder) {
-        	method.addBodyLine("return SQL();"); //$NON-NLS-1$
+            method.addBodyLine("return SQL();"); //$NON-NLS-1$
         } else {
-        	method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
+            method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
         }
-        
-        if (context.getPlugins().providerInsertSelectiveMethodGenerated(method, topLevelClass,
-                introspectedTable)) {
+
+        if (context.getPlugins().providerInsertSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);

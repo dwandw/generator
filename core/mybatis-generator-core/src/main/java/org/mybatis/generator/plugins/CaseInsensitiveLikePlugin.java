@@ -54,8 +54,7 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 
         InnerClass criteria = null;
         // first, find the Criteria inner class
@@ -71,17 +70,14 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
             return true;
         }
 
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getNonBLOBColumns()) {
-            if (!introspectedColumn.isJdbcCharacterColumn()
-                    || !introspectedColumn.isStringColumn()) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
+            if (!introspectedColumn.isJdbcCharacterColumn() || !introspectedColumn.isStringColumn()) {
                 continue;
             }
 
             Method method = new Method();
             method.setVisibility(JavaVisibility.PUBLIC);
-            method.addParameter(new Parameter(introspectedColumn
-                    .getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
+            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
 
             StringBuilder sb = new StringBuilder();
             sb.append(introspectedColumn.getJavaProperty());
@@ -93,8 +89,7 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
 
             sb.setLength(0);
             sb.append("addCriterion(\"upper("); //$NON-NLS-1$
-            sb.append(Ibatis2FormattingUtilities
-                    .getAliasedActualColumnName(introspectedColumn));
+            sb.append(Ibatis2FormattingUtilities.getAliasedActualColumnName(introspectedColumn));
             sb.append(") like\", value.toUpperCase(), \""); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());
             sb.append("\");"); //$NON-NLS-1$

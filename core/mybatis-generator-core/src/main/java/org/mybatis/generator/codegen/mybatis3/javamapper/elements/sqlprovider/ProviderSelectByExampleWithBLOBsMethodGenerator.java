@@ -26,8 +26,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * @author Jeff Butler
  * 
  */
-public class ProviderSelectByExampleWithBLOBsMethodGenerator extends
-        ProviderSelectByExampleWithoutBLOBsMethodGenerator {
+public class ProviderSelectByExampleWithBLOBsMethodGenerator extends ProviderSelectByExampleWithoutBLOBsMethodGenerator {
 
     public ProviderSelectByExampleWithBLOBsMethodGenerator(boolean useLegacyBuilder) {
         super(useLegacyBuilder);
@@ -40,12 +39,11 @@ public class ProviderSelectByExampleWithBLOBsMethodGenerator extends
 
     @Override
     public String getMethodName() {
-        return introspectedTable.getSelectByExampleWithBLOBsStatementId();        
+        return introspectedTable.getSelectByExampleWithBLOBsStatementId();
     }
 
     @Override
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
-        return context.getPlugins().providerSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass,
-                introspectedTable);
+        return context.getPlugins().providerSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
     }
 }

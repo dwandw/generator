@@ -29,8 +29,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  * @author Jeff Butler
  * 
  */
-public class CountByExampleMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class CountByExampleMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     public CountByExampleMethodGenerator() {
         super();
@@ -38,8 +37,7 @@ public class CountByExampleMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
-                introspectedTable.getExampleType());
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         importedTypes.add(fqjt);
@@ -49,13 +47,11 @@ public class CountByExampleMethodGenerator extends
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.setName(introspectedTable.getCountByExampleStatementId());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(interfaze, method);
-        
-        if (context.getPlugins().clientCountByExampleMethodGenerated(method,
-                interfaze, introspectedTable)) {
+
+        if (context.getPlugins().clientCountByExampleMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }

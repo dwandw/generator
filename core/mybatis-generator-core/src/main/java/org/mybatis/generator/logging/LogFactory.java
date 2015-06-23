@@ -50,8 +50,8 @@ public class LogFactory {
     /**
      * This method will switch the logging implementation to Java native
      * logging. This is useful in situations where you want to use Java native
-     * logging to log activity but Log4J is on the classpath. Note that
-     * this method is only effective for log classes obtained after calling this
+     * logging to log activity but Log4J is on the classpath. Note that this
+     * method is only effective for log classes obtained after calling this
      * method. If you intend to use this method you should call it before
      * calling any other method.
      */

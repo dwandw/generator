@@ -34,7 +34,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  * @author Jeff Butler
  */
 public abstract class AbstractDAOTemplate {
-    
+
     /** The interface imports. */
     private List<FullyQualifiedJavaType> interfaceImports;
 
@@ -98,8 +98,7 @@ public abstract class AbstractDAOTemplate {
      *            the introspected table
      * @return the constructor clone
      */
-    public final Method getConstructorClone(CommentGenerator commentGenerator,
-            FullyQualifiedJavaType type, IntrospectedTable introspectedTable) {
+    public final Method getConstructorClone(CommentGenerator commentGenerator, FullyQualifiedJavaType type, IntrospectedTable introspectedTable) {
         configure();
         Method answer = new Method();
         answer.setConstructor(true);
@@ -133,11 +132,9 @@ public abstract class AbstractDAOTemplate {
      *            the parameter
      * @return the delete method
      */
-    public final String getDeleteMethod(String sqlMapNamespace,
-            String statementId, String parameter) {
+    public final String getDeleteMethod(String sqlMapNamespace, String statementId, String parameter) {
         configure();
-        String answer = MessageFormat.format(deleteMethodTemplate,
-                new Object[] { sqlMapNamespace, statementId, parameter });
+        String answer = MessageFormat.format(deleteMethodTemplate, new Object[] { sqlMapNamespace, statementId, parameter });
 
         return answer;
     }
@@ -173,11 +170,9 @@ public abstract class AbstractDAOTemplate {
      *            the parameter
      * @return the insert method
      */
-    public final String getInsertMethod(String sqlMapNamespace,
-            String statementId, String parameter) {
+    public final String getInsertMethod(String sqlMapNamespace, String statementId, String parameter) {
         configure();
-        String answer = MessageFormat.format(insertMethodTemplate,
-                new Object[] { sqlMapNamespace, statementId, parameter });
+        String answer = MessageFormat.format(insertMethodTemplate, new Object[] { sqlMapNamespace, statementId, parameter });
 
         return answer;
     }
@@ -193,11 +188,9 @@ public abstract class AbstractDAOTemplate {
      *            the parameter
      * @return the query for list method
      */
-    public final String getQueryForListMethod(String sqlMapNamespace,
-            String statementId, String parameter) {
+    public final String getQueryForListMethod(String sqlMapNamespace, String statementId, String parameter) {
         configure();
-        String answer = MessageFormat.format(queryForListMethodTemplate,
-                new Object[] { sqlMapNamespace, statementId, parameter });
+        String answer = MessageFormat.format(queryForListMethodTemplate, new Object[] { sqlMapNamespace, statementId, parameter });
 
         return answer;
     }
@@ -213,11 +206,9 @@ public abstract class AbstractDAOTemplate {
      *            the parameter
      * @return the query for object method
      */
-    public final String getQueryForObjectMethod(String sqlMapNamespace,
-            String statementId, String parameter) {
+    public final String getQueryForObjectMethod(String sqlMapNamespace, String statementId, String parameter) {
         configure();
-        String answer = MessageFormat.format(queryForObjectMethodTemplate,
-                new Object[] { sqlMapNamespace, statementId, parameter });
+        String answer = MessageFormat.format(queryForObjectMethodTemplate, new Object[] { sqlMapNamespace, statementId, parameter });
 
         return answer;
     }
@@ -243,11 +234,9 @@ public abstract class AbstractDAOTemplate {
      *            the parameter
      * @return the update method
      */
-    public final String getUpdateMethod(String sqlMapNamespace,
-            String statementId, String parameter) {
+    public final String getUpdateMethod(String sqlMapNamespace, String statementId, String parameter) {
         configure();
-        String answer = MessageFormat.format(updateMethodTemplate,
-                new Object[] { sqlMapNamespace, statementId, parameter });
+        String answer = MessageFormat.format(updateMethodTemplate, new Object[] { sqlMapNamespace, statementId, parameter });
 
         return answer;
     }
@@ -271,8 +260,7 @@ public abstract class AbstractDAOTemplate {
      *            the introspected table
      * @return the field clones
      */
-    public final List<Field> getFieldClones(CommentGenerator commentGenerator,
-            IntrospectedTable introspectedTable) {
+    public final List<Field> getFieldClones(CommentGenerator commentGenerator, IntrospectedTable introspectedTable) {
         configure();
         List<Field> answer = new ArrayList<Field>();
         for (Field oldField : fields) {
@@ -300,9 +288,7 @@ public abstract class AbstractDAOTemplate {
      *            the introspected table
      * @return the method clones
      */
-    public final List<Method> getMethodClones(
-            CommentGenerator commentGenerator,
-            IntrospectedTable introspectedTable) {
+    public final List<Method> getMethodClones(CommentGenerator commentGenerator, IntrospectedTable introspectedTable) {
         configure();
         List<Method> answer = new ArrayList<Method>();
         for (Method oldMethod : methods) {
@@ -391,8 +377,7 @@ public abstract class AbstractDAOTemplate {
      * @param queryForListMethodTemplate
      *            the new query for list method template
      */
-    protected void setQueryForListMethodTemplate(
-            String queryForListMethodTemplate) {
+    protected void setQueryForListMethodTemplate(String queryForListMethodTemplate) {
         this.queryForListMethodTemplate = queryForListMethodTemplate;
     }
 
@@ -402,8 +387,7 @@ public abstract class AbstractDAOTemplate {
      * @param queryForObjectMethodTemplate
      *            the new query for object method template
      */
-    protected void setQueryForObjectMethodTemplate(
-            String queryForObjectMethodTemplate) {
+    protected void setQueryForObjectMethodTemplate(String queryForObjectMethodTemplate) {
         this.queryForObjectMethodTemplate = queryForObjectMethodTemplate;
     }
 
@@ -546,8 +530,8 @@ public abstract class AbstractDAOTemplate {
 
     /**
      * Override this method to configure an insert method template. A method
-     * template is a string with three substitution markers that we will
-     * fill in when generating code. The substitution markers will be:
+     * template is a string with three substitution markers that we will fill in
+     * when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
      * <li>{1} - The SqlMap statement id</li>
@@ -567,8 +551,8 @@ public abstract class AbstractDAOTemplate {
 
     /**
      * Override this method to configure a queryForList method template. A
-     * method template is a string with three substitution markers that we
-     * will fill in when generating code. The substitution markers will be:
+     * method template is a string with three substitution markers that we will
+     * fill in when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
      * <li>{1} - The SqlMap statement id</li>
@@ -588,8 +572,8 @@ public abstract class AbstractDAOTemplate {
 
     /**
      * Override this method to configure a queryForObject method template. A
-     * method template is a string with three substitution markers that we
-     * will fill in when generating code. The substitution markers will be:
+     * method template is a string with three substitution markers that we will
+     * fill in when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
      * <li>{1} - The SqlMap statement id</li>
@@ -609,8 +593,8 @@ public abstract class AbstractDAOTemplate {
 
     /**
      * Override this method to configure an update method template. A method
-     * template is a string with three substitution markers that we will
-     * fill in when generating code. The substitution markers will be:
+     * template is a string with three substitution markers that we will fill in
+     * when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
      * <li>{1} - The SqlMap statement id</li>
@@ -629,8 +613,8 @@ public abstract class AbstractDAOTemplate {
 
     /**
      * Override this method to configure a delete method template. A method
-     * template is a string with three substitution markers that we will
-     * fill in when generating code. The substitution markers will be:
+     * template is a string with three substitution markers that we will fill in
+     * when generating code. The substitution markers will be:
      * <ul>
      * <li>{0} - The SqlMap namespace</li>
      * <li>{1} - The SqlMap statement id</li>

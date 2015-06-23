@@ -63,7 +63,9 @@ public class XMLParserException extends Exception {
         return errors;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Throwable#getMessage()
      */
     @Override

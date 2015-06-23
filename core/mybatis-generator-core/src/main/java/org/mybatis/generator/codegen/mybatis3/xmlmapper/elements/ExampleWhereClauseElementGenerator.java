@@ -27,8 +27,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
  * @author Jeff Butler
  * 
  */
-public class ExampleWhereClauseElementGenerator extends
-        AbstractXmlElementGenerator {
+public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenerator {
 
     private boolean isForUpdateByExample;
 
@@ -42,12 +41,9 @@ public class ExampleWhereClauseElementGenerator extends
         XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
 
         if (isForUpdateByExample) {
-            answer
-                    .addAttribute(new Attribute(
-                            "id", introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$
+            answer.addAttribute(new Attribute("id", introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$
         } else {
-            answer.addAttribute(new Attribute(
-                    "id", introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
+            answer.addAttribute(new Attribute("id", introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
         }
 
         context.getCommentGenerator().addComment(answer);
@@ -57,11 +53,9 @@ public class ExampleWhereClauseElementGenerator extends
 
         XmlElement outerForEachElement = new XmlElement("foreach"); //$NON-NLS-1$
         if (isForUpdateByExample) {
-            outerForEachElement.addAttribute(new Attribute(
-                    "collection", "example.oredCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
+            outerForEachElement.addAttribute(new Attribute("collection", "example.oredCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
-            outerForEachElement.addAttribute(new Attribute(
-                    "collection", "oredCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
+            outerForEachElement.addAttribute(new Attribute("collection", "oredCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
         }
         outerForEachElement.addAttribute(new Attribute("item", "criteria")); //$NON-NLS-1$ //$NON-NLS-2$
         outerForEachElement.addAttribute(new Attribute("separator", "or")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -80,24 +74,18 @@ public class ExampleWhereClauseElementGenerator extends
 
         trimElement.addElement(getMiddleForEachElement(null));
 
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getNonBLOBColumns()) {
-            if (stringHasValue(introspectedColumn
-                    .getTypeHandler())) {
-                trimElement
-                        .addElement(getMiddleForEachElement(introspectedColumn));
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
+            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+                trimElement.addElement(getMiddleForEachElement(introspectedColumn));
             }
         }
 
-        if (context.getPlugins()
-                .sqlMapExampleWhereClauseElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapExampleWhereClauseElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }
 
-    private XmlElement getMiddleForEachElement(
-            IntrospectedColumn introspectedColumn) {
+    private XmlElement getMiddleForEachElement(IntrospectedColumn introspectedColumn) {
         StringBuilder sb = new StringBuilder();
         String criteriaAttribute;
         boolean typeHandled;
@@ -122,8 +110,7 @@ public class ExampleWhereClauseElementGenerator extends
         }
 
         XmlElement middleForEachElement = new XmlElement("foreach"); //$NON-NLS-1$
-        middleForEachElement.addAttribute(new Attribute(
-                "collection", criteriaAttribute)); //$NON-NLS-1$
+        middleForEachElement.addAttribute(new Attribute("collection", criteriaAttribute)); //$NON-NLS-1$
         middleForEachElement.addAttribute(new Attribute("item", "criterion")); //$NON-NLS-1$ //$NON-NLS-2$
 
         XmlElement chooseElement = new XmlElement("choose"); //$NON-NLS-1$
@@ -164,8 +151,7 @@ public class ExampleWhereClauseElementGenerator extends
         when.addAttribute(new Attribute("test", "criterion.listValue")); //$NON-NLS-1$ //$NON-NLS-2$
         when.addElement(new TextElement("and ${criterion.condition}")); //$NON-NLS-1$
         XmlElement innerForEach = new XmlElement("foreach"); //$NON-NLS-1$
-        innerForEach
-                .addAttribute(new Attribute("collection", "criterion.value")); //$NON-NLS-1$ //$NON-NLS-2$
+        innerForEach.addAttribute(new Attribute("collection", "criterion.value")); //$NON-NLS-1$ //$NON-NLS-2$
         innerForEach.addAttribute(new Attribute("item", "listItem")); //$NON-NLS-1$ //$NON-NLS-2$
         innerForEach.addAttribute(new Attribute("open", "(")); //$NON-NLS-1$ //$NON-NLS-2$
         innerForEach.addAttribute(new Attribute("close", ")")); //$NON-NLS-1$ //$NON-NLS-2$

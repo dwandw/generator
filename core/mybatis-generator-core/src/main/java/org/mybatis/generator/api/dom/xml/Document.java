@@ -23,7 +23,7 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  * @author Jeff Butler
  */
 public class Document {
-    
+
     /** The public id. */
     private String publicId;
 

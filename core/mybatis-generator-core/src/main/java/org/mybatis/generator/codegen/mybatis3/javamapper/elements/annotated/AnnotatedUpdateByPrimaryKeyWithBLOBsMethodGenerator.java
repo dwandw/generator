@@ -32,8 +32,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimar
  * 
  * @author Jeff Butler
  */
-public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends
-    UpdateByPrimaryKeyWithBLOBsMethodGenerator {
+public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateByPrimaryKeyWithBLOBsMethodGenerator {
 
     public AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator() {
         super();
@@ -42,7 +41,7 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends
     @Override
     public void addMapperAnnotations(Interface interfaze, Method method) {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
-        
+
         method.addAnnotation("@Update({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
@@ -57,8 +56,7 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends
         javaIndent(sb, 1);
         sb.append("\"set "); //$NON-NLS-1$
 
-        Iterator<IntrospectedColumn> iter = introspectedTable
-                .getNonPrimaryKeyColumns().iterator();
+        Iterator<IntrospectedColumn> iter = introspectedTable.getNonPrimaryKeyColumns().iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
 
@@ -103,7 +101,7 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends
             }
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 }

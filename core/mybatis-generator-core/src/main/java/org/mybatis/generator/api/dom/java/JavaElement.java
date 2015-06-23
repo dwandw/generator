@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  * @author Jeff Butler
  */
 public abstract class JavaElement {
-    
+
     /** The java doc lines. */
     private List<String> javaDocLines;
 
@@ -50,7 +50,7 @@ public abstract class JavaElement {
         javaDocLines = new ArrayList<String>();
         annotations = new ArrayList<String>();
     }
-    
+
     /**
      * Copy Constructor.
      *

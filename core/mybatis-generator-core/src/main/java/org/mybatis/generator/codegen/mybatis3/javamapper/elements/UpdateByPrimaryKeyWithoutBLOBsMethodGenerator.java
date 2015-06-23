@@ -29,8 +29,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  * @author Jeff Butler
  * 
  */
-public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     public UpdateByPrimaryKeyWithoutBLOBsMethodGenerator() {
         super();
@@ -39,8 +38,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
-        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
-                introspectedTable.getBaseRecordType());
+        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         importedTypes.add(parameterType);
 
         Method method = new Method();
@@ -49,14 +47,11 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
         method.setName(introspectedTable.getUpdateByPrimaryKeyStatementId());
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(interfaze, method);
-        
-        if (context.getPlugins()
-                .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,
-                        interfaze, introspectedTable)) {
+
+        if (context.getPlugins().clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }

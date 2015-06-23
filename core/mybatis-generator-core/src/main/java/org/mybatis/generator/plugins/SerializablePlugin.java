@@ -62,35 +62,31 @@ public class SerializablePlugin extends PluginAdapter {
         addGWTInterface = Boolean.valueOf(properties.getProperty("addGWTInterface")); //$NON-NLS-1$
         suppressJavaInterface = Boolean.valueOf(properties.getProperty("suppressJavaInterface")); //$NON-NLS-1$
     }
-    
+
     @Override
-    public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         makeSerializable(topLevelClass, introspectedTable);
         return true;
     }
 
     @Override
-    public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         makeSerializable(topLevelClass, introspectedTable);
         return true;
     }
 
     @Override
-    public boolean modelRecordWithBLOBsClassGenerated(
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+    public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         makeSerializable(topLevelClass, introspectedTable);
         return true;
     }
 
-    protected void makeSerializable(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    protected void makeSerializable(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         if (addGWTInterface) {
             topLevelClass.addImportedType(gwtSerializable);
             topLevelClass.addSuperInterface(gwtSerializable);
         }
-        
+
         if (!suppressJavaInterface) {
             topLevelClass.addImportedType(serializable);
             topLevelClass.addSuperInterface(serializable);

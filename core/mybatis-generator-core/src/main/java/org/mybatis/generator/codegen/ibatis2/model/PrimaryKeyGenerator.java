@@ -50,13 +50,11 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
-        progressCallback.startTask(getString(
-                "Progress.7", table.toString())); //$NON-NLS-1$
+        progressCallback.startTask(getString("Progress.7", table.toString())); //$NON-NLS-1$
         Plugin plugins = context.getPlugins();
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable
-                .getPrimaryKeyType());
+        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getPrimaryKeyType());
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
@@ -66,39 +64,30 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
             topLevelClass.addImportedType(topLevelClass.getSuperClass());
         }
 
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
-            if (RootClassInfo.getInstance(rootClass, warnings)
-                    .containsProperty(introspectedColumn)) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
+            if (RootClassInfo.getInstance(rootClass, warnings).containsProperty(introspectedColumn)) {
                 continue;
             }
 
             Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
-            if (plugins.modelFieldGenerated(field, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.PRIMARY_KEY)) {
+            if (plugins.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable, Plugin.ModelClassType.PRIMARY_KEY)) {
                 topLevelClass.addField(field);
                 topLevelClass.addImportedType(field.getType());
             }
 
             Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
-            if (plugins.modelGetterMethodGenerated(method, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.PRIMARY_KEY)) {
+            if (plugins.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable, Plugin.ModelClassType.PRIMARY_KEY)) {
                 topLevelClass.addMethod(method);
             }
 
             method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
-            if (plugins.modelSetterMethodGenerated(method, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.PRIMARY_KEY)) {
+            if (plugins.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable, Plugin.ModelClassType.PRIMARY_KEY)) {
                 topLevelClass.addMethod(method);
             }
         }
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
-        if (context.getPlugins().modelPrimaryKeyClassGenerated(
-                topLevelClass, introspectedTable)) {
+        if (context.getPlugins().modelPrimaryKeyClassGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
         return answer;

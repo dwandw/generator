@@ -29,8 +29,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  * @author Jeff Butler
  * 
  */
-public class DeleteByExampleMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class DeleteByExampleMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     public DeleteByExampleMethodGenerator() {
         super();
@@ -39,8 +38,7 @@ public class DeleteByExampleMethodGenerator extends
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getExampleType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(type);
 
         Method method = new Method();
@@ -49,13 +47,11 @@ public class DeleteByExampleMethodGenerator extends
         method.setName(introspectedTable.getDeleteByExampleStatementId());
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(interfaze, method);
-        
-        if (context.getPlugins().clientDeleteByExampleMethodGenerated(
-                method, interfaze, introspectedTable)) {
+
+        if (context.getPlugins().clientDeleteByExampleMethodGenerated(method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }

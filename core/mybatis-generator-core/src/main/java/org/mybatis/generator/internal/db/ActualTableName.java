@@ -36,8 +36,7 @@ public class ActualTableName {
         this.catalog = catalog;
         this.schema = schema;
         this.tableName = tableName;
-        fullName = composeFullyQualifiedTableName(catalog,
-                schema, tableName, '.');
+        fullName = composeFullyQualifiedTableName(catalog, schema, tableName, '.');
     }
 
     public String getCatalog() {

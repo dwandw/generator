@@ -21,10 +21,10 @@ package org.mybatis.generator.api.dom.xml;
  * @author Jeff Butler
  */
 public class Attribute {
-    
+
     /** The name. */
     private String name;
-    
+
     /** The value. */
     private String value;
 

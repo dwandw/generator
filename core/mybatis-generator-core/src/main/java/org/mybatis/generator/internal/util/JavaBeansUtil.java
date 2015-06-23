@@ -47,9 +47,11 @@ public class JavaBeansUtil {
     /**
      * JavaBeans rules:
      * 
-     * eMail &gt; geteMail() firstName &gt; getFirstName() URL $gt; getURL() XAxis &gt; getXAxis() a &gt; getA() B &gt;
-     * invalid - this method assumes that this is not the case. Call getValidPropertyName first. Yaxis &gt; invalid -
-     * this method assumes that this is not the case. Call getValidPropertyName first.
+     * eMail &gt; geteMail() firstName &gt; getFirstName() URL $gt; getURL()
+     * XAxis &gt; getXAxis() a &gt; getA() B &gt; invalid - this method assumes
+     * that this is not the case. Call getValidPropertyName first. Yaxis &gt;
+     * invalid - this method assumes that this is not the case. Call
+     * getValidPropertyName first.
      *
      * @param property
      *            the property
@@ -57,8 +59,7 @@ public class JavaBeansUtil {
      *            the fully qualified java type
      * @return the getter method name
      */
-    public static String getGetterMethodName(String property,
-            FullyQualifiedJavaType fullyQualifiedJavaType) {
+    public static String getGetterMethodName(String property, FullyQualifiedJavaType fullyQualifiedJavaType) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(property);
@@ -68,8 +69,7 @@ public class JavaBeansUtil {
             }
         }
 
-        if (fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getBooleanPrimitiveInstance())) {
+        if (fullyQualifiedJavaType.equals(FullyQualifiedJavaType.getBooleanPrimitiveInstance())) {
             sb.insert(0, "is"); //$NON-NLS-1$
         } else {
             sb.insert(0, "get"); //$NON-NLS-1$
@@ -81,9 +81,11 @@ public class JavaBeansUtil {
     /**
      * JavaBeans rules:
      * 
-     * eMail &gt; seteMail() firstName &gt; setFirstName() URL &gt; setURL() XAxis &gt; setXAxis() a &gt; setA() B &gt;
-     * invalid - this method assumes that this is not the case. Call getValidPropertyName first. Yaxis &gt; invalid -
-     * this method assumes that this is not the case. Call getValidPropertyName first.
+     * eMail &gt; seteMail() firstName &gt; setFirstName() URL &gt; setURL()
+     * XAxis &gt; setXAxis() a &gt; setA() B &gt; invalid - this method assumes
+     * that this is not the case. Call getValidPropertyName first. Yaxis &gt;
+     * invalid - this method assumes that this is not the case. Call
+     * getValidPropertyName first.
      *
      * @param property
      *            the property
@@ -113,8 +115,7 @@ public class JavaBeansUtil {
      *            the first character uppercase
      * @return the camel case string
      */
-    public static String getCamelCaseString(String inputString,
-            boolean firstCharacterUppercase) {
+    public static String getCamelCaseString(String inputString, boolean firstCharacterUppercase) {
         StringBuilder sb = new StringBuilder();
 
         boolean nextUpperCase = false;
@@ -154,13 +155,16 @@ public class JavaBeansUtil {
     }
 
     /**
-     * This method ensures that the specified input string is a valid Java property name. The rules are as follows:
+     * This method ensures that the specified input string is a valid Java
+     * property name. The rules are as follows:
      * 
-     * 1. If the first character is lower case, then OK 2. If the first two characters are upper case, then OK 3. If the
-     * first character is upper case, and the second character is lower case, then the first character should be made
-     * lower case
+     * 1. If the first character is lower case, then OK 2. If the first two
+     * characters are upper case, then OK 3. If the first character is upper
+     * case, and the second character is lower case, then the first character
+     * should be made lower case
      * 
-     * eMail &gt; eMail firstName &gt; firstName URL &gt; URL XAxis &gt; XAxis a &gt; a B &gt; b Yaxis &gt; yaxis
+     * eMail &gt; eMail firstName &gt; firstName URL &gt; URL XAxis &gt; XAxis a
+     * &gt; a B &gt; b Yaxis &gt; yaxis
      *
      * @param inputString
      *            the input string
@@ -174,10 +178,8 @@ public class JavaBeansUtil {
         } else if (inputString.length() < 2) {
             answer = inputString.toLowerCase(Locale.US);
         } else {
-            if (Character.isUpperCase(inputString.charAt(0))
-                    && !Character.isUpperCase(inputString.charAt(1))) {
-                answer = inputString.substring(0, 1).toLowerCase(Locale.US)
-                        + inputString.substring(1);
+            if (Character.isUpperCase(inputString.charAt(0)) && !Character.isUpperCase(inputString.charAt(1))) {
+                answer = inputString.substring(0, 1).toLowerCase(Locale.US) + inputString.substring(1);
             } else {
                 answer = inputString;
             }
@@ -197,19 +199,15 @@ public class JavaBeansUtil {
      *            the introspected table
      * @return the java beans getter
      */
-    public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn,
-            Context context,
-            IntrospectedTable introspectedTable) {
-        FullyQualifiedJavaType fqjt = introspectedColumn
-                .getFullyQualifiedJavaType();
+    public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn, Context context, IntrospectedTable introspectedTable) {
+        FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(fqjt);
         method.setName(getGetterMethodName(property, fqjt));
-        context.getCommentGenerator().addGetterComment(method,
-                introspectedTable, introspectedColumn);
+        context.getCommentGenerator().addGetterComment(method, introspectedTable, introspectedColumn);
 
         StringBuilder sb = new StringBuilder();
         sb.append("return "); //$NON-NLS-1$
@@ -231,19 +229,15 @@ public class JavaBeansUtil {
      *            the introspected table
      * @return the java beans field
      */
-    public static Field getJavaBeansField(IntrospectedColumn introspectedColumn,
-            Context context,
-            IntrospectedTable introspectedTable) {
-        FullyQualifiedJavaType fqjt = introspectedColumn
-                .getFullyQualifiedJavaType();
+    public static Field getJavaBeansField(IntrospectedColumn introspectedColumn, Context context, IntrospectedTable introspectedTable) {
+        FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
         Field field = new Field();
         field.setVisibility(JavaVisibility.PRIVATE);
         field.setType(fqjt);
         field.setName(property);
-        context.getCommentGenerator().addFieldComment(field,
-                introspectedTable, introspectedColumn);
+        context.getCommentGenerator().addFieldComment(field, introspectedTable, introspectedColumn);
 
         return field;
     }
@@ -259,19 +253,15 @@ public class JavaBeansUtil {
      *            the introspected table
      * @return the java beans setter
      */
-    public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,
-            Context context,
-            IntrospectedTable introspectedTable) {
-        FullyQualifiedJavaType fqjt = introspectedColumn
-                .getFullyQualifiedJavaType();
+    public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn, Context context, IntrospectedTable introspectedTable) {
+        FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setName(getSetterMethodName(property));
         method.addParameter(new Parameter(fqjt, property));
-        context.getCommentGenerator().addSetterComment(method,
-                introspectedTable, introspectedColumn);
+        context.getCommentGenerator().addSetterComment(method, introspectedTable, introspectedColumn);
 
         StringBuilder sb = new StringBuilder();
         if (isTrimStringsEnabled(context) && introspectedColumn.isStringColumn()) {
@@ -303,10 +293,8 @@ public class JavaBeansUtil {
      * @return true, if is trim strings enabled
      */
     private static boolean isTrimStringsEnabled(Context context) {
-        Properties properties = context
-                .getJavaModelGeneratorConfiguration().getProperties();
-        boolean rc = isTrue(properties
-                .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
+        Properties properties = context.getJavaModelGeneratorConfiguration().getProperties();
+        boolean rc = isTrue(properties.getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
         return rc;
     }
 

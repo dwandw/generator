@@ -66,32 +66,28 @@ public class ConfigurationParser {
         parseErrors = new ArrayList<String>();
     }
 
-    public Configuration parseConfiguration(File inputFile) throws IOException,
-            XMLParserException {
+    public Configuration parseConfiguration(File inputFile) throws IOException, XMLParserException {
 
         FileReader fr = new FileReader(inputFile);
 
         return parseConfiguration(fr);
     }
 
-    public Configuration parseConfiguration(Reader reader) throws IOException,
-            XMLParserException {
+    public Configuration parseConfiguration(Reader reader) throws IOException, XMLParserException {
 
         InputSource is = new InputSource(reader);
 
         return parseConfiguration(is);
     }
 
-    public Configuration parseConfiguration(InputStream inputStream)
-            throws IOException, XMLParserException {
+    public Configuration parseConfiguration(InputStream inputStream) throws IOException, XMLParserException {
 
         InputSource is = new InputSource(inputStream);
 
         return parseConfiguration(is);
     }
 
-    private Configuration parseConfiguration(InputSource inputSource)
-            throws IOException, XMLParserException {
+    private Configuration parseConfiguration(InputSource inputSource) throws IOException, XMLParserException {
         parseErrors.clear();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setValidating(true);
@@ -100,8 +96,7 @@ public class ConfigurationParser {
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setEntityResolver(new ParserEntityResolver());
 
-            ParserErrorHandler handler = new ParserErrorHandler(warnings,
-                    parseErrors);
+            ParserErrorHandler handler = new ParserErrorHandler(warnings, parseErrors);
             builder.setErrorHandler(handler);
 
             Document document = null;
@@ -124,13 +119,9 @@ public class ConfigurationParser {
             Configuration config;
             Element rootNode = document.getDocumentElement();
             DocumentType docType = document.getDoctype();
-            if (rootNode.getNodeType() == Node.ELEMENT_NODE
-                    && docType.getPublicId().equals(
-                            XmlConstants.IBATOR_CONFIG_PUBLIC_ID)) {
+            if (rootNode.getNodeType() == Node.ELEMENT_NODE && docType.getPublicId().equals(XmlConstants.IBATOR_CONFIG_PUBLIC_ID)) {
                 config = parseIbatorConfiguration(rootNode);
-            } else if (rootNode.getNodeType() == Node.ELEMENT_NODE
-                    && docType.getPublicId().equals(
-                            XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
+            } else if (rootNode.getNodeType() == Node.ELEMENT_NODE && docType.getPublicId().equals(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
                 config = parseMyBatisGeneratorConfiguration(rootNode);
             } else {
                 throw new XMLParserException(getString("RuntimeError.5")); //$NON-NLS-1$
@@ -147,17 +138,13 @@ public class ConfigurationParser {
         }
     }
 
-    private Configuration parseIbatorConfiguration(Element rootNode)
-            throws XMLParserException {
-        IbatorConfigurationParser parser = new IbatorConfigurationParser(
-                properties);
+    private Configuration parseIbatorConfiguration(Element rootNode) throws XMLParserException {
+        IbatorConfigurationParser parser = new IbatorConfigurationParser(properties);
         return parser.parseIbatorConfiguration(rootNode);
     }
 
-    private Configuration parseMyBatisGeneratorConfiguration(Element rootNode)
-            throws XMLParserException {
-        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(
-                properties);
+    private Configuration parseMyBatisGeneratorConfiguration(Element rootNode) throws XMLParserException {
+        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(properties);
         return parser.parseConfiguration(rootNode);
     }
 }
