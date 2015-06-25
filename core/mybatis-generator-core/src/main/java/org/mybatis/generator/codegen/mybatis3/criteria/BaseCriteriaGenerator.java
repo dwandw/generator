@@ -45,9 +45,7 @@ public class BaseCriteriaGenerator extends AbstractJavaGenerator {
         progressCallback.startTask(getString("Progress.19", "baseCriteria")); //$NON-NLS-1$
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedCriteria.getBaseCriteriaType());
-        // FullyQualifiedJavaType type = new
-        // FullyQualifiedJavaType("BaseCriteria");
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(context.getIntrospectedCriteria().getBaseCriteriaType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setAbstract(true);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
@@ -115,7 +113,6 @@ public class BaseCriteriaGenerator extends AbstractJavaGenerator {
         // add field and methods for the list of ored criteria
         field = new Field();
         field.setVisibility(JavaVisibility.PROTECTED);
-
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.List<Criteria>"); //$NON-NLS-1$
         field.setType(fqjt);
         field.setName("oredCriteria"); //$NON-NLS-1$
@@ -154,6 +151,14 @@ public class BaseCriteriaGenerator extends AbstractJavaGenerator {
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setName("getPageSize"); //$NON-NLS-1$
+        method.addBodyLine("return pageSize;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+
         // add field, getter, setter for pageNo
         field = new Field();
         field.setVisibility(JavaVisibility.PROTECTED);
@@ -167,6 +172,14 @@ public class BaseCriteriaGenerator extends AbstractJavaGenerator {
         method.setName("setPageNo"); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "pageNo")); //$NON-NLS-1$
         method.addBodyLine("this.pageNo = pageNo;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setName("getPageNo"); //$NON-NLS-1$
+        method.addBodyLine("return pageNo;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 

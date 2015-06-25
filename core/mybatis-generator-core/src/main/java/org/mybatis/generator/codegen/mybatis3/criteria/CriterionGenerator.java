@@ -45,7 +45,7 @@ public class CriterionGenerator extends AbstractJavaGenerator {
         progressCallback.startTask(getString("Progress.19", "criterion")); //$NON-NLS-1$
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedCriteria.getCriterionType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(context.getIntrospectedCriteria().getCriterionType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setFinal(true);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);

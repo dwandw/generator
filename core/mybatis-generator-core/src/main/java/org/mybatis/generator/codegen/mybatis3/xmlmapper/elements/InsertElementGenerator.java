@@ -93,7 +93,11 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             }
 
             insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
-            valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+            if (introspectedColumn.getActualColumnName().equals(introspectedTable.getCreateTime())) {
+                valuesClause.append("now()");
+            } else {
+                valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+            }
             if (i + 1 < columns.size()) {
                 if (!columns.get(i + 1).isIdentity()) {
                     insertClause.append(", "); //$NON-NLS-1$
@@ -101,7 +105,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                 }
             }
 
-            if (valuesClause.length() > 80) {
+            if (valuesClause.length() > lineWidth) {
                 answer.addElement(new TextElement(insertClause.toString()));
                 insertClause.setLength(0);
                 OutputUtilities.xmlIndent(insertClause, 1);

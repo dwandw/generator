@@ -65,6 +65,9 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlE
         }
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
+            if (introspectedColumn.getActualColumnName().equals(introspectedTable.getCreateTime())) {
+                continue;
+            }
 
             sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$

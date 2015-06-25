@@ -224,6 +224,10 @@ public class MyBatisGenerator {
 
         for (Context context : contextsToRun) {
             context.introspectTables(callback, warnings, fullyQualifiedTableNames);
+            IntrospectedCriteria introspectedCriteria = ObjectFactory.createIntrospectedCriteria(context);
+            introspectedCriteria.calculateModelAttributes();
+            introspectedCriteria.calculateGenerators(warnings, callback);
+            context.setIntrospectedCriteria(introspectedCriteria);
         }
 
         // now run the generates

@@ -143,7 +143,7 @@ public class XmlElement extends Element {
         }
 
         if (elements.size() > 0) {
-            sb.append(" >"); //$NON-NLS-1$
+            sb.append(">"); //$NON-NLS-1$
             for (Element element : elements) {
                 OutputUtilities.newLine(sb);
                 sb.append(element.getFormattedContent(indentLevel + 1));

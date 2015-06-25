@@ -113,7 +113,6 @@ public class IntrospectedCriteriaMyBatis3Impl extends IntrospectedCriteria {
         }
 
         abstractGenerator.setContext(context);
-        abstractGenerator.setIntrospectedCriteria(this);
         abstractGenerator.setProgressCallback(progressCallback);
         abstractGenerator.setWarnings(warnings);
     }

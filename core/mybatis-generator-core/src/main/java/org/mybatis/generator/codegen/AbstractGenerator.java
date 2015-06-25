@@ -31,6 +31,7 @@ public abstract class AbstractGenerator {
     protected IntrospectedTable introspectedTable;
     protected List<String> warnings;
     protected ProgressCallback progressCallback;
+    protected static int lineWidth = 170;
 
     public AbstractGenerator() {
         super();

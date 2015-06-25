@@ -29,6 +29,7 @@ import java.util.Set;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.IntrospectedCriteria;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -66,6 +67,9 @@ public class Context extends PropertyHolder {
 
     /** The java client generator configuration. */
     private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
+
+    /** The java criteria generator configuration. */
+    private JavaCriteriaGeneratorConfiguration javaCriteriaGeneratorConfiguration;
 
     /** The table configurations. */
     private ArrayList<TableConfiguration> tableConfigurations;
@@ -105,6 +109,8 @@ public class Context extends PropertyHolder {
 
     /** The xml formatter. */
     private XmlFormatter xmlFormatter;
+
+    private boolean firstRun;
 
     /**
      * Constructs a Context object.
@@ -151,6 +157,10 @@ public class Context extends PropertyHolder {
      */
     public JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
         return javaClientGeneratorConfiguration;
+    }
+
+    public JavaCriteriaGeneratorConfiguration getJavaCriteriaGeneratorConfiguration() {
+        return javaCriteriaGeneratorConfiguration;
     }
 
     /**
@@ -220,6 +230,10 @@ public class Context extends PropertyHolder {
             javaClientGeneratorConfiguration.validate(errors, id);
         }
 
+        if (javaCriteriaGeneratorConfiguration != null) {
+            javaCriteriaGeneratorConfiguration.validate(errors, id);
+        }
+
         IntrospectedTable it = null;
         try {
             it = ObjectFactory.createIntrospectedTableForValidation(this);
@@ -277,6 +291,10 @@ public class Context extends PropertyHolder {
      */
     public void setJavaClientGeneratorConfiguration(JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
         this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;
+    }
+
+    public void setJavaCriteriaGeneratorConfiguration(JavaCriteriaGeneratorConfiguration javaCriteriaGeneratorConfiguration) {
+        this.javaCriteriaGeneratorConfiguration = javaCriteriaGeneratorConfiguration;
     }
 
     /**
@@ -352,6 +370,8 @@ public class Context extends PropertyHolder {
             xmlElement.addAttribute(new Attribute("targetRuntime", targetRuntime)); //$NON-NLS-1$
         }
 
+        xmlElement.addAttribute(new Attribute("firstRun", String.valueOf(firstRun))); //$NON-NLS-1$
+
         addPropertyXmlElements(xmlElement);
 
         for (PluginConfiguration pluginConfiguration : pluginConfigurations) {
@@ -380,6 +400,10 @@ public class Context extends PropertyHolder {
 
         if (javaClientGeneratorConfiguration != null) {
             xmlElement.addElement(javaClientGeneratorConfiguration.toXmlElement());
+        }
+
+        if (javaCriteriaGeneratorConfiguration != null) {
+            xmlElement.addElement(javaCriteriaGeneratorConfiguration.toXmlElement());
         }
 
         for (TableConfiguration tableConfiguration : tableConfigurations) {
@@ -524,6 +548,14 @@ public class Context extends PropertyHolder {
         this.targetRuntime = targetRuntime;
     }
 
+    public boolean getFirstRun() {
+        return firstRun;
+    }
+
+    public void setFirstRun(boolean firstRun) {
+        this.firstRun = firstRun;
+    }
+
     /**
      * Gets the introspected column impl.
      *
@@ -555,6 +587,16 @@ public class Context extends PropertyHolder {
 
     /** The introspected tables. */
     private List<IntrospectedTable> introspectedTables;
+
+    private IntrospectedCriteria introspectedCriteria;
+
+    public IntrospectedCriteria getIntrospectedCriteria() {
+        return introspectedCriteria;
+    }
+
+    public void setIntrospectedCriteria(IntrospectedCriteria introspectedCriteria) {
+        this.introspectedCriteria = introspectedCriteria;
+    }
 
     /**
      * Gets the introspection steps.
@@ -697,6 +739,11 @@ public class Context extends PropertyHolder {
                 generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles(introspectedTable));
                 generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles(introspectedTable));
             }
+
+        }
+        // base cretiria
+        if (getFirstRun()) {
+            generatedJavaFiles.addAll(introspectedCriteria.getGeneratedJavaFiles());
         }
 
         generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles());

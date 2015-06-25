@@ -62,7 +62,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends AbstractJavaMapp
         method.setReturnType(returnType);
 
         method.setName(introspectedTable.getSelectByExampleStatementId());
-        method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
+        method.addParameter(new Parameter(type, "criteria")); //$NON-NLS-1$
 
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 

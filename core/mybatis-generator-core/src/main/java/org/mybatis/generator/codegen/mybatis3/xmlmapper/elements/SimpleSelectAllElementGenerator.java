@@ -56,7 +56,7 @@ public class SimpleSelectAllElementGenerator extends AbstractXmlElementGenerator
                 sb.append(", "); //$NON-NLS-1$
             }
 
-            if (sb.length() > 80) {
+            if (sb.length() > lineWidth) {
                 answer.addElement(new TextElement(sb.toString()));
                 sb.setLength(0);
             }

@@ -53,9 +53,6 @@ public class JavaCriteriaGeneratorConfiguration extends TypedPropertyHolder {
 
     public XmlElement toXmlElement() {
         XmlElement answer = new XmlElement("javaClientGenerator"); //$NON-NLS-1$
-        if (getConfigurationType() != null) {
-            answer.addAttribute(new Attribute("type", getConfigurationType())); //$NON-NLS-1$
-        }
 
         if (targetPackage != null) {
             answer.addAttribute(new Attribute("targetPackage", targetPackage)); //$NON-NLS-1$
@@ -63,10 +60,6 @@ public class JavaCriteriaGeneratorConfiguration extends TypedPropertyHolder {
 
         if (targetProject != null) {
             answer.addAttribute(new Attribute("targetProject", targetProject)); //$NON-NLS-1$
-        }
-
-        if (implementationPackage != null) {
-            answer.addAttribute(new Attribute("implementationPackage", targetProject)); //$NON-NLS-1$
         }
 
         addPropertyXmlElements(answer);
@@ -90,11 +83,6 @@ public class JavaCriteriaGeneratorConfiguration extends TypedPropertyHolder {
         if (!stringHasValue(targetPackage)) {
             errors.add(getString("ValidationError.12", //$NON-NLS-1$
                     "javaClientGenerator", contextId)); //$NON-NLS-1$
-        }
-
-        if (!stringHasValue(getConfigurationType())) {
-            errors.add(getString("ValidationError.20", //$NON-NLS-1$
-                    contextId));
         }
     }
 }

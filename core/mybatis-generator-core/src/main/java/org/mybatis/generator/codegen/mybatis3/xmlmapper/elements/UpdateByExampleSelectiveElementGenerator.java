@@ -51,6 +51,9 @@ public class UpdateByExampleSelectiveElementGenerator extends AbstractXmlElement
         answer.addElement(dynamicElement);
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
+            if (introspectedColumn.getActualColumnName().equals(introspectedTable.getCreateTime())) {
+                continue;
+            }
             XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);
             sb.append(introspectedColumn.getJavaProperty("record.")); //$NON-NLS-1$

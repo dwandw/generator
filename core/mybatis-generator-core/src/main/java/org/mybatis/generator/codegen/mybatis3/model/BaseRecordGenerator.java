@@ -60,6 +60,17 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
+        topLevelClass.addSuperInterface(new FullyQualifiedJavaType("java.io.Serializable"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("java.io.Serializable"));
+        Field _field = new Field();
+        _field.setVisibility(JavaVisibility.PRIVATE);
+        _field.setStatic(true);
+        _field.setFinal(true);
+        _field.setType(new FullyQualifiedJavaType("long"));
+        _field.setName("serialVersionUID");
+        _field.setInitializationString("1L");
+        topLevelClass.addField(_field);
+
         FullyQualifiedJavaType superClass = getSuperClass();
         if (superClass != null) {
             topLevelClass.setSuperClass(superClass);

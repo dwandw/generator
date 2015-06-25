@@ -66,7 +66,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * org.mybatis.generator.api.IntrospectedTable#calculateGenerators(java.
      * util.List, org.mybatis.generator.api.ProgressCallback)
@@ -212,7 +212,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.mybatis.generator.api.IntrospectedTable#getGeneratedJavaFiles()
      */
     @Override
@@ -242,7 +242,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.mybatis.generator.api.IntrospectedTable#getGeneratedXmlFiles()
      */
     @Override
@@ -252,7 +252,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         if (xmlMapperGenerator != null) {
             Document document = xmlMapperGenerator.getDocument();
             GeneratedXmlFile gxf = new GeneratedXmlFile(document, getMyBatis3XmlMapperFileName(), getMyBatis3XmlMapperPackage(), context
-                    .getSqlMapGeneratorConfiguration().getTargetProject(), true, context.getXmlFormatter());
+                    .getSqlMapGeneratorConfiguration().getTargetProject(), false, context.getXmlFormatter());
             if (context.getPlugins().sqlMapGenerated(gxf, this)) {
                 answer.add(gxf);
             }
@@ -263,7 +263,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.mybatis.generator.api.IntrospectedTable#getGenerationSteps()
      */
     @Override
@@ -273,7 +273,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.mybatis.generator.api.IntrospectedTable#isJava5Targeted()
      */
     @Override
@@ -283,7 +283,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.mybatis.generator.api.IntrospectedTable#requiresXMLGenerator()
      */
     @Override

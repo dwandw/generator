@@ -16,7 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3.criteria;
 
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class CriteriaGenerator extends AbstractJavaGenerator {
         progressCallback.startTask(getString("Progress.19", "criteria")); //$NON-NLS-1$
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedCriteria.getCriteriaType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(context.getIntrospectedCriteria().getCriteriaType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
@@ -66,17 +65,10 @@ public class CriteriaGenerator extends AbstractJavaGenerator {
         method.setConstructor(true);
         method.addBodyLine("criteria = new ArrayList<Criterion>();"); //$NON-NLS-1$
         topLevelClass.addMethod(method);
-        topLevelClass.addImportedType(new FullyQualifiedJavaType(introspectedCriteria.getCriterionType()));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType(context.getIntrospectedCriteria().getCriterionType()));
 
         List<String> criteriaLists = new ArrayList<String>();
         criteriaLists.add("criteria"); //$NON-NLS-1$
-
-        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
-            if (stringHasValue(introspectedColumn.getTypeHandler())) {
-                String name = addtypeHandledObjectsAndMethods(introspectedColumn, method, topLevelClass);
-                criteriaLists.add(name);
-            }
-        }
 
         // now generate the isValid method
         method = new Method();
@@ -198,108 +190,10 @@ public class CriteriaGenerator extends AbstractJavaGenerator {
         }
         topLevelClass.addMethod(method);
 
-        // now generate the inner class that holds the AND conditions
-        // topLevelClass
-        // .addInnerClass(getGeneratedCriteriaInnerClass(topLevelClass));
-        //
-        // topLevelClass.addInnerClass(getCriteriaInnerClass(topLevelClass));
-
-        // topLevelClass.addInnerClass(getCriterionInnerClass(topLevelClass));
-
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().modelExampleClassGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
-        return answer;
-    }
-
-    /**
-     * This method adds all the extra methods and fields required to support a
-     * user defined type handler on some column.
-     * 
-     * @param introspectedColumn
-     * @param constructor
-     * @param innerClass
-     * @return the name of the List added to the class by this method
-     */
-    private String addtypeHandledObjectsAndMethods(IntrospectedColumn introspectedColumn, Method constructor, InnerClass innerClass) {
-        String answer;
-        StringBuilder sb = new StringBuilder();
-
-        // add new private field and public accessor in the class
-        sb.setLength(0);
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.append("Criteria"); //$NON-NLS-1$
-        answer = sb.toString();
-
-        Field field = new Field();
-        field.setVisibility(JavaVisibility.PROTECTED);
-        field.setType(new FullyQualifiedJavaType("java.util.List<Criterion>")); //$NON-NLS-1$
-        field.setName(answer);
-        innerClass.addField(field);
-
-        Method method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(field.getType());
-        method.setName(getGetterMethodName(field.getName(), field.getType()));
-        sb.insert(0, "return "); //$NON-NLS-1$
-        sb.append(';');
-        method.addBodyLine(sb.toString());
-        innerClass.addMethod(method);
-
-        // add constructor initialization
-        sb.setLength(0);
-        sb.append(field.getName());
-        sb.append(" = new ArrayList<Criterion>();"); //$NON-NLS-1$;
-        constructor.addBodyLine(sb.toString());
-
-        // now add the methods for simplifying the individual field set methods
-        method = new Method();
-        method.setVisibility(JavaVisibility.PROTECTED);
-        sb.setLength(0);
-        sb.append("add"); //$NON-NLS-1$
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));
-        sb.append("Criterion"); //$NON-NLS-1$
-
-        method.setName(sb.toString());
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
-        method.addBodyLine("if (value == null) {"); //$NON-NLS-1$
-        method.addBodyLine("throw new RuntimeException(\"Value for \" + property + \" cannot be null\");"); //$NON-NLS-1$
-        method.addBodyLine("}"); //$NON-NLS-1$
-
-        method.addBodyLine(String.format("%s.add(new Criterion(condition, value, \"%s\"));", //$NON-NLS-1$
-                field.getName(), introspectedColumn.getTypeHandler()));
-        method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
-        innerClass.addMethod(method);
-
-        sb.setLength(0);
-        sb.append("add"); //$NON-NLS-1$
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));
-        sb.append("Criterion"); //$NON-NLS-1$
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PROTECTED);
-        method.setName(sb.toString());
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-        method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(), "value1")); //$NON-NLS-1$
-        method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(), "value2")); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
-        if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
-            method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
-            method.addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
-            method.addBodyLine("}"); //$NON-NLS-1$
-        }
-
-        method.addBodyLine(String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));", //$NON-NLS-1$
-                field.getName(), introspectedColumn.getTypeHandler()));
-
-        method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
-        innerClass.addMethod(method);
-
         return answer;
     }
 }

@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
+import org.mybatis.generator.api.IntrospectedCriteria;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -34,6 +35,7 @@ import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java2Impl;
 import org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java5Impl;
+import org.mybatis.generator.codegen.mybatis3.IntrospectedCriteriaMyBatis3Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3SimpleImpl;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
@@ -357,6 +359,13 @@ public class ObjectFactory {
         return answer;
     }
 
+    public static IntrospectedCriteria createIntrospectedCriteria(Context context) {
+
+        IntrospectedCriteria answer = createIntrospectedCriteriaForValidation(context);
+
+        return answer;
+    }
+
     /**
      * This method creates an introspected table implementation that is only
      * usable for validation (i.e. for a context to determine if the target is
@@ -384,6 +393,20 @@ public class ObjectFactory {
         }
 
         IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);
+        answer.setContext(context);
+
+        return answer;
+    }
+
+    public static IntrospectedCriteria createIntrospectedCriteriaForValidation(Context context) {
+        String type = context.getTargetRuntime();
+        if (!stringHasValue(type)) {
+            type = IntrospectedCriteriaMyBatis3Impl.class.getName();
+        } else if ("MyBatis3".equalsIgnoreCase(type)) { //$NON-NLS-1$
+            type = IntrospectedCriteriaMyBatis3Impl.class.getName();
+        }
+
+        IntrospectedCriteria answer = (IntrospectedCriteria) createInternalObject(type);
         answer.setContext(context);
 
         return answer;

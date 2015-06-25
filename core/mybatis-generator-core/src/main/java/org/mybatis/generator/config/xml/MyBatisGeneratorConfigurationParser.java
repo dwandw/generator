@@ -31,6 +31,7 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
+import org.mybatis.generator.config.JavaCriteriaGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.ModelType;
@@ -129,6 +130,7 @@ public class MyBatisGeneratorConfigurationParser {
         Properties attributes = parseAttributes(node);
         String defaultModelType = attributes.getProperty("defaultModelType"); //$NON-NLS-1$
         String targetRuntime = attributes.getProperty("targetRuntime"); //$NON-NLS-1$
+        String firstRun = attributes.getProperty("firstRun"); //$NON-NLS-1$
         String introspectedColumnImpl = attributes.getProperty("introspectedColumnImpl"); //$NON-NLS-1$
         String id = attributes.getProperty("id"); //$NON-NLS-1$
 
@@ -141,6 +143,9 @@ public class MyBatisGeneratorConfigurationParser {
         }
         if (stringHasValue(targetRuntime)) {
             context.setTargetRuntime(targetRuntime);
+        }
+        if (stringHasValue(firstRun)) {
+            context.setFirstRun(isTrue(firstRun));
         }
 
         configuration.addContext(context);
@@ -169,6 +174,8 @@ public class MyBatisGeneratorConfigurationParser {
                 parseSqlMapGenerator(context, childNode);
             } else if ("javaClientGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseJavaClientGenerator(context, childNode);
+            } else if ("javaCriteriaGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseJavaCriteriaGenerator(context, childNode);
             } else if ("table".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseTable(context, childNode);
             }
@@ -486,6 +493,36 @@ public class MyBatisGeneratorConfigurationParser {
 
             if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseProperty(javaModelGeneratorConfiguration, childNode);
+            }
+        }
+    }
+
+    private void parseJavaCriteriaGenerator(Context context, Node node) {
+        JavaCriteriaGeneratorConfiguration javaCriteriaGeneratorConfiguration = new JavaCriteriaGeneratorConfiguration();
+
+        context.setJavaCriteriaGeneratorConfiguration(javaCriteriaGeneratorConfiguration);
+
+        Properties attributes = parseAttributes(node);
+        String type = attributes.getProperty("type"); //$NON-NLS-1$
+        String targetPackage = attributes.getProperty("targetPackage"); //$NON-NLS-1$
+        String targetProject = attributes.getProperty("targetProject"); //$NON-NLS-1$
+        String implementationPackage = attributes.getProperty("implementationPackage"); //$NON-NLS-1$
+
+        javaCriteriaGeneratorConfiguration.setConfigurationType(type);
+        javaCriteriaGeneratorConfiguration.setTargetPackage(targetPackage);
+        javaCriteriaGeneratorConfiguration.setTargetProject(targetProject);
+        javaCriteriaGeneratorConfiguration.setImplementationPackage(implementationPackage);
+
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+
+            if (childNode.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseProperty(javaCriteriaGeneratorConfiguration, childNode);
             }
         }
     }

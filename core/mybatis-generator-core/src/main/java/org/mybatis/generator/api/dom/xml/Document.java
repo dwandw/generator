@@ -109,7 +109,7 @@ public class Document {
             sb.append(publicId);
             sb.append("\" \""); //$NON-NLS-1$
             sb.append(systemId);
-            sb.append("\" >"); //$NON-NLS-1$
+            sb.append("\">"); //$NON-NLS-1$
         }
 
         OutputUtilities.newLine(sb);
