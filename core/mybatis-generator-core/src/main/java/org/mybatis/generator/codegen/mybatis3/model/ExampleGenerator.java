@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.codegen.mybatis3.model;
 
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getSetterMethodName;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getValidPropertyName;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -25,6 +28,7 @@ import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -33,6 +37,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
+import org.mybatis.generator.config.Association;
 
 /**
  * 
@@ -71,6 +76,48 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().modelExampleClassGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
+        }
+
+        if (introspectedTable.getTableConfiguration().getAssociations().size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            FullyQualifiedJavaType associationType;
+            for (Association association : introspectedTable.getTableConfiguration().getAssociations()) {
+                String property = association.getIntrospectedTable().getCriteriaJavaProperty();
+                associationType = new FullyQualifiedJavaType(association.getIntrospectedTable().getExampleType());
+
+                Field field = new Field();
+                field.setVisibility(JavaVisibility.PRIVATE);
+                field.setType(associationType);
+                field.setName(property);
+                topLevelClass.addField(field);
+
+                method = new Method();
+                method.setVisibility(JavaVisibility.PUBLIC);
+                method.setReturnType(associationType);
+                method.setName(getGetterMethodName(property, associationType));
+
+                sb.setLength(0);
+                sb.append("return ");
+                sb.append(property);
+                sb.append(';');
+                method.addBodyLine(sb.toString());
+                topLevelClass.addMethod(method);
+
+                method = new Method();
+                method.setVisibility(JavaVisibility.PUBLIC);
+                method.setName(getSetterMethodName(property));
+                method.addParameter(new Parameter(associationType, property));
+
+                sb.setLength(0);
+                sb.append("this.");
+                sb.append(property);
+                sb.append(" = ");
+                sb.append(property);
+                sb.append(';');
+                method.addBodyLine(sb.toString());
+                topLevelClass.addMethod(method);
+
+            }
         }
         return answer;
     }
@@ -360,8 +407,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
      * 
      * @param introspectedColumn
      * @param inMethod
-     *            if true generates an "in" method, else generates a "not in"
-     *            method
+     *            if true generates an "in" method, else generates a "not in" method
      * @return a generated method for the in or not in method
      */
     private Method getSetInOrNotInMethod(IntrospectedColumn introspectedColumn, boolean inMethod) {

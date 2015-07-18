@@ -16,6 +16,7 @@
 
 package org.mybatis.generator.api;
 
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getValidPropertyName;
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
@@ -41,9 +42,8 @@ import org.mybatis.generator.internal.rules.HierarchicalModelRules;
 import org.mybatis.generator.internal.rules.Rules;
 
 /**
- * Base class for all code generator implementations. This class provides many
- * of the housekeeping methods needed to implement a code generator, with only
- * the actual code generation methods left unimplemented.
+ * Base class for all code generator implementations. This class provides many of the housekeeping methods needed to implement a code generator, with only the actual code
+ * generation methods left unimplemented.
  * 
  * @author Jeff Butler
  * 
@@ -177,7 +177,17 @@ public abstract class IntrospectedTable {
         /** The ATT r_ mybati s3_ sq l_ provide r_ type. */
         ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
 
-        ATTR_CREATE_TIME
+        ATTR_CREATE_TIME,
+
+        ATTR_ASSOCIATION_RESULT_MAP_ID,
+
+        ATTR_EXAMPLE_WHERE_WITH_ASSOCIATION_CLAUSE_ID,
+
+        ATTR_SELECT_BY_EXAMPLE_WITH_ASSOCIATION_STATEMENT_ID,
+
+        ATTR_CRITERIA_JAVA_PROPERTY,
+
+        ATTR_COUNT_BY_CRITERIA_WITH_ASSOCIATION_STATEMENT_ID
     }
 
     /** The table configuration. */
@@ -205,14 +215,12 @@ public abstract class IntrospectedTable {
     protected TargetRuntime targetRuntime;
 
     /**
-     * Attributes may be used by plugins to capture table related state between
-     * the different plugin calls.
+     * Attributes may be used by plugins to capture table related state between the different plugin calls.
      */
     protected Map<String, Object> attributes;
 
     /**
-     * Internal attributes are used to store commonly accessed items by all code
-     * generators.
+     * Internal attributes are used to store commonly accessed items by all code generators.
      */
     protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes;
 
@@ -323,8 +331,7 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * Returns true if any of the columns in the table are JDBC Dates (as
-     * opposed to timestamps).
+     * Returns true if any of the columns in the table are JDBC Dates (as opposed to timestamps).
      * 
      * @return true if the table contains DATE columns
      */
@@ -351,8 +358,7 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * Returns true if any of the columns in the table are JDBC Times (as
-     * opposed to timestamps).
+     * Returns true if any of the columns in the table are JDBC Times (as opposed to timestamps).
      * 
      * @return true if the table contains TIME columns
      */
@@ -379,9 +385,8 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * Returns the columns in the primary key. If the generatePrimaryKeyClass()
-     * method returns false, then these columns will be iterated as the
-     * parameters of the selectByPrimaryKay and deleteByPrimaryKey methods
+     * Returns the columns in the primary key. If the generatePrimaryKeyClass() method returns false, then these columns will be iterated as the parameters of the
+     * selectByPrimaryKay and deleteByPrimaryKey methods
      * 
      * @return a List of ColumnDefinition objects for columns in the primary key
      */
@@ -408,8 +413,7 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * Returns all columns in the table (for use by the select by primary key
-     * and select by example with BLOBs methods).
+     * Returns all columns in the table (for use by the select by primary key and select by example with BLOBs methods).
      *
      * @return a List of ColumnDefinition objects for all columns in the table
      */
@@ -423,11 +427,9 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * Returns all columns except BLOBs (for use by the select by example
-     * without BLOBs method).
+     * Returns all columns except BLOBs (for use by the select by example without BLOBs method).
      *
-     * @return a List of ColumnDefinition objects for columns in the table that
-     *         are non BLOBs
+     * @return a List of ColumnDefinition objects for columns in the table that are non BLOBs
      */
     public List<IntrospectedColumn> getNonBLOBColumns() {
         List<IntrospectedColumn> answer = new ArrayList<IntrospectedColumn>();
@@ -518,9 +520,8 @@ public abstract class IntrospectedTable {
     /**
      * Gets the base record type.
      *
-     * @return the type for the record (the class that holds non-primary key and
-     *         non-BLOB fields). Note that the value will be calculated
-     *         regardless of whether the table has these columns or not.
+     * @return the type for the record (the class that holds non-primary key and non-BLOB fields). Note that the value will be calculated regardless of whether the table
+     *         has these columns or not.
      */
     public String getBaseRecordType() {
         return internalAttributes.get(InternalAttribute.ATTR_BASE_RECORD_TYPE);
@@ -538,18 +539,14 @@ public abstract class IntrospectedTable {
     /**
      * Gets the record with blo bs type.
      *
-     * @return the type for the record with BLOBs class. Note that the value
-     *         will be calculated regardless of whether the table has BLOB
-     *         columns or not.
+     * @return the type for the record with BLOBs class. Note that the value will be calculated regardless of whether the table has BLOB columns or not.
      */
     public String getRecordWithBLOBsType() {
         return internalAttributes.get(InternalAttribute.ATTR_RECORD_WITH_BLOBS_TYPE);
     }
 
     /**
-     * Calculates an SQL Map file name for the table. Typically the name is
-     * "XXXX_SqlMap.xml" where XXXX is the fully qualified table name (delimited
-     * with underscores).
+     * Calculates an SQL Map file name for the table. Typically the name is "XXXX_SqlMap.xml" where XXXX is the fully qualified table name (delimited with underscores).
      * 
      * @return the name of the SqlMap file
      */
@@ -773,6 +770,8 @@ public abstract class IntrospectedTable {
         setSqlMapFullyQualifiedRuntimeTableName(calculateSqlMapFullyQualifiedRuntimeTableName());
         setSqlMapAliasedFullyQualifiedRuntimeTableName(calculateSqlMapAliasedFullyQualifiedRuntimeTableName());
 
+        setCriteriaJavaProperty(getValidPropertyName(calculateCriteriaJavaProperty()));
+
         setCountByExampleStatementId("countByCriteria"); //$NON-NLS-1$
         setDeleteByExampleStatementId("deleteByCriteria"); //$NON-NLS-1$
         setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); //$NON-NLS-1$
@@ -789,11 +788,24 @@ public abstract class IntrospectedTable {
         setUpdateByPrimaryKeySelectiveStatementId("updateByPrimaryKeySelective"); //$NON-NLS-1$
         setUpdateByPrimaryKeyWithBLOBsStatementId("updateByPrimaryKeyWithBLOBs"); //$NON-NLS-1$
         setBaseResultMapId("BaseResultMap"); //$NON-NLS-1$
+        setAssociationResultMapId("AssociationResultMap"); //$NON-NLS-1$
         setResultMapWithBLOBsId("ResultMapWithBLOBs"); //$NON-NLS-1$
         setExampleWhereClauseId("Where_Clause"); //$NON-NLS-1$
         setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
         setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
         setMyBatis3UpdateByExampleWhereClauseId("Update_By_Criteria_Where_Clause"); //$NON-NLS-1$
+        setSelectByCriteriaAssociationStatementId("selectByCriteriaWithAssociation");
+        setCriteriaWhereWithAssociationClauseId("Association_Where_Clause");
+        setCountByCriteriaWithAssociationStatementId("countByCriteriaWithAssociation");
+        setCreateTime("create_time");
+    }
+
+    public void setCriteriaJavaProperty(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_CRITERIA_JAVA_PROPERTY, s);
+    }
+
+    public String getCriteriaJavaProperty() {
+        return internalAttributes.get(InternalAttribute.ATTR_CRITERIA_JAVA_PROPERTY);
     }
 
     /**
@@ -826,6 +838,10 @@ public abstract class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID, s);
     }
 
+    public void setCriteriaWhereWithAssociationClauseId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_EXAMPLE_WHERE_WITH_ASSOCIATION_CLAUSE_ID, s);
+    }
+
     /**
      * Sets the my batis3 update by example where clause id.
      *
@@ -854,6 +870,10 @@ public abstract class IntrospectedTable {
      */
     public void setBaseResultMapId(String s) {
         internalAttributes.put(InternalAttribute.ATTR_BASE_RESULT_MAP_ID, s);
+    }
+
+    public void setAssociationResultMapId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_ASSOCIATION_RESULT_MAP_ID, s);
     }
 
     /**
@@ -956,6 +976,10 @@ public abstract class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID, s);
     }
 
+    public void setSelectByCriteriaAssociationStatementId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_ASSOCIATION_STATEMENT_ID, s);
+    }
+
     /**
      * Sets the insert selective statement id.
      *
@@ -1006,6 +1030,10 @@ public abstract class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID, s);
     }
 
+    public void setCountByCriteriaWithAssociationStatementId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_COUNT_BY_CRITERIA_WITH_ASSOCIATION_STATEMENT_ID, s);
+    }
+
     /**
      * Gets the blob column list id.
      *
@@ -1033,6 +1061,10 @@ public abstract class IntrospectedTable {
         return internalAttributes.get(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID);
     }
 
+    public String getCriteriaWhereWithAssociationClauseId() {
+        return internalAttributes.get(InternalAttribute.ATTR_EXAMPLE_WHERE_WITH_ASSOCIATION_CLAUSE_ID);
+    }
+
     /**
      * Gets the my batis3 update by example where clause id.
      *
@@ -1058,6 +1090,10 @@ public abstract class IntrospectedTable {
      */
     public String getBaseResultMapId() {
         return internalAttributes.get(InternalAttribute.ATTR_BASE_RESULT_MAP_ID);
+    }
+
+    public String getAssociationResultMapId() {
+        return internalAttributes.get(InternalAttribute.ATTR_ASSOCIATION_RESULT_MAP_ID);
     }
 
     /**
@@ -1150,6 +1186,10 @@ public abstract class IntrospectedTable {
         return internalAttributes.get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID);
     }
 
+    public String getSelectByCrietriaWithAssociationStatementId() {
+        return internalAttributes.get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_ASSOCIATION_STATEMENT_ID);
+    }
+
     /**
      * Gets the insert selective statement id.
      *
@@ -1193,6 +1233,10 @@ public abstract class IntrospectedTable {
      */
     public String getCountByExampleStatementId() {
         return internalAttributes.get(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID);
+    }
+
+    public String getCountByCriteriaWithAssociationStatementId() {
+        return internalAttributes.get(InternalAttribute.ATTR_COUNT_BY_CRITERIA_WITH_ASSOCIATION_STATEMENT_ID);
     }
 
     /**
@@ -1332,8 +1376,6 @@ public abstract class IntrospectedTable {
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Criteria"); //$NON-NLS-1$
         setExampleType(sb.toString());
-
-        setCreateTime("create_time");
     }
 
     /**
@@ -1401,6 +1443,13 @@ public abstract class IntrospectedTable {
         return sb.toString();
     }
 
+    protected String calculateCriteriaJavaProperty() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("Criteria");
+        return sb.toString();
+    }
+
     /**
      * Calculate sql map fully qualified runtime table name.
      *
@@ -1438,11 +1487,9 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * This method can be used to initialize the generators before they will be
-     * called.
+     * This method can be used to initialize the generators before they will be called.
      * 
-     * This method is called after all the setX methods, but before
-     * getNumberOfSubtasks(), getGeneratedJavaFiles, and getGeneratedXmlFiles.
+     * This method is called after all the setX methods, but before getNumberOfSubtasks(), getGeneratedJavaFiles, and getGeneratedXmlFiles.
      *
      * @param warnings
      *            the warnings
@@ -1452,42 +1499,35 @@ public abstract class IntrospectedTable {
     public abstract void calculateGenerators(List<String> warnings, ProgressCallback progressCallback);
 
     /**
-     * This method should return a list of generated Java files related to this
-     * table. This list could include various types of model classes, as well as
-     * DAO classes.
+     * This method should return a list of generated Java files related to this table. This list could include various types of model classes, as well as DAO classes.
      * 
      * @return the list of generated Java files for this table
      */
     public abstract List<GeneratedJavaFile> getGeneratedJavaFiles();
 
     /**
-     * This method should return a list of generated XML files related to this
-     * table. Most implementations will only return one file - the generated
-     * SqlMap file.
+     * This method should return a list of generated XML files related to this table. Most implementations will only return one file - the generated SqlMap file.
      * 
      * @return the list of generated XML files for this table
      */
     public abstract List<GeneratedXmlFile> getGeneratedXmlFiles();
 
     /**
-     * Denotes whether generated code is targeted for Java version 5.0 or
-     * higher.
+     * Denotes whether generated code is targeted for Java version 5.0 or higher.
      * 
      * @return true if the generated code makes use of Java5 features
      */
     public abstract boolean isJava5Targeted();
 
     /**
-     * This method should return the number of progress messages that will be
-     * send during the generation phase.
+     * This method should return the number of progress messages that will be send during the generation phase.
      * 
      * @return the number of progress messages
      */
     public abstract int getGenerationSteps();
 
     /**
-     * This method exists to give plugins the opportunity to replace the
-     * calculated rules if necessary.
+     * This method exists to give plugins the opportunity to replace the calculated rules if necessary.
      *
      * @param rules
      *            the new rules
@@ -1757,11 +1797,8 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * Should return true if an XML generator is required for this table. This
-     * method will be called during validation of the configuration, so it
-     * should not rely on database introspection. This method simply tells the
-     * validator if an XML configuration is normally required for this
-     * implementation.
+     * Should return true if an XML generator is required for this table. This method will be called during validation of the configuration, so it should not rely on
+     * database introspection. This method simply tells the validator if an XML configuration is normally required for this implementation.
      *
      * @return true, if successful
      */

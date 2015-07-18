@@ -35,8 +35,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     }
 
     /**
-     * This method should return an XmlElement for the select key used to
-     * automatically generate keys.
+     * This method should return an XmlElement for the select key used to automatically generate keys.
      * 
      * @param introspectedColumn
      *            the column related to the select key statement
@@ -79,6 +78,18 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
         includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
                 introspectedTable.getExampleWhereClauseId()));
+        ifElement.addElement(includeElement);
+
+        return ifElement;
+    }
+
+    protected XmlElement getCriteriaWhereWithAssociationIncludeElement() {
+        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+        ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
+
+        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+        includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
+                introspectedTable.getCriteriaWhereWithAssociationClauseId()));
         ifElement.addElement(includeElement);
 
         return ifElement;

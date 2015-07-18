@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
+import org.mybatis.generator.config.Association;
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
@@ -327,6 +328,10 @@ public class MyBatisGeneratorConfigurationParser {
                 parseGeneratedKey(tc, childNode);
             } else if ("columnRenamingRule".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseColumnRenamingRule(tc, childNode);
+            } else if ("association".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseAssociation(tc, childNode);
+            } else if ("collection".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseCollection(tc, childNode);
             }
         }
     }
@@ -403,6 +408,30 @@ public class MyBatisGeneratorConfigurationParser {
         }
 
         tc.addIgnoredColumn(ic);
+    }
+
+    private void parseAssociation(TableConfiguration tc, Node node) {
+        Properties attributes = parseAttributes(node);
+        String column = attributes.getProperty("column"); //$NON-NLS-1$
+        String leftColumn = attributes.getProperty("leftColumn"); //$NON-NLS-1$
+        String ref = attributes.getProperty("ref"); //$NON-NLS-1$
+        String joinType = stringHasValue("joinType") ? attributes.getProperty("joinType") : null;
+        String leftTable = stringHasValue("leftTable") ? attributes.getProperty("leftTable") : null;
+
+        Association as = new Association(null, ref, column, leftColumn, joinType, leftTable);
+        tc.addAssociation(as);
+    }
+
+    private void parseCollection(TableConfiguration tc, Node node) {
+        Properties attributes = parseAttributes(node);
+        String column = attributes.getProperty("column"); //$NON-NLS-1$
+        String leftColumn = attributes.getProperty("leftColumn"); //$NON-NLS-1$
+        String ref = attributes.getProperty("ref"); //$NON-NLS-1$
+        String joinType = stringHasValue("joinType") ? attributes.getProperty("joinType") : null;
+        String leftTable = stringHasValue("leftTable") ? attributes.getProperty("leftTable") : null;
+
+        Association as = new Association("collection", ref, column, leftColumn, joinType, leftTable);
+        tc.addAssociation(as);
     }
 
     private void parseColumnRenamingRule(TableConfiguration tc, Node node) {

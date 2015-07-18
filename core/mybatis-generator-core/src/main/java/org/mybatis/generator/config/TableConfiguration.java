@@ -110,6 +110,8 @@ public class TableConfiguration extends PropertyHolder {
     /** The is all column delimiting enabled. */
     private boolean isAllColumnDelimitingEnabled;
 
+    private List<Association> associations;
+
     /**
      * Instantiates a new table configuration.
      *
@@ -122,6 +124,7 @@ public class TableConfiguration extends PropertyHolder {
         this.modelType = context.getDefaultModelType();
 
         columnOverrides = new ArrayList<ColumnOverride>();
+        associations = new ArrayList<Association>();
         ignoredColumns = new HashMap<IgnoredColumn, Boolean>();
 
         insertStatementEnabled = true;
@@ -254,6 +257,9 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void addColumnOverride(ColumnOverride columnOverride) {
         columnOverrides.add(columnOverride);
+    }
+    public void addAssociation(Association association) {
+        associations.add(association);
     }
 
     /*
@@ -684,6 +690,12 @@ public class TableConfiguration extends PropertyHolder {
             }
         }
 
+        if (associations.size() > 0) {
+            for (Association association : associations) {
+                xmlElement.addElement(association.toXmlElement());
+            }
+        }
+
         return xmlElement;
     }
 
@@ -798,6 +810,10 @@ public class TableConfiguration extends PropertyHolder {
         for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {
             ignoredColumn.validate(errors, fqTableName);
         }
+
+        for (Association association : associations) {
+            association.validate(errors, fqTableName);
+        }
     }
 
     /**
@@ -836,5 +852,13 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setAllColumnDelimitingEnabled(boolean isAllColumnDelimitingEnabled) {
         this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;
+    }
+
+    public List<Association> getAssociations() {
+        return associations;
+    }
+
+    public void setAssociations(List<Association> associations) {
+        this.associations = associations;
     }
 }

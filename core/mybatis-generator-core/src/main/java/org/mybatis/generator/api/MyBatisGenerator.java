@@ -29,9 +29,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.mybatis.generator.config.Association;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.MergeConstants;
+import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -223,11 +225,11 @@ public class MyBatisGenerator {
         callback.introspectionStarted(totalSteps);
 
         for (Context context : contextsToRun) {
-            context.introspectTables(callback, warnings, fullyQualifiedTableNames);
             IntrospectedCriteria introspectedCriteria = ObjectFactory.createIntrospectedCriteria(context);
             introspectedCriteria.calculateModelAttributes();
             introspectedCriteria.calculateGenerators(warnings, callback);
             context.setIntrospectedCriteria(introspectedCriteria);
+            context.introspectTables(callback, warnings, fullyQualifiedTableNames);
         }
 
         // now run the generates

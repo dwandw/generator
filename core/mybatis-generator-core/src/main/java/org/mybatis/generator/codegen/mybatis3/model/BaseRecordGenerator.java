@@ -18,6 +18,9 @@ package org.mybatis.generator.codegen.mybatis3.model;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansField;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansGetter;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansSetter;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getSetterMethodName;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getValidPropertyName;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
@@ -36,6 +39,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.config.Association;
 
 /**
  * 
@@ -115,6 +119,53 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().modelBaseRecordClassGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
+        }
+
+        if (introspectedTable.getTableConfiguration().getAssociations().size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            FullyQualifiedJavaType associationType = null;
+            for (Association association : introspectedTable.getTableConfiguration().getAssociations()) {
+                String property = getValidPropertyName(association.getIntrospectedTable().getFullyQualifiedTable().getDomainObjectName());
+                if (association.getType().equalsIgnoreCase("association")) {
+                    associationType = new FullyQualifiedJavaType(association.getIntrospectedTable().getBaseRecordType());
+                } else if (association.getType().equalsIgnoreCase("collection")) {
+                    topLevelClass.addImportedType(FullyQualifiedJavaType.getNewListInstance());
+                    associationType = new FullyQualifiedJavaType(String.format("java.util.List<%s>", association.getIntrospectedTable().getBaseRecordType()));
+                }
+
+                Field field = new Field();
+                field.setVisibility(JavaVisibility.PRIVATE);
+                field.setType(associationType);
+                field.setName(property);
+                topLevelClass.addField(field);
+
+                Method method = new Method();
+                method.setVisibility(JavaVisibility.PUBLIC);
+                method.setReturnType(associationType);
+                method.setName(getGetterMethodName(property, associationType));
+
+                sb.setLength(0);
+                sb.append("return ");
+                sb.append(property);
+                sb.append(';');
+                method.addBodyLine(sb.toString());
+                topLevelClass.addMethod(method);
+
+                method = new Method();
+                method.setVisibility(JavaVisibility.PUBLIC);
+                method.setName(getSetterMethodName(property));
+                method.addParameter(new Parameter(associationType, property));
+
+                sb.setLength(0);
+                sb.append("this.");
+                sb.append(property);
+                sb.append(" = ");
+                sb.append(property);
+                sb.append(';');
+                method.addBodyLine(sb.toString());
+                topLevelClass.addMethod(method);
+
+            }
         }
         return answer;
     }

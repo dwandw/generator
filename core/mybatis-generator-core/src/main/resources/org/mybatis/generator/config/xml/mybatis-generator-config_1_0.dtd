@@ -145,7 +145,7 @@
   The table element is used to specify a database table that will be the source information
   for a set of generated objects.
 -->
-<!ELEMENT table (property*, generatedKey?, columnRenamingRule?, (columnOverride | ignoreColumn)*) >
+<!ELEMENT table (property*, generatedKey?, association*, collection*, columnRenamingRule?, (columnOverride | ignoreColumn)*) >
 <!ATTLIST table
   catalog CDATA #IMPLIED
   schema CDATA #IMPLIED
@@ -179,6 +179,22 @@
   jdbcType CDATA #IMPLIED
   typeHandler CDATA #IMPLIED
   delimitedColumnName CDATA #IMPLIED>
+  
+<!ELEMENT association (property*)>
+<!ATTLIST association
+  leftTable CDATA #IMPLIED
+  leftColumn CDATA #REQUIRED
+  joinType CDATA #IMPLIED
+  ref CDATA #REQUIRED
+  column CDATA #REQUIRED>
+  
+<!ELEMENT collection (property*)>
+<!ATTLIST collection
+  leftTable CDATA #IMPLIED
+  leftColumn CDATA #REQUIRED
+  joinType CDATA #IMPLIED
+  ref CDATA #REQUIRED
+  column CDATA #REQUIRED>
 
 <!--
   The ignoreColumn element is used to identify a column that should be ignored.

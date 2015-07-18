@@ -23,7 +23,9 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.mybatis.generator.api.CommentGenerator;
@@ -201,10 +203,8 @@ public class Context extends PropertyHolder {
     }
 
     /**
-     * This method does a simple validate, it makes sure that all required
-     * fields have been filled in. It does not do any more complex operations
-     * such as validating that database tables exist or validating that named
-     * columns exist
+     * This method does a simple validate, it makes sure that all required fields have been filled in. It does not do any more complex operations such as validating that
+     * database tables exist or validating that named columns exist
      *
      * @param errors
      *            the errors
@@ -347,9 +347,8 @@ public class Context extends PropertyHolder {
     }
 
     /**
-     * Builds an XmlElement representation of this context. Note that the XML
-     * may not necessarily validate if the context is invalid. Call the
-     * <code>validate</code> method to check validity of this context.
+     * Builds an XmlElement representation of this context. Note that the XML may not necessarily validate if the context is invalid. Call the <code>validate</code>
+     * method to check validity of this context.
      * 
      * @return the XML representation of this context
      */
@@ -443,9 +442,7 @@ public class Context extends PropertyHolder {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.mybatis.generator.config.PropertyHolder#addProperty(java.lang.String,
-     * java.lang.String)
+     * @see org.mybatis.generator.config.PropertyHolder#addProperty(java.lang.String, java.lang.String)
      */
     @Override
     public void addProperty(String name, String value) {
@@ -618,26 +615,19 @@ public class Context extends PropertyHolder {
     }
 
     /**
-     * Introspect tables based on the configuration specified in the
-     * constructor. This method is long running.
+     * Introspect tables based on the configuration specified in the constructor. This method is long running.
      * 
      * @param callback
-     *            a progress callback if progress information is desired, or
-     *            <code>null</code>
+     *            a progress callback if progress information is desired, or <code>null</code>
      * @param warnings
-     *            any warning generated from this method will be added to the
-     *            List. Warnings are always Strings.
+     *            any warning generated from this method will be added to the List. Warnings are always Strings.
      * @param fullyQualifiedTableNames
-     *            a set of table names to generate. The elements of the set must
-     *            be Strings that exactly match what's specified in the
-     *            configuration. For example, if table name = "foo" and schema =
-     *            "bar", then the fully qualified table name is "foo.bar". If
-     *            the Set is null or empty, then all tables in the configuration
-     *            will be used for code generation.
+     *            a set of table names to generate. The elements of the set must be Strings that exactly match what's specified in the configuration. For example, if
+     *            table name = "foo" and schema = "bar", then the fully qualified table name is "foo.bar". If the Set is null or empty, then all tables in the
+     *            configuration will be used for code generation.
      * 
      * @throws SQLException
-     *             if some error arises while introspecting the specified
-     *             database tables.
+     *             if some error arises while introspecting the specified database tables.
      * @throws InterruptedException
      *             if the progress callback reports a cancel
      */
@@ -728,11 +718,25 @@ public class Context extends PropertyHolder {
         }
 
         if (introspectedTables != null) {
+            Map<String, IntrospectedTable> _map = new HashMap<String, IntrospectedTable>();
+            for (IntrospectedTable introspectedTable : introspectedTables) {
+                introspectedTable.initialize();
+                introspectedTable.calculateGenerators(warnings, callback);
+                _map.put(introspectedTable.getFullyQualifiedTable().getIntrospectedTableName(), introspectedTable);
+            }
+
+            for (TableConfiguration tc : tableConfigurations) {
+                for (Association association : tc.getAssociations()) {
+                    association.setIntrospectedTable(_map.get(association.getRef()));
+                    if (association.getLeftTable() != null) {
+                        association.setLeftIntrospectedTable(_map.get(association.getLeftTable()));
+                    }
+                }
+            }
+
             for (IntrospectedTable introspectedTable : introspectedTables) {
                 callback.checkCancel();
 
-                introspectedTable.initialize();
-                introspectedTable.calculateGenerators(warnings, callback);
                 generatedJavaFiles.addAll(introspectedTable.getGeneratedJavaFiles());
                 generatedXmlFiles.addAll(introspectedTable.getGeneratedXmlFiles());
 

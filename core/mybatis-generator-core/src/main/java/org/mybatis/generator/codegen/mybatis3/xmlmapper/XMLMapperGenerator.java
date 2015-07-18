@@ -26,14 +26,18 @@ import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BaseColumnListElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BlobColumnListElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.CountByCriteriaWithAssociationElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.CountByExampleElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.CriteriaWhereWithAssociationClauseElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByExampleElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ExampleWhereClauseElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertSelectiveElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithAssociationWithoutBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByCriteriaWithAssociationWithoutBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByExampleWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByExampleWithoutBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByPrimaryKeyElementGenerator;
@@ -65,9 +69,14 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
         context.getCommentGenerator().addRootComment(answer);
 
+        addResultMapWithAssociationWithoutBLOBsElement(answer);
+        addCriteriaWhereWithAssociationClauseElement(answer);
+        addSelectByCriteriaWithAssociationWithoutBLOBsElement(answer);
+        addCountByCriteriaWithAssociationElement(answer);
+
         addResultMapWithoutBLOBsElement(answer);
         addResultMapWithBLOBsElement(answer);
-        addExampleWhereClauseElement(answer);
+        addCriteriaWhereClauseElement(answer);
         addMyBatis3UpdateByExampleWhereClauseElement(answer);
         addBaseColumnListElement(answer);
         addBlobColumnListElement(answer);
@@ -89,6 +98,26 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         return answer;
     }
 
+    protected void addResultMapWithAssociationWithoutBLOBsElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new ResultMapWithAssociationWithoutBLOBsElementGenerator(false);
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
+    protected void addSelectByCriteriaWithAssociationWithoutBLOBsElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new SelectByCriteriaWithAssociationWithoutBLOBsElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
+    protected void addCriteriaWhereWithAssociationClauseElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new CriteriaWhereWithAssociationClauseElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
+    protected void addCountByCriteriaWithAssociationElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new CountByCriteriaWithAssociationElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
     protected void addResultMapWithoutBLOBsElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBaseResultMap()) {
             AbstractXmlElementGenerator elementGenerator = new ResultMapWithoutBLOBsElementGenerator(false);
@@ -103,7 +132,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         }
     }
 
-    protected void addExampleWhereClauseElement(XmlElement parentElement) {
+    protected void addCriteriaWhereClauseElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateSQLExampleWhereClause()) {
             AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(false);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
